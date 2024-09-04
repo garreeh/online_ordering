@@ -20,6 +20,12 @@ if (isset($_POST['username_or_email'], $_POST['user_password'])) {
         $row = mysqli_fetch_assoc($result);
 
         if ($row) {
+            // Check if account is active
+            if ($row["account_status"] != 'Active') {
+                echo json_encode(['success' => false, 'message' => 'Account is not active. Please verify your email.']);
+                exit();
+            }
+
             if ($user_password == $row["user_confirm_password"]) {
                 $_SESSION['user_id'] = $row['user_id'];
                 $_SESSION['user_fullname'] = $row['user_fullname'];

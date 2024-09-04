@@ -107,7 +107,7 @@ $sql_details = array(
 require('../../assets/datatables/ssp.class_with_where.php');
 
 // Define where clause if needed
-$where = "is_admin = '1'";
+$where = "is_admin = '0'";
 
 // Fetch and encode data
 echo json_encode(SSP::simple($_GET, $sql_details, $table, $primaryKey, $columns, $where));

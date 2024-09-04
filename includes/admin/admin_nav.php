@@ -52,9 +52,9 @@ if (!isset($_SESSION['user_id'])) {
       Manage Billing & PO
     </div>
     <li class="nav-item">
-      <a class="nav-link" href="/online_ordering/views/admin/billing_module.php">
+      <a class="nav-link" href="/online_ordering/views/admin/transaction_module.php">
         <i class="fas fa-fw fa-money-bill"></i>
-        <span>Billing</span></a>
+        <span>Transactions</span></a>
     </li>
 
     <li class="nav-item">
@@ -125,13 +125,15 @@ if (!isset($_SESSION['user_id'])) {
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse3" aria-expanded="true"
         aria-controls="collapse3">
         <i class="fas fa-fw fa-cogs"></i>
-        <span>User Setup</span>
+        <span>User</span>
       </a>
       <div id="collapse3" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
           <!-- <h6 class="collapse-header">Setup:</h6> -->
           <a class="collapse-item" href="/online_ordering/views/admin/user_type_module.php">Add User Type</a>
           <a class="collapse-item" href="/online_ordering/views/admin/user_module.php">Add User</a>
+          <a class="collapse-item" href="/online_ordering/views/admin/customer_module.php">Customers</a>
+
         </div>
         
       </div>

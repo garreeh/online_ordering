@@ -52,8 +52,6 @@ if (!isset($_SESSION['user_id'])) {
 
     <!-- Modal for Adding and Editing Supplier -->
     <?php include './../../modals/users/modal_add_user.php'; ?>
-    <?php include './../../modals/users/modal_edit_user.php' ?>
-
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">

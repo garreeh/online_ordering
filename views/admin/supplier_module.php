@@ -29,7 +29,7 @@ if (!isset($_SESSION['user_id'])) {
   <link href="./../../assets/img/favicon.ico" rel="icon">
 
 
-  <title>Admin | Add User Type</title>
+  <title>Admin | Supplier</title>
 
   <link href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
@@ -51,7 +51,7 @@ if (!isset($_SESSION['user_id'])) {
     <!-- End of Sidebar -->
 
     <!-- Modal for Adding and Editing Supplier -->
-    <?php include './../../modals/usertype/modal_add_usertype.php'; ?>
+    <?php include './../../modals/supplier/modal_add_supplier.php'; ?>
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -67,10 +67,10 @@ if (!isset($_SESSION['user_id'])) {
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">User Type Module</h1>
+            <h1 class="h3 mb-0 text-gray-800">Supplier Module</h1>
           </div>
 
-          <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm mb-4" data-toggle="modal" data-target="#addUserModal"> <i class="fas fa-plus"></i> Add User Type</a>
+          <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm mb-4" data-toggle="modal" data-target="#addSupplierModal"> <i class="fas fa-plus"></i> Add Supplier</a>
           <a href="./../../excels/supplier_export.php" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm mb-4"><i class="fas fa-file-excel"></i> Export Excel</a>
 
           <div class="row">
@@ -80,11 +80,12 @@ if (!isset($_SESSION['user_id'])) {
                 <div class="table-responsive">
                   <div id="modalContainerSupplier"></div>
 
-                  <table class="table custom-table table-hover" name="usertype_table" id="usertype_table">
+                  <table class="table custom-table table-hover" name="supplier_table" id="supplier_table">
                     <thead>
                       <tr>
-                        <th>ID</th>
-                        <th>User Type</th>
+                        <th>Supplier ID</th>
+                        <th>Supplier Name</th>
+                        <th>Details</th>
                         <th>Date Created</th>
                         <th>Date Updated</th>
                         <th>Manage</th>
@@ -129,46 +130,68 @@ if (!isset($_SESSION['user_id'])) {
 
 <script>
   $('#sidebarToggle').click(function () {
-    $('#usertype_table').css('width', '100%');
+    $('#supplier_table').css('width', '100%');
     // console.log(table) //This is for testing only
   });
   
   //Table for Supplier
   $(document).ready(function() {
-    var usertype_table = $('#usertype_table').DataTable({
+    var supplier_table = $('#supplier_table').DataTable({
       "pagingType": "numbers",
       "processing": true,
       "serverSide": true,
-      "ajax": "./../../controllers/tables/usertype_table.php",
+      "ajax": "./../../controllers/tables/supplier_table.php",
     });
 
     window.reloadDataTable = function() {
-      usertype_table.ajax.reload();
+      supplier_table.ajax.reload();
     };
 
   });
 
-  //Bridge for Modal Backend to Frontend
+  // //Column 3
   $(document).ready(function() {
     // Function to handle click event on datatable rows
-    $('#usertype_table').on('click', 'tr td:nth-child(5) .fetchDataUserType', function() {
-        var user_type_id = $(this).closest('tr').find('td').first().text(); // Get the user_type_id from the clicked row
-        console.log('Button clicked, User ID: ' + user_type_id);
+    $('#supplier_table').on('click', 'tr td:nth-child(3) .fetchDataSupplierDetails', function() {
+        var supplier_id = $(this).closest('tr').find('td').first().text(); // Get the user_id from the clicked row
 
         $.ajax({
-            url: './../../modals/usertype/modal_edit_usertype.php', // Path to PHP script to fetch modal content
+            url: './../../modals/supplier/modal_viewdetails_supplier.php', // Path to PHP script to fetch modal content
             method: 'POST',
-            data: { user_type_id: user_type_id },
+            data: { supplier_id: supplier_id },
             success: function(response) {
                 $('#modalContainerSupplier').html(response);
-                $('#fetchDataUsertypeModal').modal('show');
-                console.log("Modal content loaded for User Type ID: " + user_type_id);
+                $('#fetchDataSupplierDetailsModal').modal('show');
+                console.log("#fetchDataSupplierDetailsModal " + supplier_id);
             },
             error: function(xhr, status, error) {
-                console.error("Error: " + xhr.responseText);
+                console.error(xhr.responseText);
             }
         });
     });
   });
+
+  //Column 5
+  $(document).ready(function() {
+    // Function to handle click event on datatable rows
+    $('#supplier_table').on('click', 'tr td:nth-child(6) .fetchDataSupplier', function() {
+        var supplier_id = $(this).closest('tr').find('td').first().text(); // Get the user_id from the clicked row
+
+        $.ajax({
+            url: './../../modals/supplier/modal_edit_supplier.php', // Path to PHP script to fetch modal content
+            method: 'POST',
+            data: { supplier_id: supplier_id },
+            success: function(response) {
+                $('#modalContainerSupplier').html(response);
+                $('#fetchDataSupplierModal').modal('show');
+                console.log("#fetchDataSupplierModal" + supplier_id);
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+  });
+
 
 </script>

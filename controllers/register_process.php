@@ -1,6 +1,13 @@
 <?php
 include '../connections/connections.php';
 
+require '../assets/PHPMailer/src/Exception.php';
+require '../assets/PHPMailer/src/PHPMailer.php';
+require '../assets/PHPMailer/src/SMTP.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve and sanitize POST data
     $user_fullname = isset($_POST['user_fullname']) ? $conn->real_escape_string($_POST['user_fullname']) : '';
@@ -45,16 +52,107 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $hashed_password = password_hash($user_password, PASSWORD_DEFAULT);
 
     // Insert user into the database
-    $sql = "INSERT INTO users (user_fullname, username, user_email, user_contact, user_password, user_confirm_password, is_admin) 
-            VALUES ('$user_fullname', '$username', '$user_email', '$user_contact', '$hashed_password', '$user_confirm_password', '0')";
+    $sql = "INSERT INTO users (user_fullname, username, user_email, user_contact, user_password, user_confirm_password, is_admin, account_status) 
+            VALUES ('$user_fullname', '$username', '$user_email', '$user_contact', '$hashed_password', '$user_confirm_password', '0', 'Inactive')";
 
     if (mysqli_query($conn, $sql)) {
-        $response = array('success' => true, 'message' => 'Registration successful. Please login.');
+        // Send verification email
+        $mail = new PHPMailer(true);
+        try {
+            //Server settings
+            $mail->isSMTP();                                            // Send using SMTP
+            $mail->Host       = 'smtp.gmail.com';                       // Set the SMTP server to send through
+            $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+            $mail->Username   = 'gajultos.garry123@gmail.com';          // SMTP username
+            $mail->Password   = 'tehpihixtxqropqd';                     // SMTP password
+            $mail->SMTPSecure = 'ssl';                                  // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+            $mail->Port       = '465';                                  // TCP port to connect to
+
+            //Recipients
+            $mail->setFrom('gajultos.garry123@gmail.com', 'Garry Gajultos');
+            $mail->addAddress($user_email, $user_fullname);             // Add a recipient
+
+            // Content
+            $mail->isHTML(true);                                        // Set email format to HTML
+            $mail->Subject = 'Email Verification';
+            $mail->Body    = "
+                                <html>
+                                <head>
+                                    <style>
+                                        .email-container {
+                                            font-family: Arial, sans-serif;
+                                            line-height: 1.6;
+                                            color: #333;
+                                        }
+                                        .email-header {
+                                            background-color: #007bff;
+                                            padding: 20px;
+                                            color: #fff;
+                                            text-align: center;
+                                        }
+                                        .email-body {
+                                            padding: 20px;
+                                            background-color: #f9f9f9;
+                                        }
+                                        .email-footer {
+                                            text-align: center;
+                                            padding: 10px;
+                                            background-color: #007bff;
+                                            color: #fff;
+                                        }
+                                        .verify-button {
+                                            color: #007BFF;            /* Set text color (adjust as needed) */
+                                            text-decoration: none;     /* Remove underline */
+                                            background-color: #F0F0F0; /* Light background color (optional) */
+                                            padding: 10px 20px;        /* Add some padding */
+                                            border-radius: 5px;        /* Rounded corners */
+                                            display: inline-block;     /* Ensure padding and background work properly */
+                                            font-weight: bold;         /* Optional: Make text bold */
+                                        }
+
+                                        .verify-button:hover {
+                                            background-color: #E0E0E0; /* Slightly darker background on hover */
+                                            color: #0056b3;            /* Darker text color on hover */
+                                        }
+
+                                    </style>
+                                </head>
+                                <body>
+                                    <div class='email-container'>
+                                        <div class='email-header'>
+                                            <h2>Email Verification</h2>
+                                        </div>
+                                        <div class='email-body'>
+                                            <p>Dear $user_fullname,</p>
+                                            <p>Thank you for registering with us. To complete your registration, please verify your email address by clicking the button below:</p>
+                                            <a href='http://localhost/controllers/verification_process.php?email=$user_email' class='verify-button'>Verify Email</a>
+                                            <p>If you did not sign up for this account, please disregard this email.</p>
+                                            <p>Best Regards,<br>Sterling</p>
+                                        </div>
+                                        <div class='email-footer'>
+                                            &copy; 2024 Your Company. All rights reserved.
+                                        </div>
+                                    </div>
+                                </body>
+                                </html>";
+
+            $mail->send();
+        } catch (Exception $e) {
+            $response = array('success' => false, 'message' => "Message could not be sent. Mailer Error: {$mail->ErrorInfo}");
+            echo json_encode($response);
+            exit();
+        }
+        
+        session_start();
+        $_SESSION['email_verified'] = true;
+            
+        // Redirect to verification page
+        $response = array('success' => true, 'message' => 'Registration successful. Please check your email for verification.');
+        echo json_encode($response);
+        exit();
     } else {
         $response = array('success' => false, 'message' => 'Registration failed. Please try again.');
+        echo json_encode($response);
+        exit();
     }
-
-    echo json_encode($response);
-    exit();
 }
-?>
