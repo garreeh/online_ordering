@@ -51,8 +51,8 @@ if (!isset($_SESSION['user_id'])) {
     <!-- End of Sidebar -->
 
     <!-- Modal for Adding and Editing Supplier -->
-    <?php include './../../modals/modal_add_user.php'; ?>
-    <?php include "./../../modals/modal_edit_user.php" ?>
+    <?php include './../../modals/users/modal_add_user.php'; ?>
+    <?php include './../../modals/users/modal_edit_user.php' ?>
 
 
     <!-- Content Wrapper -->
@@ -69,10 +69,10 @@ if (!isset($_SESSION['user_id'])) {
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Add User Module</h1>
+            <h1 class="h3 mb-0 text-gray-800">User Module</h1>
           </div>
 
-          <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm mb-4" data-toggle="modal" data-target="#addUserModal"> <i class="fas fa-plus"></i> Add Supplier</a>
+          <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm mb-4" data-toggle="modal" data-target="#addUserModal"> <i class="fas fa-plus"></i> Add User</a>
           <a href="./../../excels/supplier_export.php" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm mb-4"><i class="fas fa-file-excel"></i> Export Excel</a>
 
           <div class="row">
@@ -156,22 +156,24 @@ if (!isset($_SESSION['user_id'])) {
   //Bridge for Modal Backend to Frontend
   $(document).ready(function() {
     // Function to handle click event on datatable rows
-    $('#users_table').on('click', 'tr td:nth-child(7) .fetchDataSupplier', function() {
-        var supplier_id = $(this).closest('tr').find('td').text(); // Get the item supplier_id from the clicked row
+    $('#users_table').on('click', 'tr td:nth-child(8) .fetchDataUser', function() {
+        var user_id = $(this).closest('tr').find('td').first().text(); // Get the user_id from the clicked row
+        console.log('Button clicked, User ID: ' + user_id);
 
         $.ajax({
-            url: './../../modal/edit_supplier_modal.php', // Path to PHP script to fetch modal content
+            url: './../../modals/users/modal_edit_user.php', // Path to PHP script to fetch modal content
             method: 'POST',
-            data: { supplier_id: supplier_id },
+            data: { user_id: user_id },
             success: function(response) {
                 $('#modalContainerSupplier').html(response);
-                $('#fetchDataSupplierModal').modal('show');
-                console.log("#fetchDataSupplierModal" + supplier_id);
+                $('#fetchDataUserModal').modal('show');
+                console.log("Modal content loaded for User ID: " + user_id);
             },
             error: function(xhr, status, error) {
-                console.error(xhr.responseText);
+                console.error("Error: " + xhr.responseText);
             }
         });
     });
   });
+
 </script>

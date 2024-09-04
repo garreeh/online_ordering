@@ -147,7 +147,7 @@ if (!isset($_SESSION['user_id'])) {
     <hr class="sidebar-divider d-none d-md-block">
 
     <li class="nav-item">
-      <a class="nav-link" href="/inventory_system/controllers/logout_process.php">
+      <a class="nav-link" href="/online_ordering/controllers/logout_process.php">
         <i class="fas fa-fw fa-sign-out-alt"></i>
         <span>Sign Out</span></a>
     </li>

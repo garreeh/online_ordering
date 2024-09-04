@@ -9,9 +9,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user_contact = isset($_POST['user_contact']) ? $conn->real_escape_string($_POST['user_contact']) : '';
     $user_email = isset($_POST['user_email']) ? $conn->real_escape_string($_POST['user_email']) : '';
     $user_password = isset($_POST['user_password']) ? $conn->real_escape_string($_POST['user_password']) : '';
+    $user_type_id = isset($_POST['user_type_id']) ? $conn->real_escape_string($_POST['user_type_id']) : '';
+
 
     // Check if any field is empty
-    if (empty($user_fullname) || empty($user_address) || empty($user_contact) || empty($user_email) || empty($user_password)) {
+    if (empty($user_fullname) || empty($user_address) || empty($user_contact) || empty($user_email) || empty($user_password) || empty($user_type_id)) {
         $response = array('success' => false, 'message' => 'All fields are required.');
         echo json_encode($response);
         exit();
@@ -38,8 +40,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $hashed_password = password_hash($user_password, PASSWORD_DEFAULT);
 
     // Insert user into the database
-    $sql = "INSERT INTO users (user_fullname, username, user_address, user_contact, user_email, user_password, user_confirm_password, is_admin, account_status) 
-            VALUES ('$user_fullname', '$username', '$user_address', '$user_contact', '$user_email', '$hashed_password', '$user_password', '1', 'Inactive')";
+    $sql = "INSERT INTO users (user_fullname, username, user_address, user_contact, user_email, user_password, user_confirm_password, is_admin, account_status, user_type_id) 
+            VALUES ('$user_fullname', '$username', '$user_address', '$user_contact', '$user_email', '$hashed_password', '$user_password', '1', 'Inactive', '$user_type_id')";
 
     if (mysqli_query($conn, $sql)) {
         $response = array('success' => true, 'message' => 'User added successfully.');

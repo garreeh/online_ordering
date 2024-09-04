@@ -18,35 +18,10 @@
 
       <div class="modal-body">
       <form method="post" enctype="multipart/form-data">
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="user_fullname">Fullname:</label>
-            <input type="text" class="form-control" id="user_fullname" name="user_fullname" placeholder="Enter fullname" required>
-        </div>
-        
-        <div class="form-group col-md-6">
-            <label for="username">Username:</label>
-            <input type="text" class="form-control" id="username" name="username" placeholder="Enter Username" required>
-        </div>
-
-        <div class="form-group col-md-6">
-            <label for="user_address">Address:</label>
-            <input type="text" class="form-control" id="user_address" name="user_address" placeholder="Enter Address" required>
-        </div>
-        
-        <div class="form-group col-md-6">
-            <label for="user_email">Email:</label>
-            <input type="email" class="form-control" id="user_email" name="user_email" placeholder="Enter Email" required>
-        </div>
-
-        <div class="form-group col-md-6">
-            <label for="user_contact">Contact #:</label>
-            <input type="text" class="form-control" id="user_contact" name="user_contact" placeholder="Enter Contact #" required>
-        </div>
-        
-        <div class="form-group col-md-6">
-            <label for="user_password">Password:</label>
-            <input type="password" class="form-control" id="user_password" name="user_password" placeholder="Enter Password" required>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+            <label for="user_fullname">Usertype:</label>
+            <input type="text" class="form-control" id="user_type_name" name="user_type_name" placeholder="Enter Usertype" required>
         </div>
     </div>
 
@@ -80,7 +55,7 @@
       // Send AJAX request
       $.ajax({
         type: 'POST',
-        url: '/online_ordering/controllers/admin/add_user_process.php',
+        url: '/online_ordering/controllers/admin/add_usertype_process.php',
         data: formData,
         success: function(response) {
           // Handle success response
