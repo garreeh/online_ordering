@@ -29,7 +29,7 @@ if (!isset($_SESSION['user_id'])) {
   <link href="./../../assets/img/favicon.ico" rel="icon">
 
 
-  <title>Admin | Add User</title>
+  <title>Admin | User Module</title>
 
   <link href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>

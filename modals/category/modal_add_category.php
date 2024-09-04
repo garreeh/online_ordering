@@ -7,10 +7,10 @@
 </style>
 
 <div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl" role="document">
+  <div class="modal-dialog modal-l" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addCategoryModalLabel">Add Supplier</h5>
+        <h5 class="modal-title" id="addCategoryModalLabel">Add Category</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -19,36 +19,14 @@
       <div class="modal-body">
         <form method="post" enctype="multipart/form-data">
           <div class="form-row">
-            <div class="form-group col-md-4">
-              <label for="supplier_name">Supplier Name:</label>
-              <input type="text" class="form-control" id="supplier_name" name="supplier_name" placeholder="Enter Supplier Name" required>
-            </div>
-            <div class="form-group col-md-4">
-              <label for="address">Address:</label>
-              <input type="text" class="form-control" id="address" name="address" placeholder="Enter Address">
-            </div>
-            <div class="form-group col-md-4">
-              <label for="landline">Landline:</label>
-              <input type="text" class="form-control" id="landline" name="landline" placeholder="Enter Landline">
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-4">
-              <label for="mobile">Mobile:</label>
-              <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Enter Mobile">
-            </div>
-            <div class="form-group col-md-4">
-              <label for="email">Email:</label>
-              <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email">
-            </div>
-            <div class="form-group col-md-4">
-              <label for="tin">TIN:</label>
-              <input type="text" class="form-control" id="tin" name="tin" placeholder="Enter TIN">
+            <div class="form-group col-md-12">
+              <label for="supplier_name">Category Name:</label>
+              <input type="text" class="form-control" id="category_name" name="category_name" placeholder="Enter Supplier Name" required>
             </div>
           </div>
 
           <!-- Add a hidden input field to submit the form with the button click -->
-          <input type="hidden" name="add_supplier" value="1">
+          <input type="hidden" name="add_category" value="1">
 
           <div class="modal-footer">
             <button type="submit" class="btn btn-primary">Add</button>
@@ -79,7 +57,7 @@
       // Send AJAX request
       $.ajax({
         type: 'POST',
-        url: '/online_ordering/controllers/admin/add_supplier_process.php',
+        url: '/online_ordering/controllers/admin/add_category_process.php',
         data: formData,
         success: function(response) {
           // Handle success response

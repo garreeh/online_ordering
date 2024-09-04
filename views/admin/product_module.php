@@ -29,7 +29,7 @@ if (!isset($_SESSION['user_id'])) {
   <link href="./../../assets/img/favicon.ico" rel="icon">
 
 
-  <title>Admin | User Type Module</title>
+  <title>Admin | Product</title>
 
   <link href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
@@ -51,7 +51,7 @@ if (!isset($_SESSION['user_id'])) {
     <!-- End of Sidebar -->
 
     <!-- Modal for Adding and Editing Supplier -->
-    <?php include './../../modals/usertype/modal_add_usertype.php'; ?>
+    <?php include './../../modals/product/modal_add_product.php'; ?>
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -67,10 +67,10 @@ if (!isset($_SESSION['user_id'])) {
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">User Type Module</h1>
+            <h1 class="h3 mb-0 text-gray-800">Product Module</h1>
           </div>
 
-          <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm mb-4" data-toggle="modal" data-target="#addUserModal"> <i class="fas fa-plus"></i> Add User Type</a>
+          <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm mb-4" data-toggle="modal" data-target="#addProductModal"> <i class="fas fa-plus"></i> Add Product</a>
           <a href="./../../excels/supplier_export.php" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm mb-4"><i class="fas fa-file-excel"></i> Export Excel</a>
 
           <div class="row">
@@ -78,15 +78,15 @@ if (!isset($_SESSION['user_id'])) {
               <div class="tab-pane fade show active" id="aa" role="tabpanel" aria-labelledby="aa-tab">
                 
                 <div class="table-responsive">
-                  <div id="modalContainerSupplier"></div>
+                  <div id="modalContainerCategory"></div>
 
-                  <table class="table custom-table table-hover" name="usertype_table" id="usertype_table">
+                  <table class="table custom-table table-hover" name="product_table" id="product_table">
                     <thead>
                       <tr>
-                        <th>ID</th>
-                        <th>User Type</th>
-                        <th>Date Created</th>
-                        <th>Date Updated</th>
+                        <th>SKU</th>
+                        <th>Name</th>
+                        <th>Image</th>
+                        <th>Details</th>
                         <th>Manage</th>
                       </tr>
                     </thead>
@@ -129,46 +129,48 @@ if (!isset($_SESSION['user_id'])) {
 
 <script>
   $('#sidebarToggle').click(function () {
-    $('#usertype_table').css('width', '100%');
+    $('#product_table').css('width', '100%');
     // console.log(table) //This is for testing only
   });
   
-  //Table for Supplier
+  //Table for Product
   $(document).ready(function() {
-    var usertype_table = $('#usertype_table').DataTable({
+    var product_table = $('#product_table').DataTable({
       "pagingType": "numbers",
       "processing": true,
       "serverSide": true,
-      "ajax": "./../../controllers/tables/usertype_table.php",
+      "ajax": "./../../controllers/tables/product_table.php",
     });
 
     window.reloadDataTable = function() {
-      usertype_table.ajax.reload();
+      console.log('reaload') //This is for testing only
+
+      product_table.ajax.reload();
     };
 
   });
 
-  //Bridge for Modal Backend to Frontend
+  //Column 5
   $(document).ready(function() {
     // Function to handle click event on datatable rows
-    $('#usertype_table').on('click', 'tr td:nth-child(5) .fetchDataUserType', function() {
-        var user_type_id = $(this).closest('tr').find('td').first().text(); // Get the user_type_id from the clicked row
-        console.log('Button clicked, User ID: ' + user_type_id);
+    $('#product_table').on('click', 'tr td:nth-child(5) .fetchDataCategory', function() {
+        var product_id = $(this).closest('tr').find('td').first().text(); // Get the user_id from the clicked row
 
         $.ajax({
-            url: './../../modals/usertype/modal_edit_usertype.php', // Path to PHP script to fetch modal content
+            url: './../../modals/category/modal_edit_category.php', // Path to PHP script to fetch modal content
             method: 'POST',
-            data: { user_type_id: user_type_id },
+            data: { product_id: product_id },
             success: function(response) {
-                $('#modalContainerSupplier').html(response);
-                $('#fetchDataUsertypeModal').modal('show');
-                console.log("Modal content loaded for User Type ID: " + user_type_id);
+                $('#modalContainerCategory').html(response);
+                $('#editCategoryModal').modal('show');
+                console.log("#editCategoryModal" + product_id);
             },
             error: function(xhr, status, error) {
-                console.error("Error: " + xhr.responseText);
+                console.error(xhr.responseText);
             }
         });
     });
   });
+
 
 </script>

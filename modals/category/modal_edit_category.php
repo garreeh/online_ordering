@@ -33,7 +33,7 @@ if (isset($_POST['category_id'])) {
             <div class="form-row">
               <div class="form-group col-md-12">
                 <label for="supplier_name">Category Name:</label>
-                <input type="text" class="form-control" id="supplier_name" name="supplier_name" placeholder="Enter Category Name" value="<?php echo $row['category_name']; ?>" required>
+                <input type="text" class="form-control" id="category_name" name="category_name" placeholder="Enter Category Name" value="<?php echo $row['category_name']; ?>" required>
               </div>
             </div>
 

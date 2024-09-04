@@ -29,7 +29,7 @@ if (!isset($_SESSION['user_id'])) {
   <link href="./../../assets/img/favicon.ico" rel="icon">
 
 
-  <title>Admin | Add User</title>
+  <title>Admin | Customer</title>
 
   <link href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
@@ -67,7 +67,7 @@ if (!isset($_SESSION['user_id'])) {
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">User Module</h1>
+            <h1 class="h3 mb-0 text-gray-800">Customer Module</h1>
           </div>
 
           <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm mb-4" data-toggle="modal" data-target="#addUserModal"> <i class="fas fa-plus"></i> Add User</a>
