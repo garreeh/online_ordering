@@ -7,7 +7,7 @@ if (isset($_POST['edit_product'])) {
     $response = array('success' => false, 'message' => '');
     $product_id = $conn->real_escape_string($_POST['product_id']);
     
-    // Get the old file name from the database
+    // Get the old file path from the database
     $sql = "SELECT product_image FROM product WHERE product_id='$product_id'";
     $result = mysqli_query($conn, $sql);
     if ($result) {
@@ -60,10 +60,9 @@ if (isset($_POST['edit_product'])) {
                 $response['message'] = "The file " . basename($_FILES["fileToUpload"]["name"]) . " has been uploaded.";
                 
                 // Delete the old file if it exists and is different from the new file
-                if (!empty($old_file) && $old_file !== $target_filename) {
-                    $old_file_path = $target_dir . $old_file;
-                    if (file_exists($old_file_path)) {
-                        unlink($old_file_path);
+                if (!empty($old_file) && $old_file !== $target_file) {
+                    if (file_exists($old_file)) {
+                        unlink($old_file);
                     }
                 }
             } else {
@@ -74,7 +73,7 @@ if (isset($_POST['edit_product'])) {
         }
         
         // Set new filename if a new file is uploaded
-        $new_filename = $target_filename;
+        $new_filename = $target_file;
     } else {
         // No file uploaded, retain old filename
         $new_filename = $old_file;
@@ -86,7 +85,7 @@ if (isset($_POST['edit_product'])) {
     $product_unitprice = $conn->real_escape_string($_POST['product_unitprice']);
     $product_sellingprice = $conn->real_escape_string($_POST['product_sellingprice']);
 
-    // Update SQL query
+    // Update SQL query with full path
     $sql = "UPDATE product SET 
             product_name='$product_name', product_sku='$product_sku', product_description='$product_description', 
             product_unitprice='$product_unitprice', product_sellingprice='$product_sellingprice', product_image='$new_filename' 
@@ -102,4 +101,5 @@ if (isset($_POST['edit_product'])) {
     echo json_encode($response);
     exit();
 }
+
 ?>

@@ -18,6 +18,28 @@
 <?php
 include './../../connections/connections.php';
 
+// Fetch user types from the database
+$sql = "SELECT * FROM supplier";
+$result = mysqli_query($conn, $sql);
+
+$supplier_names = [];
+if ($result) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $supplier_names[] = $row;
+    }
+}
+
+// Fetch user types from the database
+$sql = "SELECT * FROM category";
+$resultCategory = mysqli_query($conn, $sql);
+
+$category_names = [];
+if ($result) {
+    while ($row = mysqli_fetch_assoc($resultCategory)) {
+        $category_names[] = $row;
+    }
+}
+
 if (isset($_POST['product_id'])) {
   $product_id = $_POST['product_id'];
   $sql = "SELECT * FROM product WHERE product_id = '$product_id'";
@@ -25,7 +47,7 @@ if (isset($_POST['product_id'])) {
 
   if ($result) {
     while ($row = mysqli_fetch_assoc($result)) {
-      $product_image = $row['product_image'];
+      $product_image = basename($row['product_image']);
       $image_url = '../../uploads/' . $product_image; // Construct the image URL
     ?>
   <div class="modal fade" id="editProductModal" tabindex="-1" role="dialog" aria-labelledby="requestModalLabel" aria-hidden="true">
@@ -80,6 +102,30 @@ if (isset($_POST['product_id'])) {
                   <p>No image available.</p>
                 <?php endif; ?>
               </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="supplier_id">Supplier:</label>
+              <select class="form-control" id="supplier_id" name="supplier_id" required>
+                <?php foreach ($supplier_names as $supplier_rows) : ?>
+                  <option value="<?php echo $supplier_rows['supplier_id']; ?>">
+                    <?php echo $supplier_rows['supplier_name']; ?>
+                  </option>
+                <?php endforeach; ?>
+              </select>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label for="category_id">Category:</label>
+              <select class="form-control" id="category_id" name="category_id" required>
+                <?php foreach ($category_names as $category_rows) : ?>
+                  <option value="<?php echo $category_rows['category_id']; ?>">
+                    <?php echo $category_rows['category_name']; ?>
+                  </option>
+                <?php endforeach; ?>
+              </select>
             </div>
           </div>
 

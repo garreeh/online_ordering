@@ -123,7 +123,7 @@ if (!isset($_SESSION['user_id'])) {
       <div id="collapse3" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
           <!-- <h6 class="collapse-header">Setup:</h6> -->
-          <a class="collapse-item" href="/online_ordering/views/admin/supplier_module.php">Assign Delivery</a>
+          <a class="collapse-item" href="/online_ordering/views/admin/delivery_module.php">Assign Delivery</a>
           <a class="collapse-item" href="/online_ordering/views/admin/category_module.php">Delivery Status</a>
           <a class="collapse-item" href="/online_ordering/views/admin/product_module.php">Delivery History</a>
         </div>

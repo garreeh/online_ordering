@@ -22,10 +22,11 @@ if (isset($_POST['product_id'])) {
 
   if ($result) {
     while ($row = mysqli_fetch_assoc($result)) {
-      $product_image = $row['product_image'];
+      // Ensure only the filename is used
+      $product_image = basename($row['product_image']);
       $image_url = '../../uploads/' . $product_image; // Construct the image URL
     ?>
-  <div class="modal fade" id="editProductModal" tabindex="-1" role="dialog" aria-labelledby="viewImageModalLabel" aria-hidden="true">
+  <div class="modal fade" id="editProductModal" tabindex="-1" role="dialog" aria-labelledby="editProductModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">

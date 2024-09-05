@@ -7,30 +7,23 @@ if (isset($_POST['add_product'])) {
     // Initialize response array
     $response = array('success' => false, 'message' => '');
 
-    $rand = substr(md5(microtime()), rand(0, 26), 5);
-    $target_dir = "../../uploads/"; // Save directly in the uploads folder
+    $target_dir = "../../uploads/";
     $target_filename = basename($_FILES["fileToUpload"]["name"]);
-    $target_file = $target_dir . $target_filename; // Fixed path issue
+    $target_file = $target_dir . $target_filename;
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-    
+
     // Create target directory if it doesn't exist (this is not needed in your case)
     if (!file_exists($target_dir)) {
         mkdir($target_dir, 0777, true);
     }
-    
+
     // Other checks and upload logic
     if (file_exists($target_file)) {
         $response['message'] = "Sorry, file already exists.";
         $uploadOk = 0;
     }
-    
-    // LIMIT FILE SIZE (Uncomment if needed)
-    // if ($_FILES["fileToUpload"]["size"] > 500000) {
-    //   $response['message'] = "Sorry, your file is too large.";
-    //   $uploadOk = 0;
-    // }
-    
+
     // Allow certain file formats
     if (
         $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
@@ -39,7 +32,7 @@ if (isset($_POST['add_product'])) {
         $response['message'] = "Sorry, only JPG, JPEG, PNG, GIF, and PDF files are allowed.";
         $uploadOk = 0;
     }
-    
+
     // Check if $uploadOk is set to 0 by an error
     if ($uploadOk == 0) {
         $response['message'] = "Sorry, your file was not uploaded.";
@@ -54,7 +47,6 @@ if (isset($_POST['add_product'])) {
             exit();
         }
     }
-    
 
     // Get form data
     $product_name = $conn->real_escape_string($_POST['product_name']);
@@ -62,10 +54,12 @@ if (isset($_POST['add_product'])) {
     $product_description = $conn->real_escape_string($_POST['product_description']);
     $product_unitprice = $conn->real_escape_string($_POST['product_unitprice']);
     $product_sellingprice = $conn->real_escape_string($_POST['product_sellingprice']);
+    $supplier_id = $conn->real_escape_string($_POST['supplier_id']);
+    $category_id = $conn->real_escape_string($_POST['category_id']);
 
     // Construct SQL query
-    $sql = "INSERT INTO `product` (product_name, product_sku, product_description, product_unitprice, product_sellingprice, product_stocks, product_image)
-            VALUES ('$product_name', '$product_sku', '$product_description', '$product_unitprice', '$product_sellingprice', '0', '$target_file')";
+    $sql = "INSERT INTO `product` (product_name, product_sku, product_description, product_unitprice, product_sellingprice, product_stocks, product_image, supplier_id, category_id)
+            VALUES ('$product_name', '$product_sku', '$product_description', '$product_unitprice', '$product_sellingprice', '0', '$target_file', '$supplier_id', '$category_id')";
 
     // Execute SQL query
     if (mysqli_query($conn, $sql)) {
