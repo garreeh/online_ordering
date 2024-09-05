@@ -64,8 +64,8 @@ if (isset($_POST['add_product'])) {
     $product_sellingprice = $conn->real_escape_string($_POST['product_sellingprice']);
 
     // Construct SQL query
-    $sql = "INSERT INTO `product` (product_name, product_sku, product_description, product_unitprice, product_sellingprice, product_image)
-            VALUES ('$product_name', '$product_sku', '$product_description', '$product_unitprice', '$product_sellingprice', '$target_file')";
+    $sql = "INSERT INTO `product` (product_name, product_sku, product_description, product_unitprice, product_sellingprice, product_stocks, product_image)
+            VALUES ('$product_name', '$product_sku', '$product_description', '$product_unitprice', '$product_sellingprice', '0', '$target_file')";
 
     // Execute SQL query
     if (mysqli_query($conn, $sql)) {

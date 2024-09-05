@@ -49,7 +49,7 @@ if (!isset($_SESSION['user_id'])) {
 
     <!-- Heading -->
     <div class="sidebar-heading">
-      Manage Billing & PO
+      Billing & PO
     </div>
     <li class="nav-item">
       <a class="nav-link" href="/online_ordering/views/admin/transaction_module.php">
@@ -73,7 +73,7 @@ if (!isset($_SESSION['user_id'])) {
     <hr class="sidebar-divider">
     <!-- Heading -->
     <div class="sidebar-heading">
-      Reports & Product Setup
+      Reports, Product & Setup
     </div>
 
     <!-- Reports Collapse -->
@@ -112,6 +112,23 @@ if (!isset($_SESSION['user_id'])) {
         </div>
         
       </div>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse3" aria-expanded="true"
+        aria-controls="collapse3">
+        <i class="fas fa-fw fa-clipboard-list"></i>
+        <span>Delivery</span>
+      </a>
+      <div id="collapse3" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <!-- <h6 class="collapse-header">Setup:</h6> -->
+          <a class="collapse-item" href="/online_ordering/views/admin/supplier_module.php">Assign Delivery</a>
+          <a class="collapse-item" href="/online_ordering/views/admin/category_module.php">Delivery Status</a>
+          <a class="collapse-item" href="/online_ordering/views/admin/product_module.php">Delivery History</a>
+        </div>
+        
+      </div>
       
     </li>
 
@@ -122,12 +139,12 @@ if (!isset($_SESSION['user_id'])) {
       Settings
     </div>
     <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse3" aria-expanded="true"
-        aria-controls="collapse3">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse4" aria-expanded="true"
+        aria-controls="collapse4">
         <i class="fas fa-fw fa-cogs"></i>
         <span>User</span>
       </a>
-      <div id="collapse3" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+      <div id="collapse4" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
           <!-- <h6 class="collapse-header">Setup:</h6> -->
           <a class="collapse-item" href="/online_ordering/views/admin/user_type_module.php">Add User Type</a>

@@ -36,14 +36,14 @@
             </div>
             <div class="form-group col-md-6">
               <label for="product_unitprice">Product Unit Price:</label>
-              <input type="text" class="form-control" id="product_unitprice" name="product_unitprice" placeholder="Enter Product Unit Price" required>
+              <input type="number" class="form-control" id="product_unitprice" name="product_unitprice" placeholder="Enter Product Unit Price" required>
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="product_sellingprice">Product Selling Price:</label>
-              <input type="text" class="form-control" id="product_sellingprice" name="product_sellingprice" placeholder="Enter Product Selling Price" required>
+              <input type="number" class="form-control" id="product_sellingprice" name="product_sellingprice" placeholder="Enter Product Selling Price" required>
             </div>
             <div class="form-group col-md-6">
               <label for="product_image">Product Image:</label>

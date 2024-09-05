@@ -4,6 +4,15 @@
     color: #333; /* Darker label color */
     font-weight: bolder;
   }
+  .modal-body img {
+    max-width: 100%; /* Ensure the image fits within the modal */
+    height: auto;
+    max-height: 300px; /* Limit the image height */
+    object-fit: contain; /* Maintain aspect ratio */
+  }
+  .file-info {
+    margin-top: 10px;
+  }
 </style>
 
 <?php
@@ -16,8 +25,10 @@ if (isset($_POST['product_id'])) {
 
   if ($result) {
     while ($row = mysqli_fetch_assoc($result)) {
+      $product_image = $row['product_image'];
+      $image_url = '../../uploads/' . $product_image; // Construct the image URL
     ?>
-  <div class="modal fade" id="editCategoryModal" tabindex="-1" role="dialog" aria-labelledby="requestModalLabel" aria-hidden="true">
+  <div class="modal fade" id="editProductModal" tabindex="-1" role="dialog" aria-labelledby="requestModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-l" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -30,6 +41,7 @@ if (isset($_POST['product_id'])) {
         <div class="modal-body">
           <form method="post" enctype="multipart/form-data">
           <input type="hidden" name="product_id" value="<?php echo $row['product_id']; ?>">
+          
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="product_sku">Product SKU:</label>
@@ -48,28 +60,35 @@ if (isset($_POST['product_id'])) {
             </div>
             <div class="form-group col-md-6">
               <label for="product_unitprice">Product Unit Price:</label>
-              <input type="text" class="form-control" id="product_unitprice" name="product_unitprice" placeholder="Enter Product Unit Price" value="<?php echo $row['product_unitprice']; ?>" required>
+              <input type="number" class="form-control" id="product_unitprice" name="product_unitprice" placeholder="Enter Product Unit Price" value="<?php echo $row['product_unitprice']; ?>" required>
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="product_sellingprice">Product Selling Price:</label>
-              <input type="text" class="form-control" id="product_sellingprice" name="product_sellingprice" placeholder="Enter Product Selling Price" value="<?php echo $row['product_sellingprice']; ?>" required>
+              <input type="number" class="form-control" id="product_sellingprice" name="product_sellingprice" placeholder="Enter Product Selling Price" value="<?php echo $row['product_sellingprice']; ?>" required>
             </div>
             <div class="form-group col-md-6">
               <label for="product_image">Product Image:</label>
-              <input type="file" class="form-control" id="product_image" name="fileToUpload" value="<?php echo $row['fileToUpload']; ?>" required>
+              <input type="file" class="form-control" id="product_image" name="fileToUpload">
+              <!-- Display existing image filename -->
+              <div class="file-info">
+                <?php if (!empty($product_image) && file_exists('../../uploads/' . $product_image)): ?>
+                  <p><strong>Current Image:</strong> <?php echo $product_image; ?></p>
+                <?php else: ?>
+                  <p>No image available.</p>
+                <?php endif; ?>
+              </div>
             </div>
           </div>
 
             <!-- Add a hidden input field to submit the form with the button click -->
-            <input type="hidden" name="edit_supplier" value="1">
+            <input type="hidden" name="edit_product" value="1">
 
             <div class="modal-footer">
               <button type="submit" class="btn btn-primary">Save</button>
-              <!-- <input type="hidden" name="item_id" value="</?php echo $row['category_id']; ?>"> -->
-              <button type="button" class="btn btn btn-danger" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
           </form>
         </div>
@@ -83,24 +102,24 @@ if (isset($_POST['product_id'])) {
 }
 ?>
 
+
 <script>
-  //Save Button in Edit Supplier
   $(document).ready(function() {
-    $('#editCategoryModal form').submit(function(event) {
+    $('#editProductModal form').submit(function(event) {
       event.preventDefault(); // Prevent default form submission
-      // Store a reference to $(this)
       var $form = $(this);
       
-      // Serialize form data
-      var formData = $form.serialize();
+      // Create a FormData object to handle file uploads
+      var formData = new FormData($form[0]);
 
       // Send AJAX request
       $.ajax({
         type: 'POST',
         url: '/online_ordering/controllers/admin/edit_product_process.php',
         data: formData,
+        processData: false, // Prevent jQuery from automatically transforming the data into a query string
+        contentType: false, // Let the browser set the content type for the FormData
         success: function(response) {
-          // Handle success response
           console.log(response); // Log the response for debugging
           response = JSON.parse(response);
           if (response.success) {
@@ -110,8 +129,7 @@ if (isset($_POST['product_id'])) {
               backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)"
             }).showToast();
             
-            // Optionally, close the modal
-            $('#editCategoryModal').modal('hide');
+            $('#editProductModal').modal('hide');
             window.reloadDataTable();
 
           } else {
@@ -123,10 +141,9 @@ if (isset($_POST['product_id'])) {
           }
         },
         error: function(xhr, status, error) {
-          // Handle error response
           console.error(xhr.responseText);
           Toastify({
-            text: "Error occurred while editing supplier. Please try again later.",
+            text: "Error occurred while editing product. Please try again later.",
             duration: 2000,
             backgroundColor: "linear-gradient(to right, #ff6a00, #ee0979)"
           }).showToast();
@@ -134,5 +151,4 @@ if (isset($_POST['product_id'])) {
       });
     });
   });
-
 </script>

@@ -7,8 +7,17 @@ $primaryKey = 'product_id';
 // Define columns for DataTables
 $columns = array(
     array(
-        'db' => 'product_sku',
+        'db' => 'product_id',
         'dt' => 0,
+        'field' => 'product_id',
+        'formatter' => function ($lab1, $row) {
+            return $row['product_id'];
+        }
+    ),
+
+    array(
+        'db' => 'product_sku',
+        'dt' => 1,
         'field' => 'product_sku',
         'formatter' => function ($lab1, $row) {
             return $row['product_sku'];
@@ -17,7 +26,7 @@ $columns = array(
 
     array(
         'db' => 'product_name',
-        'dt' => 1,
+        'dt' => 2,
         'field' => 'product_name',
         'formatter' => function ($lab2, $row) {
             return $row['product_name'];
@@ -26,18 +35,29 @@ $columns = array(
 
     array(
         'db' => 'product_image',
-        'dt' => 2,
+        'dt' => 3,
         'field' => 'product_image',
         'formatter' => function ($lab3, $row) {
             // Return an HTML <img> tag with the image path
-            $imageUrl = '../../uploads/' . basename($row['product_image']);
-            return '<img src="' . $imageUrl . '" alt="Product Image" style="max-width: 100px; height: auto;">';
+            // $imageUrl = '../../uploads/' . basename($row['product_image']);
+            // return '<img src="' . $imageUrl . '" alt="Product Image" style="max-width: 100px; height: auto;">';
+            return '<a class="fetchDataProductImage" href="#"> View Image</a> ';
+
+        }
+    ),
+
+    array(
+        'db' => 'product_stocks',
+        'dt' => 4,
+        'field' => 'product_stocks',
+        'formatter' => function ($lab2, $row) {
+            return $row['product_stocks'];
         }
     ),
 
     array(
         'db' => 'product_id',
-        'dt' => 3,
+        'dt' => 5,
         'field' => 'product_id',
         'formatter' => function ($lab4, $row) {
             return $row['product_id'];
@@ -46,7 +66,7 @@ $columns = array(
 
     array(
         'db' => 'product_id',
-        'dt' => 4,
+        'dt' => 6,
         'field' => 'product_id',
         'formatter' => function ($lab5, $row) {
             return '

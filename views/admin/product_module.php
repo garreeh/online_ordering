@@ -78,14 +78,16 @@ if (!isset($_SESSION['user_id'])) {
               <div class="tab-pane fade show active" id="aa" role="tabpanel" aria-labelledby="aa-tab">
                 
                 <div class="table-responsive">
-                  <div id="modalContainerCategory"></div>
+                  <div id="modalContainerProduct"></div>
 
                   <table class="table custom-table table-hover" name="product_table" id="product_table">
                     <thead>
                       <tr>
+                        <th>ID</th>
                         <th>SKU</th>
                         <th>Name</th>
                         <th>Image</th>
+                        <th>Stocks</th>
                         <th>Details</th>
                         <th>Manage</th>
                       </tr>
@@ -143,27 +145,47 @@ if (!isset($_SESSION['user_id'])) {
     });
 
     window.reloadDataTable = function() {
-      console.log('reaload') //This is for testing only
-
       product_table.ajax.reload();
     };
 
   });
 
-  //Column 5
+  //Column 3
   $(document).ready(function() {
     // Function to handle click event on datatable rows
-    $('#product_table').on('click', 'tr td:nth-child(5) .fetchDataCategory', function() {
-        var product_id = $(this).closest('tr').find('td').first().text(); // Get the user_id from the clicked row
+    $('#product_table').on('click', 'tr td:nth-child(4) .fetchDataProductImage', function() {
+        var product_id = $(this).closest('tr').find('td').first().text(); // Get the product_id from the clicked row
 
         $.ajax({
-            url: './../../modals/category/modal_edit_category.php', // Path to PHP script to fetch modal content
+            url: './../../modals/product/modal_view_image_product.php', // Path to PHP script to fetch modal content
             method: 'POST',
             data: { product_id: product_id },
             success: function(response) {
-                $('#modalContainerCategory').html(response);
-                $('#editCategoryModal').modal('show');
-                console.log("#editCategoryModal" + product_id);
+                $('#modalContainerProduct').html(response);
+                $('#editProductModal').modal('show');
+                console.log("#editProductModal" + product_id);
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+  });
+
+  //Column 5
+  $(document).ready(function() {
+    // Function to handle click event on datatable rows
+    $('#product_table').on('click', 'tr td:nth-child(7) .fetchDataProduct', function() {
+        var product_id = $(this).closest('tr').find('td').first().text(); // Get the product_id from the clicked row
+
+        $.ajax({
+            url: './../../modals/product/modal_edit_product.php', // Path to PHP script to fetch modal content
+            method: 'POST',
+            data: { product_id: product_id },
+            success: function(response) {
+                $('#modalContainerProduct').html(response);
+                $('#editProductModal').modal('show');
+                console.log("#editProductModal" + product_id);
             },
             error: function(xhr, status, error) {
                 console.error(xhr.responseText);
