@@ -5,16 +5,6 @@ if (session_status() == PHP_SESSION_NONE) {
   session_start();
 }
 
-if (!isset($_SESSION['user_id'])) {
-  if (!isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == "1") {
-      // If the user is an admin, redirect to the admin dashboard
-      header("Location: /online_ordering/index.php");
-  } else {
-      // If the user is not an admin, redirect to the user dashboard
-      header("Location: /online_ordering/index.php");
-  }
-  exit();
-}
 ?>
 
 <!DOCTYPE html>
@@ -123,6 +113,20 @@ if (!isset($_SESSION['user_id'])) {
   <!-- Data tables -->
   <link rel="stylesheet" type="text/css" href="./../../assets/datatables/datatables.min.css" />
   <script type="text/javascript" src="./../../assets/datatables/datatables.min.js"></script>
+
+  <!-- COPY THESE WHOLE CODE WHEN IMPORT SELECT -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+
+  <script>
+    $(document).ready(function() {
+      $('select').selectize({
+        sortField: 'text'
+      });
+    });
+  </script>
+  <!-- END OF SELECT -->
+
 
 
 </body>

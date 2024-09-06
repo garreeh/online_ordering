@@ -5,7 +5,15 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 if (!isset($_SESSION['user_id'])) {
-  header("Location: /inventory_system/index.php");
+  // Redirect to the login page if the user is not logged in
+  header("Location: /online_ordering/views/login.php");
+  exit();
+}
+
+// Check if the user is an admin
+if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== "1") {
+  // If the user is not an admin (is_admin is not set or not "1"), redirect to the user dashboard
+  header("Location: /online_ordering/index.php"); // Adjust the redirect location as needed
   exit();
 }
 ?>

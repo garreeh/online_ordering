@@ -51,7 +51,7 @@ if (isset($_POST['product_id'])) {
       $image_url = '../../uploads/' . $product_image; // Construct the image URL
     ?>
   <div class="modal fade" id="editProductModal" tabindex="-1" role="dialog" aria-labelledby="requestModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-l" role="document">
+    <div class="modal-dialog modal-xl" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Update Product ID: <?php echo $row['product_id']; ?></h5>
@@ -141,6 +141,19 @@ if (isset($_POST['product_id'])) {
       </div>
     </div>
   </div>
+
+  <!-- COPY THESE WHOLE CODE WHEN IMPORT SELECT -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+
+  <script>
+    $(document).ready(function() {
+      $('select').selectize({
+        sortField: 'text'
+      });
+    });
+  </script>
+  <!-- END OF SELECT -->
 
 <?php 
     }

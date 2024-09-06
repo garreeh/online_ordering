@@ -5,16 +5,6 @@ if (session_status() == PHP_SESSION_NONE) {
   session_start();
 }
 
-if (!isset($_SESSION['user_id'])) {
-  if (!isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == "1") {
-      // If the user is an admin, redirect to the admin dashboard
-      header("Location: /online_ordering/index.php");
-  } else {
-      // If the user is not an admin, redirect to the user dashboard
-      header("Location: /online_ordering/index.php");
-  }
-  exit();
-}
 ?>
 
 <!DOCTYPE html>
@@ -50,9 +40,6 @@ if (!isset($_SESSION['user_id'])) {
     <?php include './../../includes/admin/admin_nav.php'; ?>
     <!-- End of Sidebar -->
 
-    <!-- Modal for Adding and Editing Supplier -->
-    <?php include './../../modals/users/modal_add_user.php'; ?>
-
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
       <!-- Main Content -->
@@ -67,10 +54,9 @@ if (!isset($_SESSION['user_id'])) {
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Customer Module</h1>
+            <h1 class="h3 mb-0 text-gray-800">Customer Accounts</h1>
           </div>
 
-          <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm mb-4" data-toggle="modal" data-target="#addUserModal"> <i class="fas fa-plus"></i> Add User</a>
           <a href="./../../excels/supplier_export.php" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm mb-4"><i class="fas fa-file-excel"></i> Export Excel</a>
 
           <div class="row">
@@ -90,7 +76,6 @@ if (!isset($_SESSION['user_id'])) {
                         <th>Account Status</th>
                         <th>Date Created</th>
                         <th>Date Updated</th>
-                        <th>Manage</th>
                       </tr>
                     </thead>
                   </table>

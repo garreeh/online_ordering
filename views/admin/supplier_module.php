@@ -5,16 +5,6 @@ if (session_status() == PHP_SESSION_NONE) {
   session_start();
 }
 
-if (!isset($_SESSION['user_id'])) {
-  if (!isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == "1") {
-      // If the user is an admin, redirect to the admin dashboard
-      header("Location: /online_ordering/index.php");
-  } else {
-      // If the user is not an admin, redirect to the user dashboard
-      header("Location: /online_ordering/index.php");
-  }
-  exit();
-}
 ?>
 
 <!DOCTYPE html>

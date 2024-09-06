@@ -12,7 +12,7 @@ if (isset($_SESSION['user_id'])) {
       header("Location: /online_ordering/views/admin/dashboard.php");
   } else {
       // If the user is not an admin, redirect to the user dashboard
-      header("Location: /online_ordering/views/user/product_showcase.php");
+      header("Location: /online_ordering/index.php");
   }
   exit();
 }

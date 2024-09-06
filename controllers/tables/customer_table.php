@@ -74,24 +74,6 @@ $columns = array(
             return date('Y-m-d', strtotime($row['updated_at']));
         }
     ),
-
-    array(
-        'db' => 'user_id',
-        'dt' => 7,
-        'field' => 'user_id',
-        'formatter' => function ($lab6, $row) {
-            return '
-                <div class="dropdown">
-                    <button class="btn btn-info" type="button" id="dropdownMenuButton' . $row['user_id'] . '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        &#x22EE;
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton' . $row['user_id'] . '">
-                        <a class="dropdown-item fetchDataUser" href="#">Edit</a>
-                        <a class="dropdown-item delete-user" href="#" data-user-id="' . $row['user_id'] . '">Delete</a>
-                    </div>
-                </div>';
-        }
-    ),
     
 );
 

@@ -11,7 +11,7 @@
  Target Server Version : 100432
  File Encoding         : 65001
 
- Date: 04/09/2024 18:21:42
+ Date: 06/09/2024 18:03:45
 */
 
 SET NAMES utf8mb4;
@@ -23,13 +23,12 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `billing`;
 CREATE TABLE `billing`  (
   `billing_id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NULL DEFAULT NULL,
   `sub_total` int(11) NOT NULL DEFAULT 0,
   `discount` int(11) NOT NULL,
   `total_less_discount` int(11) NOT NULL,
   `payment_status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'Unpaid',
   `remarks` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `bill_status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `bill_balance` decimal(10, 2) NULL DEFAULT NULL,
   `user_id` int(11) NOT NULL,
   `created_at` timestamp(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_at` timestamp(0) NOT NULL DEFAULT current_timestamp(0) ON UPDATE CURRENT_TIMESTAMP(0),
@@ -39,9 +38,26 @@ CREATE TABLE `billing`  (
 -- ----------------------------
 -- Records of billing
 -- ----------------------------
-INSERT INTO `billing` VALUES (20, 0, 0, 0, 'Unpaid', '', '', 0.00, 1, '2024-05-13 18:15:13', '2024-05-13 18:15:13');
-INSERT INTO `billing` VALUES (21, 0, 0, 0, 'Unpaid', '', '', 0.00, 2, '2024-05-13 18:18:35', '2024-05-13 18:18:35');
-INSERT INTO `billing` VALUES (22, 0, 0, 0, 'Unpaid', '', '', 0.00, 1, '2024-05-14 10:28:00', '2024-05-14 10:28:00');
+INSERT INTO `billing` VALUES (20, NULL, 0, 0, 0, 'Unpaid', '', 1, '2024-05-13 18:15:13', '2024-05-13 18:15:13');
+INSERT INTO `billing` VALUES (21, NULL, 0, 0, 0, 'Unpaid', '', 2, '2024-05-13 18:18:35', '2024-05-13 18:18:35');
+INSERT INTO `billing` VALUES (22, NULL, 0, 0, 0, 'Unpaid', '', 1, '2024-05-14 10:28:00', '2024-05-14 10:28:00');
+
+-- ----------------------------
+-- Table structure for cart
+-- ----------------------------
+DROP TABLE IF EXISTS `cart`;
+CREATE TABLE `cart`  (
+  `cart_id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NULL DEFAULT NULL,
+  `cart_status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `created_at` timestamp(0) NULL DEFAULT current_timestamp(0),
+  `updated_at` timestamp(0) NULL DEFAULT current_timestamp(0) ON UPDATE CURRENT_TIMESTAMP(0),
+  PRIMARY KEY (`cart_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of cart
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for category
@@ -61,6 +77,21 @@ CREATE TABLE `category`  (
 INSERT INTO `category` VALUES (1, 'Dog Food Ni Bert', '2024-05-14 17:48:46', '2024-09-04 17:25:31');
 INSERT INTO `category` VALUES (2, 'Dog Food Ni Patrick', '2024-05-14 17:48:30', '2024-09-04 17:25:39');
 INSERT INTO `category` VALUES (5, 'Test lang', '2024-09-04 17:23:29', '2024-09-04 17:25:44');
+
+-- ----------------------------
+-- Table structure for order
+-- ----------------------------
+DROP TABLE IF EXISTS `order`;
+CREATE TABLE `order`  (
+  `order_id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) NOT NULL,
+  `delivery_status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`order_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of order
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for payment
@@ -109,42 +140,44 @@ CREATE TABLE `product`  (
   `product_description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `product_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `product_sku` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `product_stocks` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `product_stocks` int(11) NULL DEFAULT NULL,
   `product_unitprice` decimal(10, 2) NULL DEFAULT NULL,
   `product_sellingprice` decimal(10, 2) NULL DEFAULT NULL,
   `created_at` timestamp(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_at` timestamp(0) NOT NULL DEFAULT current_timestamp(0) ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`product_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of product
 -- ----------------------------
-INSERT INTO `product` VALUES (11, NULL, NULL, 'first data', 'first data', '../../uploads/4.png', 'first data', NULL, 0.00, 0.00, '2024-09-04 18:14:57', '2024-09-04 18:14:57');
+INSERT INTO `product` VALUES (17, 26, 1, '11', '11', '../../uploads/1.png', '11', 5, 11.00, 11.00, '2024-09-05 14:39:33', '2024-09-06 11:51:27');
+INSERT INTO `product` VALUES (18, 27, 2, '22', '22', '../../uploads/2.png', '22', 3, 22.00, 22.00, '2024-09-05 14:40:14', '2024-09-06 11:49:17');
+INSERT INTO `product` VALUES (19, 26, 1, 'dogfood ni bert', 'dogfood ni bert', '../../uploads/3.png', 'dogfood ni bert', 15, 1.00, 1.00, '2024-09-05 14:40:51', '2024-09-05 16:55:57');
 
 -- ----------------------------
 -- Table structure for purchase_order
 -- ----------------------------
 DROP TABLE IF EXISTS `purchase_order`;
 CREATE TABLE `purchase_order`  (
-  `purchse_order_id` int(11) NOT NULL AUTO_INCREMENT,
+  `purchase_order_id` int(11) NOT NULL AUTO_INCREMENT,
   `purchase_number` int(11) NULL DEFAULT NULL,
   `supplier_id` int(11) NULL DEFAULT NULL,
   `product_id` int(11) NULL DEFAULT NULL,
-  `voucher_id` int(11) NULL DEFAULT NULL,
-  `product_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `unit_price` decimal(10, 2) NULL DEFAULT NULL,
   `quantity` int(11) NULL DEFAULT NULL,
-  `discount` int(11) NULL DEFAULT NULL,
-  `total_amount` int(11) NULL DEFAULT NULL,
   `created_at` timestamp(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_at` timestamp(0) NOT NULL DEFAULT current_timestamp(0) ON UPDATE CURRENT_TIMESTAMP(0),
-  PRIMARY KEY (`purchse_order_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+  PRIMARY KEY (`purchase_order_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of purchase_order
 -- ----------------------------
+INSERT INTO `purchase_order` VALUES (8, 4, 27, 18, 6, '2024-09-05 16:05:41', '2024-09-06 11:45:40');
+INSERT INTO `purchase_order` VALUES (9, 2, 26, 17, 10, '2024-09-05 16:38:36', '2024-09-06 11:50:15');
+INSERT INTO `purchase_order` VALUES (10, 1, 26, 19, 10, '2024-09-05 16:55:57', '2024-09-05 16:55:57');
+INSERT INTO `purchase_order` VALUES (11, 1, 27, 18, 1, '2024-09-06 11:45:19', '2024-09-06 11:45:19');
+INSERT INTO `purchase_order` VALUES (12, 123, 26, 17, 10, '2024-09-06 11:51:02', '2024-09-06 11:51:02');
 
 -- ----------------------------
 -- Table structure for supplier

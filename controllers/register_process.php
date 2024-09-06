@@ -125,7 +125,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <div class='email-body'>
                                             <p>Dear $user_fullname,</p>
                                             <p>Thank you for registering with us. To complete your registration, please verify your email address by clicking the button below:</p>
-                                            <a href='http://localhost/controllers/verification_process.php?email=$user_email' class='verify-button'>Verify Email</a>
+                                            <a href='http://localhost/online_ordering/controllers/verification_process.php?email=$user_email' class='verify-button'>Verify Email</a>
                                             <p>If you did not sign up for this account, please disregard this email.</p>
                                             <p>Best Regards,<br>Sterling</p>
                                         </div>
