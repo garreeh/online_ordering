@@ -6,7 +6,7 @@
 // if (isset($_SESSION['user_id'])) {
 //   if (!isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == "1") {
 //       // If the user is an admin, redirect to the admin dashboard
-//       header("Location: /online_ordering/index.php");
+//       header("Location: /online_ordering/views/admin/dashboard.php.php");
 //   } else {
 //       // If the user is not an admin, redirect to the user dashboard
 //       header("Location: /online_ordering/index.php");
@@ -55,8 +55,6 @@
 <div class="header">
   <div class="container">
     <a class="site-logo" href="shop-index.html"><img src="assets/user/corporate/img/logos/logo-shop-red.png" alt="Metronic Shop UI"></a>
-
-    <a href="javascript:void(0);" class="mobi-toggler"><i class="fa fa-bars"></i></a>
 
     <!-- BEGIN CART -->
     <div class="top-cart-block">
