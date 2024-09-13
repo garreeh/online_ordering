@@ -54,6 +54,7 @@
     <!-- This is the Header and navigation -->
     <?php include './includes/navigation.php'?>
 
+
     <div class="main">
       <div class="container">
         <!-- BEGIN SALE PRODUCT & NEW ARRIVALS -->
@@ -103,7 +104,7 @@
 
       </div>
     </div>
-
+    <?php include './modals/not_logged_in.php'?>
     <?php include './includes/footer.php'?>
     <?php include './modals/modal_fast_view.php'?>
 
@@ -143,67 +144,73 @@
 </html>
 
 <script type="text/javascript">
-    $(document).ready(function() {
-        $('.add-to-cart').click(function() {
-            var productId = $(this).data('product-id');
-            
-            // Make AJAX call to add_cart_process.php
-            $.ajax({
-                url: '/online_ordering/controllers/users/add_cart_process.php',
-                method: 'POST',
-                data: {
-                    product_id: productId
-                },
-                success: function(response) {
-                    try {
-                        var res = JSON.parse(response);
-                        if (res.success) {
-                            // Show success message using Toastify
-                            Toastify({
-                                text: res.message,
-                                duration: 3000,
-                                close: true,
-                                gravity: "top", // `top` or `bottom`
-                                position: "right", // `left`, `center` or `right`
-                                backgroundColor: "#4CAF50", // Green background for success
-                            }).showToast();
+$(document).ready(function() {
+    $('.add-to-cart').click(function() {
+        var productId = $(this).data('product-id');
+        
+        // Make AJAX call to add_cart_process.php
+        $.ajax({
+            url: '/online_ordering/controllers/users/add_cart_process.php',
+            method: 'POST',
+            data: {
+                product_id: productId
+            },
+            success: function(response) {
+                try {
+                    var res = JSON.parse(response);
+                    if (res.success) {
+                        // Show success message using Toastify
+                        Toastify({
+                            text: res.message,
+                            duration: 3000,
+                            close: true,
+                            gravity: "top",
+                            position: "right",
+                            backgroundColor: "#4CAF50", // Green background for success
+                        }).showToast();
+                    } else {
+                        if (res.message === 'You are not logged in.') {
+                            // Show the modal instead of Toast
+                            $('#loginModal').modal('show');
                         } else {
                             // Show error message using Toastify
                             Toastify({
                                 text: res.message,
                                 duration: 3000,
                                 close: true,
-                                gravity: "top", 
-                                position: "right", 
+                                gravity: "top",
+                                position: "right",
                                 backgroundColor: "#FF0000", // Red background for error
                             }).showToast();
                         }
-                    } catch (e) {
-                        console.error("Invalid JSON response:", response);
-                        Toastify({
-                            text: "An unexpected error occurred.",
-                            duration: 3000,
-                            close: true,
-                            gravity: "top", 
-                            position: "right", 
-                            backgroundColor: "#FF0000", // Red background for error
-                        }).showToast();
                     }
-                },
-                error: function(xhr, status, error) {
-                    console.log('Error: ' + error);
+                } catch (e) {
+                    console.error("Invalid JSON response:", response);
                     Toastify({
-                        text: "An error occurred. Please try again.",
+                        text: "An unexpected error occurred.",
                         duration: 3000,
                         close: true,
-                        gravity: "top", 
-                        position: "right", 
+                        gravity: "top",
+                        position: "right",
                         backgroundColor: "#FF0000", // Red background for error
                     }).showToast();
                 }
-            });
+            },
+            error: function(xhr, status, error) {
+                console.log('Error: ' + error);
+                Toastify({
+                    text: "An error occurred. Please try again.",
+                    duration: 3000,
+                    close: true,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "#FF0000", // Red background for error
+                }).showToast();
+            }
         });
     });
+});
+
 </script>
 
 

@@ -73,6 +73,9 @@ if (isset($_SESSION['user_id'])) {
 											<input type="email" class="form-control form-control-user" placeholder="Email" name="user_email" id="user_email" required>
 										</div>
 										<div class="form-group">
+											<input type="text" class="form-control form-control-user" placeholder="Contact" name="user_address" id="user_address" required>
+										</div>
+										<div class="form-group">
 											<input type="text" class="form-control form-control-user" placeholder="Contact" name="user_contact" id="user_contact" required>
 										</div>
 										<div class="form-group">
@@ -163,8 +166,10 @@ document.addEventListener('DOMContentLoaded', function () {
     var username = document.getElementById('username').value;
     var email = document.getElementById('user_email').value;
     var contact = document.getElementById('user_contact').value;
+    var user_address = document.getElementById('user_address').value;
     var password = document.getElementById('user_password').value;
     var confirm_password = document.getElementById('user_confirm_password').value;
+
 
     // Check if passwords match
     if (password !== confirm_password) {
@@ -179,8 +184,10 @@ document.addEventListener('DOMContentLoaded', function () {
         username: username,
         user_email: email,
         user_contact: contact,
+        user_address: user_address,
         user_password: password,
         user_confirm_password: confirm_password
+
     };
 
     $.ajax({

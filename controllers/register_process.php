@@ -14,11 +14,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = isset($_POST['username']) ? $conn->real_escape_string($_POST['username']) : '';
     $user_email = isset($_POST['user_email']) ? $conn->real_escape_string($_POST['user_email']) : '';
     $user_contact = isset($_POST['user_contact']) ? $conn->real_escape_string($_POST['user_contact']) : '';
+    $user_address = isset($_POST['user_address']) ? $conn->real_escape_string($_POST['user_address']) : '';
     $user_password = isset($_POST['user_password']) ? $conn->real_escape_string($_POST['user_password']) : '';
     $user_confirm_password = isset($_POST['user_confirm_password']) ? $conn->real_escape_string($_POST['user_confirm_password']) : '';
 
     // Check if any field is empty
-    if (empty($user_fullname) || empty($username) || empty($user_email) || empty($user_contact) || empty($user_password) || empty($user_confirm_password)) {
+    if (empty($user_fullname) || empty($username) || empty($user_email) || empty($user_contact) || empty($user_address) || empty($user_password) || empty($user_confirm_password)) {
         $response = array('success' => false, 'message' => 'All fields are required.');
         echo json_encode($response);
         exit();
@@ -52,8 +53,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $hashed_password = password_hash($user_password, PASSWORD_DEFAULT);
 
     // Insert user into the database
-    $sql = "INSERT INTO users (user_fullname, username, user_email, user_contact, user_password, user_confirm_password, is_admin, account_status) 
-            VALUES ('$user_fullname', '$username', '$user_email', '$user_contact', '$hashed_password', '$user_confirm_password', '0', 'Inactive')";
+    $sql = "INSERT INTO users (user_fullname, username, user_email, user_contact, user_address, user_password, user_confirm_password, is_admin, account_status) 
+            VALUES ('$user_fullname', '$username', '$user_email', '$user_contact', '$user_address', '$hashed_password', '$user_confirm_password', '0', 'Inactive')";
 
     if (mysqli_query($conn, $sql)) {
         // Send verification email
