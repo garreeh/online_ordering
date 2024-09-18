@@ -11,7 +11,7 @@
  Target Server Version : 100432 (10.4.32-MariaDB)
  File Encoding         : 65001
 
- Date: 09/09/2024 08:07:20
+ Date: 18/09/2024 08:03:46
 */
 
 SET NAMES utf8mb4;
@@ -50,17 +50,19 @@ CREATE TABLE `cart`  (
   `cart_id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NULL DEFAULT NULL,
   `product_id` int NULL DEFAULT NULL,
-  `cart_status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `cart_quantity` int NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp,
   `updated_at` timestamp NULL DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`cart_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 39 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of cart
 -- ----------------------------
-INSERT INTO `cart` VALUES (4, 38, 17, NULL, '2024-09-07 17:23:18', '2024-09-07 17:23:18');
-INSERT INTO `cart` VALUES (5, 38, 17, NULL, '2024-09-07 17:23:28', '2024-09-07 17:23:28');
+INSERT INTO `cart` VALUES (34, 2, 18, 3, '2024-09-14 02:07:25', '2024-09-14 02:07:26');
+INSERT INTO `cart` VALUES (36, 2, 19, 5, '2024-09-14 02:07:31', '2024-09-14 02:07:32');
+INSERT INTO `cart` VALUES (37, 2, 17, 4, '2024-09-14 02:26:36', '2024-09-14 02:27:01');
+INSERT INTO `cart` VALUES (38, 2, 20, 3, '2024-09-14 02:30:48', '2024-09-14 02:30:52');
 
 -- ----------------------------
 -- Table structure for category
@@ -89,8 +91,12 @@ INSERT INTO `category` VALUES (7, 'Spaghetti', '2024-09-06 22:20:07', '2024-09-0
 DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order`  (
   `order_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NULL DEFAULT NULL,
   `product_id` int NOT NULL,
   `delivery_status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `proof_of_payment` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp,
+  `updated_at` timestamp NULL DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`order_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
@@ -156,10 +162,10 @@ CREATE TABLE `product`  (
 -- ----------------------------
 -- Records of product
 -- ----------------------------
-INSERT INTO `product` VALUES (17, 26, 1, '11', '11', '../../uploads/1.png', '11', 5, 11.00, 11.00, '2024-09-05 14:39:33', '2024-09-06 11:51:27');
-INSERT INTO `product` VALUES (18, 27, 2, '22', '22', '../../uploads/2.png', '22', 3, 22.00, 22.00, '2024-09-05 14:40:14', '2024-09-06 11:49:17');
-INSERT INTO `product` VALUES (19, 26, 1, 'dogfood ni bert', 'dogfood ni bert', '../../uploads/3.png', 'dogfood ni bert', 25, 1.00, 1.00, '2024-09-05 14:40:51', '2024-09-06 21:21:51');
-INSERT INTO `product` VALUES (20, 26, 7, 'Test', 'Test', '../../uploads/test.jpg', '123', 100, 200.00, 300.00, '2024-09-06 22:20:40', '2024-09-06 22:21:19');
+INSERT INTO `product` VALUES (17, 26, 1, '11', 'DESCRIPTION PRODUCT 1', '../../uploads/1.png', '11', 5, 11.00, 11.00, '2024-09-05 14:39:33', '2024-09-14 02:30:21');
+INSERT INTO `product` VALUES (18, 27, 2, '22', 'DESCRIPTION PRODUCT 2', '../../uploads/2.png', '22', 3, 22.00, 22.00, '2024-09-05 14:40:14', '2024-09-14 02:30:24');
+INSERT INTO `product` VALUES (19, 26, 1, 'dogfood ni bert', 'DESCRIPTION PRODUCT 3', '../../uploads/3.png', 'dogfood ni bert', 25, 1.00, 1.00, '2024-09-05 14:40:51', '2024-09-14 02:30:27');
+INSERT INTO `product` VALUES (20, 26, 7, 'Test', 'DESCRIPTION PRODUCT 4', '../../uploads/test.jpg', '123', 100, 200.00, 300.00, '2024-09-06 22:20:40', '2024-09-14 02:30:29');
 
 -- ----------------------------
 -- Table structure for purchase_order
@@ -232,15 +238,14 @@ CREATE TABLE `users`  (
   `account_status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `user_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 39 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 40 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
 INSERT INTO `users` VALUES (1, 'Garry Gajultos', 'garry', '123123@gmail.com', 123123123, '$2y$10$vtj3lvgROA.ecVm2oI2YnOrlhFzn1jNE/sMk72HTTH.ymfaBol9jW', '123123', '', '2024-04-07 16:08:00', '2024-09-04 15:57:51', NULL, '1', 'Active', '1');
 INSERT INTO `users` VALUES (2, 'Test Account', 'Ron', '123123@gmail.comm', NULL, '$2y$10$Wtj4pYEWKXHYe4DUwLPTveZdPJUNrXwfkfeZRWXO4bnmbNd9NOA9y', 'test1005', NULL, '2024-05-13 18:18:17', '2024-09-04 15:58:23', NULL, '0', 'Active', NULL);
-INSERT INTO `users` VALUES (32, '123', '123', 'pendragondeveloper@gmail.com', 1, '$2y$10$lCWQG/EL9ErCmkNN12/2HulQ3x.XDscSUhdfNN6xWGGOkTd.6FKLa', '1', NULL, '2024-09-04 16:32:35', '2024-09-04 16:51:53', NULL, '0', 'Inactive', NULL);
-INSERT INTO `users` VALUES (38, 'Albert Dela Cruz', 'garreeh', 'gajultos.garrydev@gmail.com', 2147483647, '$2y$10$.wKjRZONMr8CILxSHUzmzepql0Lr7588RhHYfQRkReNciHTq1Bpnq', '123', NULL, '2024-09-06 22:21:59', '2024-09-06 22:22:28', NULL, '0', 'Active', NULL);
+INSERT INTO `users` VALUES (39, '1', 'test', 'gajultos.garrydev@gmail.com', 1, '$2y$10$XX19Ar6P.ig1stK9lZ0N2eP89FY5FughUlK0xhgDfLj1P60tMMPva', '1', NULL, '2024-09-13 23:58:14', '2024-09-13 23:58:14', NULL, '0', 'Inactive', '1');
 
 -- ----------------------------
 -- Table structure for usertype
