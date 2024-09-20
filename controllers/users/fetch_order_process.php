@@ -13,7 +13,7 @@ $user_id = $_SESSION['user_id'];
 $query = "SELECT *
           FROM cart c
           LEFT JOIN product p ON c.product_id = p.product_id
-          WHERE c.user_id = '$user_id' AND c.cart_status = 'Cart'";
+          WHERE c.user_id = '$user_id' AND c.cart_status = 'Processing'";
 
 $result = $conn->query($query);
 $cart_items = array();

@@ -15,13 +15,14 @@ if (isset($_POST['product_id'])) {
     $product_id = $conn->real_escape_string($_POST['product_id']);
     $user_id = $_SESSION['user_id'];
 
-    // Get the current stock of the product
-    $stock_query = "SELECT product_stocks FROM product WHERE product_id = '$product_id'";
-    $stock_result = $conn->query($stock_query);
+    // Get the current stock and selling price of the product
+    $product_query = "SELECT product_stocks, product_sellingprice FROM product WHERE product_id = '$product_id'";
+    $product_result = $conn->query($product_query);
     
-    if ($stock_result->num_rows > 0) {
-        $stock_row = $stock_result->fetch_assoc();
-        $product_stock = $stock_row['product_stocks'];
+    if ($product_result->num_rows > 0) {
+        $product_row = $product_result->fetch_assoc();
+        $product_stock = $product_row['product_stocks'];
+        $product_price = $product_row['product_sellingprice'];
     } else {
         $response = array('success' => false, 'message' => 'Product not found.');
         echo json_encode($response);
@@ -44,8 +45,11 @@ if (isset($_POST['product_id'])) {
             exit();
         }
 
-        // Update the quantity in the cart
-        $update_query = "UPDATE cart SET cart_quantity = '$new_quantity' WHERE user_id = '$user_id' AND product_id = '$product_id'";
+        // Compute the new total price
+        $total_price = $new_quantity * $product_price;
+
+        // Update the quantity, total price, and cart status in the cart
+        $update_query = "UPDATE cart SET cart_quantity = '$new_quantity', total_price = '$total_price', cart_status = 'Cart' WHERE user_id = '$user_id' AND product_id = '$product_id'";
         if ($conn->query($update_query)) {
             $response = array('success' => true, 'message' => 'Cart updated successfully!');
         } else {
@@ -59,7 +63,11 @@ if (isset($_POST['product_id'])) {
             exit();
         }
 
-        $insert_query = "INSERT INTO cart (user_id, product_id, cart_quantity) VALUES ('$user_id', '$product_id', 1)";
+        // Compute the total price
+        $total_price = $product_price;
+
+        // Insert the new product into the cart with cart_status set to 'Cart'
+        $insert_query = "INSERT INTO cart (user_id, product_id, cart_quantity, total_price, cart_status) VALUES ('$user_id', '$product_id', 1, '$total_price', 'Cart')";
         if ($conn->query($insert_query)) {
             $response = array('success' => true, 'message' => 'Product added to cart successfully!');
         } else {

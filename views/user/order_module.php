@@ -65,7 +65,7 @@
         <div class="row margin-bottom-40">
           <!-- BEGIN CONTENT -->
           <div class="col-md-12 col-sm-12">
-            <h1>Shopping cart</h1>
+            <h1>ORDERS</h1>
             <div class="goods-page">
               <div class="goods-data clearfix">
                 <div class="table-wrapper-responsive">
@@ -86,28 +86,7 @@
                   </table>
                 </div>
 
-                <div class="shopping-total">
-                  <ul>
-                    <li>
-                      <em>Sub total</em>
-                      <strong class="price" id="cart-subtotal"><span>₱ </span>0.00</strong>
-                    </li>
-                    <li>
-                      <em>Delivery cost</em>
-                      <strong class="price" id="cart-shipping"><span>₱ </span>35.00</strong>
-                    </li>
-                    <li class="shopping-total-price">
-                      <em>Total</em>
-                      <strong class="price" id="cart-total"><span>₱ </span>0.00</strong>
-                    </li>
-                  </ul>
-                </div>
               </div>
-              <a href="/online_ordering/index.php" class="btn btn-default" type="submit">Continue shopping <i class="fa fa-shopping-cart"></i></a>
-              <?php include './../../modals/checkout_modal.php' ?>
-              <!-- Update this button to trigger the modal -->
-              <button class="btn btn-primary" type="submit" data-toggle="modal" data-target="#checkoutModal" id="checkout-button">Checkout <i class="fa fa-check"></i></button>
-
 
             </div>
           </div>
@@ -163,7 +142,7 @@
   $(document).ready(function() {
       function updateCart() {
         $.ajax({
-            url: '/online_ordering/controllers/users/fetch_cart_process.php',
+            url: '/online_ordering/controllers/users/fetch_order_process.php',
             method: 'GET',
             dataType: 'json',
             success: function(response) {
@@ -186,7 +165,7 @@
                         cartContent += '<td class="goods-page-quantity"><div class="product-quantity"><input type="text" value="' + cartQuantity + '" readonly class="form-control input-sm"></div></td>';
                         cartContent += '<td class="goods-page-price"><strong><span>₱ </span>' + productPrice.toFixed(2) + '</strong></td>';
                         cartContent += '<td class="goods-page-total"><strong><span>₱ </span>' + (productPrice * cartQuantity).toFixed(2) + '</strong></td>';
-                        cartContent += '<td class="del-goods-col"><a class="del-goods" href="javascript:;" data-product-id="' + item.product_id + '">&nbsp;</a></td>';
+                        cartContent += '<td class="del-goods-col"><button class="btn btn-primary" href="javascript:;" data-product-id="' + item.product_id + '">Cancel</button></td>';
                         cartContent += '</tr>';
                     });
 
