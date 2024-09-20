@@ -5,7 +5,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 if (!isset($_SESSION['user_id'])) {
-  header("Location: /inventory_system/index.php");
+  header("Location: /online_ordering/index.php");
   exit();
 }
 ?>
