@@ -172,13 +172,6 @@
                     $('#cart-items').html(cartContent);
                     $('#cart-subtotal').text('₱ ' + response.total_price.toFixed(2));
                     $('#cart-total').text('₱ ' + (response.total_price + 35).toFixed(2));
-                    
-                    // Show or hide the checkout button based on whether there are items in the cart
-                    if (response.items.length > 0) {
-                        $('#checkout-button').show();
-                    } else {
-                        $('#checkout-button').hide();
-                    }
 
                 } else {
                     console.error('Failed to fetch cart data:', response.message);
@@ -189,108 +182,6 @@
             }
         });
       }
-
-    // Show/Hide proof of payment based on selected payment method
-    $('input[name="paymentCategory"]').change(function() {
-      var selectedPayment = $('input[name="paymentCategory"]:checked').val();
-      if (selectedPayment === 'GCash') {
-        $('#proof-of-payment-field').show();
-        $('#proofOfPayment').prop('required', true); // Set required attribute
-      } else {
-        $('#proof-of-payment-field').hide();
-        $('#proofOfPayment').prop('required', false); // Remove required attribute
-      }
-    });
-
-    $('#submitCheckout').click(function(e) {
-      e.preventDefault(); // Prevent default form submission
-
-      var selectedPayment = $('input[name="paymentCategory"]:checked').val();
-      var proofOfPayment = $('#proofOfPayment').val();
-
-      // Validate payment method selection
-      if (!selectedPayment) {
-        Toastify({
-          text: "Please select a payment method.",
-          duration: 2000,
-          backgroundColor: "#dc3545" // Red for error
-        }).showToast();
-        return;
-      }
-
-      // If GCash is selected, validate proof of payment
-      if (selectedPayment === 'GCash' && !proofOfPayment) {
-        Toastify({
-          text: "Please upload proof of payment for GCash.",
-          duration: 2000,
-          backgroundColor: "#dc3545" // Red for error
-        }).showToast();
-        return;
-      }
-
-      // Serialize form data
-      var formData = new FormData($('#checkoutForm')[0]);
-
-      $.ajax({
-        type: 'POST',
-        url: '/online_ordering/controllers/users/checkout_process.php',
-        data: formData,
-        contentType: false,
-        processData: false,
-        success: function(response) {
-          if (typeof response === 'string') {
-            try {
-              response = JSON.parse(response);
-            } catch (e) {
-              console.error("Response is not valid JSON:", response);
-              Toastify({
-                text: "Invalid response format.",
-                duration: 3000,
-                backgroundColor: "#dc3545" // Red for error
-              }).showToast();
-              return;
-            }
-          }
-
-          if (response.success) {
-            Toastify({
-              text: response.message,
-              duration: 2000,
-              backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)" // Green for success
-            }).showToast();
-
-            // Close the modal and reset the form
-            $('#checkoutModal').modal('hide');
-
-            // Remove the backdrop
-            $('.modal-backdrop').remove();
-
-            // Reset the form and hide proof of payment field
-            $('#checkoutForm').trigger('reset');
-            $('#proof-of-payment-field').hide(); // Hide proof of payment field
-
-            // Update the cart
-            updateCart(); // Refresh cart after successful order confirmation
-
-          } else {
-            Toastify({
-              text: response.message,
-              duration: 2000,
-              backgroundColor: "linear-gradient(to right, #ff6a00, #ee0979)" // Red for error
-            }).showToast();
-          }
-        },
-        error: function(xhr, status, error) {
-          console.error('AJAX Error:', status, error);
-          Toastify({
-            text: "An error occurred while processing your request.",
-            duration: 3000,
-            backgroundColor: "#dc3545", // Red for error
-            close: true
-          }).showToast();
-        }
-      });
-    });
 
       // Initial cart update
       updateCart();

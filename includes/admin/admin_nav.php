@@ -59,6 +59,13 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== "1") {
     <div class="sidebar-heading">
       Billing & PO
     </div>
+
+    <li class="nav-item">
+      <a class="nav-link" href="/online_ordering/views/admin/orders_module.php">
+        <i class="fas fa-fw fa-money-bill"></i>
+        <span>Client Orders</span></a>
+    </li>
+
     <li class="nav-item">
       <a class="nav-link" href="/online_ordering/views/admin/transaction_module.php">
         <i class="fas fa-fw fa-money-bill"></i>
@@ -133,7 +140,7 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== "1") {
           <!-- <h6 class="collapse-header">Setup:</h6> -->
           <a class="collapse-item" href="/online_ordering/views/admin/delivery_module.php">Assign Delivery</a>
           <a class="collapse-item" href="/online_ordering/views/admin/category_module.php">Delivery Status</a>
-          <a class="collapse-item" href="/online_ordering/views/admin/product_module.php">Delivery History</a>
+          <!-- <a class="collapse-item" href="/online_ordering/views/admin/product_module.php">Delivery History</a> -->
         </div>
         
       </div>

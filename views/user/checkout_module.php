@@ -1,3 +1,17 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (!isset($_SESSION['user_id'])) {
+  // Redirect to the login page if the user is not logged in
+  header("Location: /online_ordering/views/login.php");
+  exit();
+}
+
+?>
+
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -161,55 +175,98 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-      function updateCart() {
-        $.ajax({
-            url: '/online_ordering/controllers/users/fetch_cart_process.php',
-            method: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                console.log('Cart Data:', response);
+    
+    // Function to update the cart content
+    function updateCart() {
+      $.ajax({
+        url: '/online_ordering/controllers/users/fetch_cart_process.php',
+        method: 'GET',
+        dataType: 'json',
+        success: function(response) {
+          console.log('Cart Data:', response);
 
-                if (response.success) {
-                    var cartContent = '';
-                    var totalPrice = response.total_price;
+          if (response.success) {
+            var cartContent = '';
+            var totalPrice = response.total_price;
 
-                    $('#cart-items').empty();
+            // Clear the existing cart items
+            $('#cart-items').empty();
 
-                    $.each(response.items, function(index, item) {
-                        var productPrice = parseFloat(item.product_sellingprice) || 0;
-                        var cartQuantity = parseInt(item.cart_quantity, 10) || 0;
+            // Iterate over cart items and generate HTML content
+            $.each(response.items, function(index, item) {
+              var productPrice = parseFloat(item.product_sellingprice) || 0;
+              var cartQuantity = parseInt(item.cart_quantity, 10) || 0;
 
-                        cartContent += '<tr>';
-                        cartContent += '<td class="goods-page-image"><a href="javascript:;"><img src="./../../assets/user/pages/img/products/model3.jpg" alt="' + item.product_name + '" /></a></td>';
-                        cartContent += '<td class="goods-page-description"><h3><a href="javascript:;"></a></h3><p><strong>' + item.product_name + '</strong></p><em>' + item.product_description + '</em></td>';
-                        cartContent += '<td class="goods-page-ref-no">' + item.product_sku + '</td>';
-                        cartContent += '<td class="goods-page-quantity"><div class="product-quantity"><input type="text" value="' + cartQuantity + '" readonly class="form-control input-sm"></div></td>';
-                        cartContent += '<td class="goods-page-price"><strong><span>₱ </span>' + productPrice.toFixed(2) + '</strong></td>';
-                        cartContent += '<td class="goods-page-total"><strong><span>₱ </span>' + (productPrice * cartQuantity).toFixed(2) + '</strong></td>';
-                        cartContent += '<td class="del-goods-col"><a class="del-goods" href="javascript:;" data-product-id="' + item.product_id + '">&nbsp;</a></td>';
-                        cartContent += '</tr>';
-                    });
+              cartContent += '<tr>';
+              cartContent += '<td class="goods-page-image"><a href="javascript:;"><img src="./../../assets/user/pages/img/products/model3.jpg" alt="' + item.product_name + '" /></a></td>';
+              cartContent += '<td class="goods-page-description"><h3><a href="javascript:;"></a></h3><p><strong>' + item.product_name + '</strong></p><em>' + item.product_description + '</em></td>';
+              cartContent += '<td class="goods-page-ref-no">' + item.product_sku + '</td>';
+              cartContent += '<td class="goods-page-quantity"><div class="product-quantity"><input type="text" value="' + cartQuantity + '" readonly class="form-control input-sm"></div></td>';
+              cartContent += '<td class="goods-page-price"><strong><span>₱ </span>' + productPrice.toFixed(2) + '</strong></td>';
+              cartContent += '<td class="goods-page-total"><strong><span>₱ </span>' + (productPrice * cartQuantity).toFixed(2) + '</strong></td>';
+              cartContent += '<td class="del-goods-col"><a class="del-goods" href="javascript:;" data-product-id="' + item.product_id + '">&nbsp;</a></td>';
+              cartContent += '</tr>';
+            });
 
-                    $('#cart-items').html(cartContent);
-                    $('#cart-subtotal').text('₱ ' + response.total_price.toFixed(2));
-                    $('#cart-total').text('₱ ' + (response.total_price + 35).toFixed(2));
-                    
-                    // Show or hide the checkout button based on whether there are items in the cart
-                    if (response.items.length > 0) {
-                        $('#checkout-button').show();
-                    } else {
-                        $('#checkout-button').hide();
-                    }
+            // Update the DOM with the new cart content
+            $('#cart-items').html(cartContent);
 
-                } else {
-                    console.error('Failed to fetch cart data:', response.message);
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('AJAX Error:', error);
+            // Update the subtotal and total price
+            $('#cart-subtotal').text('₱ ' + response.total_price.toFixed(2));
+            $('#cart-total').text('₱ ' + (response.total_price + 35).toFixed(2));
+
+            // Toggle the checkout button visibility based on cart contents
+            if (response.items.length > 0) {
+              $('#checkout-button').show();
+            } else {
+              $('#checkout-button').hide();
             }
-        });
-      }
+          } else {
+            console.error('Failed to fetch cart data:', response.message);
+          }
+        },
+        error: function(xhr, status, error) {
+          console.error('AJAX Error:', error);
+        }
+      });
+    }
+
+    // Delete cart item function
+    function deleteCartItem(productId) {
+      $.ajax({
+        url: '/online_ordering/controllers/users/delete_cart_process.php',
+        method: 'POST',
+        data: { product_id: productId },
+        dataType: 'json',
+        success: function(response) {
+          if (response.success) {
+            Toastify({
+              text: "Item removed from cart.",
+              backgroundColor: "linear-gradient(to right, #FF5F6D, #FFC371)",
+              duration: 3000
+            }).showToast();
+
+            // Refresh the cart after successful deletion
+            updateCart();
+          } else {
+            Toastify({
+              text: response.message || "Failed to remove item.",
+              backgroundColor: "linear-gradient(to right, #FF5F6D, #FFC371)",
+              duration: 3000
+            }).showToast();
+          }
+        },
+        error: function(xhr, status, error) {
+          console.error('AJAX Error:', error);
+        }
+      });
+    }
+
+    // Bind the delete button click event
+    $(document).on('click', '.del-goods', function() {
+      var productId = $(this).data('product-id');
+      deleteCartItem(productId);
+    });
 
     // Show/Hide proof of payment based on selected payment method
     $('input[name="paymentCategory"]').change(function() {
@@ -223,6 +280,7 @@
       }
     });
 
+    // Handle checkout form submission
     $('#submitCheckout').click(function(e) {
       e.preventDefault(); // Prevent default form submission
 
@@ -252,6 +310,7 @@
       // Serialize form data
       var formData = new FormData($('#checkoutForm')[0]);
 
+      // Send the form data via AJAX
       $.ajax({
         type: 'POST',
         url: '/online_ordering/controllers/users/checkout_process.php',
@@ -280,19 +339,14 @@
               backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)" // Green for success
             }).showToast();
 
-            // Close the modal and reset the form
+            // Close modal and reset form
             $('#checkoutModal').modal('hide');
-
-            // Remove the backdrop
             $('.modal-backdrop').remove();
-
-            // Reset the form and hide proof of payment field
             $('#checkoutForm').trigger('reset');
-            $('#proof-of-payment-field').hide(); // Hide proof of payment field
+            $('#proof-of-payment-field').hide();
 
-            // Update the cart
-            updateCart(); // Refresh cart after successful order confirmation
-
+            // Refresh the cart
+            updateCart();
           } else {
             Toastify({
               text: response.message,
@@ -313,7 +367,7 @@
       });
     });
 
-      // Initial cart update
-      updateCart();
+    // Initial cart update when the page loads
+    updateCart();
   });
 </script>

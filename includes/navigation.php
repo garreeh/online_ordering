@@ -1,7 +1,7 @@
 <?php 
-// if (session_status() == PHP_SESSION_NONE) {
+if (session_status() == PHP_SESSION_NONE) {
   session_start();
-// }
+}
 
 // if (isset($_SESSION['user_id'])) {
 //   if (!isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == "1") {
@@ -117,15 +117,22 @@
 
                       $('.scroller').empty();
 
-                      $.each(response.items, function(index, item) {
-                          cartContent += '<li>';
-                          cartContent += '<a href="shop-item.html"><img src="/online_ordering/assets/user/pages/img/cart-img.jpg" alt="' + item.product_name + '" width="37" height="34"></a>';
-                          cartContent += '<span class="cart-content-count">x ' + item.cart_quantity + '</span>';
-                          cartContent += '<strong><a href="shop-item.html">' + item.product_name + '</a></strong>';
-                          cartContent += '<em>$' + (item.product_sellingprice * item.cart_quantity).toFixed(2) + '</em>';
-                          cartContent += '<a href="#" class="del-goods" data-product-id="' + item.product_id + '">&nbsp;</a>';
-                          cartContent += '</li>';
-                      });
+                      if (response.items.length === 0) {
+                        // If cart is empty, display a message
+                        cartContent = '<li style="text-align: center; padding: 20px;">Your cart is empty.</li>';
+                        
+                        } else {
+                            // Populate the cart with items
+                            $.each(response.items, function(index, item) {
+                                cartContent += '<li>';
+                                cartContent += '<a href="shop-item.html"><img src="/online_ordering/assets/user/pages/img/cart-img.jpg" alt="' + item.product_name + '" width="37" height="34"></a>';
+                                cartContent += '<span class="cart-content-count">x ' + item.cart_quantity + '</span>';
+                                cartContent += '<strong><a href="shop-item.html">' + item.product_name + '</a></strong>';
+                                cartContent += '<em>₱' + (item.product_sellingprice * item.cart_quantity).toFixed(2) + '</em>';
+                                cartContent += '<a href="#" class="del-goods" data-product-id="' + item.product_id + '">&nbsp;</a>';
+                                cartContent += '</li>';
+                            });
+                        }
 
                       $('.scroller').html(cartContent);
                   } else {
@@ -147,20 +154,20 @@
               dataType: 'json',
               success: function(response) {
                   if (response.success) {
-                      Toastify({
-                          text: "Item removed from cart.",
-                          backgroundColor: "linear-gradient(to right, #FF5F6D, #FFC371)",
-                          className: "info",
-                          duration: 3000
-                      }).showToast();
+                    //   Toastify({
+                    //       text: "Item removed from cart.",
+                    //       backgroundColor: "linear-gradient(to right, #FF5F6D, #FFC371)",
+                    //       className: "info",
+                    //       duration: 3000
+                    //   }).showToast();
                       updateCart(); // Refresh cart immediately
                   } else {
-                      Toastify({
-                          text: response.message,
-                          backgroundColor: "linear-gradient(to right, #FF5F6D, #FFC371)",
-                          className: "info",
-                          duration: 3000
-                      }).showToast();
+                    //   Toastify({
+                    //       text: response.message,
+                    //       backgroundColor: "linear-gradient(to right, #FF5F6D, #FFC371)",
+                    //       className: "info",
+                    //       duration: 3000
+                    //   }).showToast();
                   }
               },
               error: function(xhr, status, error) {

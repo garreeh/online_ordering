@@ -1,3 +1,19 @@
+
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Check if the user is logged in and an admin
+if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === "1") {
+    // If the user is an admin, redirect them to the admin dashboard
+    header("Location: /online_ordering/views/admin/dashboard.php");
+    exit();
+}
+
+
+?>
+
 <!DOCTYPE html>
 
 <html lang="en">

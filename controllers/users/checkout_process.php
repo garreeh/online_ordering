@@ -13,6 +13,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
+$cart_id = $_POST['cart_id'];
 $paymentMethod = $_POST['paymentCategory'];
 $referenceNo = strtoupper(bin2hex(random_bytes(3))); // Generate a 6-digit random reference number
 
@@ -43,7 +44,7 @@ mysqli_begin_transaction($conn);
 
 try {
     // Update cart status
-    $updateCartSql = "UPDATE cart SET cart_status = 'Processing', reference_no = '$referenceNo', payment_method = '$paymentMethod' WHERE user_id = '$user_id'";
+    $updateCartSql = "UPDATE cart SET cart_status = 'Processing', reference_no = '$referenceNo', payment_method = '$paymentMethod' WHERE user_id = '$user_id' AND cart_id = '$cart_id'";
     if (!mysqli_query($conn, $updateCartSql)) {
         throw new Exception('Failed to update cart status');
     }

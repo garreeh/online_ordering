@@ -13,6 +13,8 @@ $cartItems = ''; // Initialize cart items content
 
 if ($result && mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
+        $cart_id = htmlspecialchars($row['cart_id']);
+
         $productName = htmlspecialchars($row['product_name']);
         $quantity = intval($row['cart_quantity']);
         $price = floatval($row['product_sellingprice']);
@@ -25,6 +27,8 @@ if ($result && mysqli_num_rows($result) > 0) {
         $cartItems .= '<td>₱ ' . $price . '</td>';
         $cartItems .= '<td>₱ ' . $itemTotal . '</td>';
         $cartItems .= '</tr>';
+
+        $cartItems .= '<input type="hidden" name="cart_id[]" value="' . $cart_id . '">';
     }
 ?>
 
@@ -72,6 +76,8 @@ if ($result && mysqli_num_rows($result) > 0) {
             <label for="proofOfPayment">Upload Proof of Payment (GCash):</label>
             <input type="file" id="proofOfPayment" name="proofOfPayment" class="form-control-file" required>
           </div>
+
+          <input type="text" name="cart_id" value="<?php echo $cart_id; ?>">
         </form>
       </div>
       <div class="modal-footer">

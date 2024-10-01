@@ -11,7 +11,7 @@
  Target Server Version : 100432
  File Encoding         : 65001
 
- Date: 20/09/2024 16:22:19
+ Date: 01/10/2024 16:36:24
 */
 
 SET NAMES utf8mb4;
@@ -55,17 +55,19 @@ CREATE TABLE `cart`  (
   `proof_of_payment` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `total_price` decimal(11, 2) NULL DEFAULT NULL,
   `payment_method` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `payment_status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `reference_no` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `created_at` timestamp(0) NULL DEFAULT current_timestamp(0),
   `updated_at` timestamp(0) NULL DEFAULT current_timestamp(0) ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`cart_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 61 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 105 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of cart
 -- ----------------------------
-INSERT INTO `cart` VALUES (58, 2, 18, 3, 'Cart', '../../uploads/payments/VSS APPLICATION.png', 66.00, 'Cash On Delivery', 'ADA492', '2024-09-18 17:25:14', '2024-09-18 17:35:28');
-INSERT INTO `cart` VALUES (60, 39, 17, 4, 'Processing', NULL, 44.00, 'Cash On Delivery', '4BC8C7', '2024-09-18 18:15:01', '2024-09-18 18:15:09');
+INSERT INTO `cart` VALUES (95, 2, 18, 2, 'Processing', '../../uploads/payments/Garry.png', 44.00, 'GCash', NULL, '41D59E', '2024-09-26 14:56:55', '2024-09-26 16:14:48');
+INSERT INTO `cart` VALUES (99, 2, 19, 3, 'Processing', '../../uploads/payments/Garry.png', 3.00, 'GCash', NULL, '4558B1', '2024-09-26 16:15:43', '2024-09-26 16:16:06');
+INSERT INTO `cart` VALUES (100, 2, 20, 3, 'Processing', NULL, 900.00, 'Cash On Delivery', NULL, '29BB86', '2024-09-26 16:16:25', '2024-09-26 16:16:30');
 
 -- ----------------------------
 -- Table structure for category
@@ -77,15 +79,17 @@ CREATE TABLE `category`  (
   `created_at` timestamp(0) NOT NULL DEFAULT current_timestamp(0),
   `updated_at` timestamp(0) NOT NULL DEFAULT current_timestamp(0) ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`category_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of category
 -- ----------------------------
-INSERT INTO `category` VALUES (1, 'Dog Food Ni Bert', '2024-05-14 17:48:46', '2024-09-04 17:25:31');
+INSERT INTO `category` VALUES (1, 'Dog Food Ni Bert1', '2024-05-14 17:48:46', '2024-09-23 10:36:16');
 INSERT INTO `category` VALUES (2, 'Dog Food Ni Patrick', '2024-05-14 17:48:30', '2024-09-04 17:25:39');
 INSERT INTO `category` VALUES (5, 'Test lang', '2024-09-04 17:23:29', '2024-09-04 17:25:44');
 INSERT INTO `category` VALUES (6, 'Test Category', '2024-09-06 21:20:13', '2024-09-06 21:20:13');
+INSERT INTO `category` VALUES (7, 'Spaghetti', '2024-09-06 22:20:07', '2024-09-06 22:20:07');
+INSERT INTO `category` VALUES (8, 'Categ', '2024-09-23 10:36:51', '2024-09-23 10:36:51');
 
 -- ----------------------------
 -- Table structure for order
@@ -169,10 +173,10 @@ CREATE TABLE `product`  (
 -- ----------------------------
 -- Records of product
 -- ----------------------------
-INSERT INTO `product` VALUES (17, 26, 1, '11', 'DESCRIPTION PRODUCT 1', '../../uploads/1.png', '11', 11, 11.00, 11.00, '2024-09-05 14:39:33', '2024-09-18 18:15:09');
-INSERT INTO `product` VALUES (18, 27, 2, '22', 'DESCRIPTION PRODUCT 2', '../../uploads/2.png', '22', 3, 22.00, 22.00, '2024-09-05 14:40:14', '2024-09-18 17:35:57');
-INSERT INTO `product` VALUES (19, 26, 1, 'dogfood ni bert', 'DESCRIPTION PRODUCT 3', '../../uploads/3.png', 'dogfood ni bert', 25, 1.00, 1.00, '2024-09-05 14:40:51', '2024-09-14 02:30:27');
-INSERT INTO `product` VALUES (20, 26, 7, 'Test', 'DESCRIPTION PRODUCT 4', '../../uploads/test.jpg', '123', 100, 200.00, 300.00, '2024-09-06 22:20:40', '2024-09-14 02:30:29');
+INSERT INTO `product` VALUES (17, 26, 1, '11', 'DESCRIPTION PRODUCT 1', '../../uploads/1.png', '11', -1, 11.00, 11.00, '2024-09-05 14:39:33', '2024-09-26 16:14:48');
+INSERT INTO `product` VALUES (18, 27, 2, '22', 'DESCRIPTION PRODUCT 2', '../../uploads/2.png', '22', -11, 22.00, 22.00, '2024-09-05 14:40:14', '2024-09-26 16:16:30');
+INSERT INTO `product` VALUES (19, 26, 1, 'dogfood ni bert', 'DESCRIPTION PRODUCT 3', '../../uploads/3.png', 'dogfood ni bert', 15, 1.00, 1.00, '2024-09-05 14:40:51', '2024-09-26 16:16:30');
+INSERT INTO `product` VALUES (20, 26, 7, 'Test', 'DESCRIPTION PRODUCT 4', '../../uploads/test.jpg', '123', 97, 200.00, 300.00, '2024-09-06 22:20:40', '2024-09-26 16:16:30');
 INSERT INTO `product` VALUES (21, 28, 1, 'VSS', 'VSS', '../../uploads/VSS APPLICATION.png', '123123123', 0, 1000.00, 1100.00, '2024-09-18 17:45:50', '2024-09-18 17:45:50');
 
 -- ----------------------------
