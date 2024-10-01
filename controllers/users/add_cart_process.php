@@ -29,12 +29,12 @@ if (isset($_POST['product_id'])) {
         exit();
     }
 
-    // Check if the product is already in the cart
-    $cart_query = "SELECT cart_quantity FROM cart WHERE user_id = '$user_id' AND product_id = '$product_id'";
+    // Check if the product is in the cart with status 'Cart'
+    $cart_query = "SELECT cart_quantity, cart_status FROM cart WHERE user_id = '$user_id' AND product_id = '$product_id' AND cart_status = 'Cart'";
     $cart_result = $conn->query($cart_query);
 
     if ($cart_result->num_rows > 0) {
-        // Product is already in the cart, update the quantity
+        // Product is already in the cart with status 'Cart', update the quantity
         $cart_row = $cart_result->fetch_assoc();
         $new_quantity = $cart_row['cart_quantity'] + 1;
 
@@ -49,29 +49,53 @@ if (isset($_POST['product_id'])) {
         $total_price = $new_quantity * $product_price;
 
         // Update the quantity, total price, and cart status in the cart
-        $update_query = "UPDATE cart SET cart_quantity = '$new_quantity', total_price = '$total_price', cart_status = 'Cart' WHERE user_id = '$user_id' AND product_id = '$product_id'";
+        $update_query = "UPDATE cart SET cart_quantity = '$new_quantity', total_price = '$total_price', cart_status = 'Cart' WHERE user_id = '$user_id' AND product_id = '$product_id' AND cart_status = 'Cart'";
         if ($conn->query($update_query)) {
             $response = array('success' => true, 'message' => 'Cart updated successfully!');
         } else {
             $response = array('success' => false, 'message' => 'Error updating cart: ' . $conn->error);
         }
+
     } else {
-        // Product is not in the cart, add it with quantity 1
-        if ($product_stock < 1) {
-            $response = array('success' => false, 'message' => 'Not enough stock available.');
-            echo json_encode($response);
-            exit();
-        }
+        // If the product is in the cart but with status 'Processing'
+        $cart_processing_query = "SELECT * FROM cart WHERE user_id = '$user_id' AND product_id = '$product_id' AND cart_status = 'Processing'";
+        $cart_processing_result = $conn->query($cart_processing_query);
 
-        // Compute the total price
-        $total_price = $product_price;
+        if ($cart_processing_result->num_rows > 0) {
+            // Product is already in the cart with status 'Processing', add a new cart entry with status 'Cart'
+            if ($product_stock < 1) {
+                $response = array('success' => false, 'message' => 'Not enough stock available.');
+                echo json_encode($response);
+                exit();
+            }
 
-        // Insert the new product into the cart with cart_status set to 'Cart'
-        $insert_query = "INSERT INTO cart (user_id, product_id, cart_quantity, total_price, cart_status) VALUES ('$user_id', '$product_id', 1, '$total_price', 'Cart')";
-        if ($conn->query($insert_query)) {
-            $response = array('success' => true, 'message' => 'Product added to cart successfully!');
+            // Insert a new entry with quantity 1 for the same product but with 'Cart' status
+            $total_price = $product_price;
+            $insert_new_cart_query = "INSERT INTO cart (user_id, product_id, cart_quantity, total_price, cart_status) VALUES ('$user_id', '$product_id', 1, '$total_price', 'Cart')";
+            if ($conn->query($insert_new_cart_query)) {
+                $response = array('success' => true, 'message' => 'Product added to cart successfully!');
+            } else {
+                $response = array('success' => false, 'message' => 'Error adding product to cart: ' . $conn->error);
+            }
+
         } else {
-            $response = array('success' => false, 'message' => 'Error adding product to cart: ' . $conn->error);
+            // Product is not in the cart at all, add it with quantity 1
+            if ($product_stock < 1) {
+                $response = array('success' => false, 'message' => 'Not enough stock available.');
+                echo json_encode($response);
+                exit();
+            }
+
+            // Compute the total price
+            $total_price = $product_price;
+
+            // Insert the new product into the cart with cart_status set to 'Cart'
+            $insert_query = "INSERT INTO cart (user_id, product_id, cart_quantity, total_price, cart_status) VALUES ('$user_id', '$product_id', 1, '$total_price', 'Cart')";
+            if ($conn->query($insert_query)) {
+                $response = array('success' => true, 'message' => 'Product added to cart successfully!');
+            } else {
+                $response = array('success' => false, 'message' => 'Error adding product to cart: ' . $conn->error);
+            }
         }
     }
 

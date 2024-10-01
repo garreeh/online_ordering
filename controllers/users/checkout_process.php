@@ -43,52 +43,57 @@ if ($paymentMethod === 'GCash' && isset($_FILES['proofOfPayment']) && $_FILES['p
 mysqli_begin_transaction($conn);
 
 try {
-    // Update cart status
-    $updateCartSql = "UPDATE cart SET cart_status = 'Processing', reference_no = '$referenceNo', payment_method = '$paymentMethod' WHERE user_id = '$user_id' AND cart_id = '$cart_id'";
-    if (!mysqli_query($conn, $updateCartSql)) {
-        throw new Exception('Failed to update cart status');
-    }
-
-    // Save the path of the proof of payment if available
-    if ($proofOfPaymentPath) {
-        $updateProofSql = "UPDATE cart SET proof_of_payment = '$proofOfPaymentPath' WHERE user_id = '$user_id'";
-        if (!mysqli_query($conn, $updateProofSql)) {
-            throw new Exception('Failed to update proof of payment');
-        }
-    }
-
-    // Retrieve cart items for stock update
-    $cartItemsSql = "SELECT product_id, cart_quantity FROM cart WHERE user_id = '$user_id'";
+    // Retrieve cart items for stock update (only those in 'Cart' status)
+    $cartItemsSql = "SELECT product_id, cart_quantity FROM cart 
+                    WHERE user_id = '$user_id' AND cart_status = 'Cart'";
     $result = mysqli_query($conn, $cartItemsSql);
     if (!$result) {
         throw new Exception('Failed to retrieve cart items');
     }
 
+    // Prepare to update product stocks based on quantities from the cart
     while ($row = mysqli_fetch_assoc($result)) {
         $product_id = $row['product_id'];
         $cart_quantity = $row['cart_quantity'];
 
-        // Update product stocks
-        $updateProductSql = "UPDATE product SET product_stocks = product_stocks - $cart_quantity WHERE product_id = '$product_id'";
+        // Update product stocks by subtracting the quantity of the products in 'Cart' status
+        $updateProductSql = "UPDATE product 
+                            SET product_stocks = product_stocks - $cart_quantity 
+                            WHERE product_id = '$product_id'";
+
         if (!mysqli_query($conn, $updateProductSql)) {
             throw new Exception('Failed to update product stocks');
         }
 
-        // Check if product stocks are 0
+        // Check if product stocks are now zero or less
         $checkStockSql = "SELECT product_stocks FROM product WHERE product_id = '$product_id'";
         $stockResult = mysqli_query($conn, $checkStockSql);
         if ($stockResult) {
             $stockRow = mysqli_fetch_assoc($stockResult);
-            if ($stockRow['product_stocks'] <= 0) {
-                // Remove cart items for other users
-                $deleteCartSql = "DELETE FROM cart WHERE product_id = '$product_id' AND user_id != '$user_id'";
-                if (!mysqli_query($conn, $deleteCartSql)) {
-                    throw new Exception('Failed to remove cart items for other users');
-                }
+            if ($stockRow['product_stocks'] < 0) {
+                throw new Exception('Stock cannot go negative');
             }
         } else {
             throw new Exception('Failed to check product stocks');
         }
+    }
+
+    // Update the cart status for items being processed (set 'Processing')
+    $updateCartSql = "UPDATE cart SET cart_status = 'Processing', reference_no = '$referenceNo', payment_method = '$paymentMethod' 
+                      WHERE user_id = '$user_id' AND cart_id = '$cart_id' AND cart_status = 'Cart'";
+    
+    if ($proofOfPaymentPath) {
+        // Save the path of the proof of payment if available
+        $updateProofSql = "UPDATE cart SET proof_of_payment = '$proofOfPaymentPath' 
+                           WHERE user_id = '$user_id' AND cart_id = '$cart_id'";
+        if (!mysqli_query($conn, $updateProofSql)) {
+            throw new Exception('Failed to update proof of payment');
+        }
+    }
+
+    // Execute the cart status update
+    if (!mysqli_query($conn, $updateCartSql)) {
+        throw new Exception('Failed to update cart status');
     }
 
     // Commit the transaction
