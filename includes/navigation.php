@@ -111,6 +111,8 @@ if (session_status() == PHP_SESSION_NONE) {
                       var cartContent = '';
                       var totalItems = response.total_items;
                       var totalPrice = response.total_price;
+                      var baseURL = "./../uploads/";
+
 
                       $('.top-cart-info-count').text(totalItems + ' items');
                       $('.top-cart-info-value').text('₱ ' + totalPrice.toFixed(2));
@@ -125,7 +127,7 @@ if (session_status() == PHP_SESSION_NONE) {
                             // Populate the cart with items
                             $.each(response.items, function(index, item) {
                                 cartContent += '<li>';
-                                cartContent += '<a href="shop-item.html"><img src="/online_ordering/assets/user/pages/img/cart-img.jpg" alt="' + item.product_name + '" width="37" height="34"></a>';
+                                cartContent += '<a href="shop-item.html"><img src="' + baseURL + item.product_image + '" alt="' + item.product_name + '" width="37" height="34"></a>';
                                 cartContent += '<span class="cart-content-count">x ' + item.cart_quantity + '</span>';
                                 cartContent += '<strong><a href="shop-item.html">' + item.product_name + '</a></strong>';
                                 cartContent += '<em>₱' + (item.product_sellingprice * item.cart_quantity).toFixed(2) + '</em>';

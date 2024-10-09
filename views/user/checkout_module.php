@@ -196,9 +196,10 @@ if (!isset($_SESSION['user_id'])) {
             $.each(response.items, function(index, item) {
               var productPrice = parseFloat(item.product_sellingprice) || 0;
               var cartQuantity = parseInt(item.cart_quantity, 10) || 0;
+              var baseURL = "./../uploads/";
 
               cartContent += '<tr>';
-              cartContent += '<td class="goods-page-image"><a href="javascript:;"><img src="./../../assets/user/pages/img/products/model3.jpg" alt="' + item.product_name + '" /></a></td>';
+              cartContent += '<td class="goods-page-image"><a href="javascript:;"><img src="' + baseURL + item.product_image + '" alt="' + item.product_name + '" style="width: 90px; height: 100px;" /></a></td>';
               cartContent += '<td class="goods-page-description"><h3><a href="javascript:;"></a></h3><p><strong>' + item.product_name + '</strong></p><em>' + item.product_description + '</em></td>';
               cartContent += '<td class="goods-page-ref-no">' + item.product_sku + '</td>';
               cartContent += '<td class="goods-page-quantity"><div class="product-quantity"><input type="text" value="' + cartQuantity + '" readonly class="form-control input-sm"></div></td>';
