@@ -13,7 +13,6 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
-$cart_id = $_POST['cart_id'];
 $paymentMethod = $_POST['paymentCategory'];
 $referenceNo = strtoupper(bin2hex(random_bytes(3))); // Generate a 6-digit random reference number
 
@@ -43,12 +42,12 @@ if ($paymentMethod === 'GCash' && isset($_FILES['proofOfPayment']) && $_FILES['p
 mysqli_begin_transaction($conn);
 
 try {
-    // Retrieve cart items for stock update (only those in 'Cart' status)
+    // Retrieve cart items for stock update (only those in 'Cart' status for the logged-in user)
     $cartItemsSql = "SELECT product_id, cart_quantity FROM cart 
-                    WHERE user_id = '$user_id' AND cart_status = 'Cart'";
+                     WHERE user_id = '$user_id' AND cart_status = 'Cart'";
     $result = mysqli_query($conn, $cartItemsSql);
-    if (!$result) {
-        throw new Exception('Failed to retrieve cart items');
+    if (!$result || mysqli_num_rows($result) === 0) {
+        // throw new Exception('No items in the cart to checkout.');
     }
 
     // Prepare to update product stocks based on quantities from the cart
@@ -58,11 +57,11 @@ try {
 
         // Update product stocks by subtracting the quantity of the products in 'Cart' status
         $updateProductSql = "UPDATE product 
-                            SET product_stocks = product_stocks - $cart_quantity 
-                            WHERE product_id = '$product_id'";
+                             SET product_stocks = product_stocks - $cart_quantity 
+                             WHERE product_id = '$product_id'";
 
         if (!mysqli_query($conn, $updateProductSql)) {
-            throw new Exception('Failed to update product stocks');
+            throw new Exception('Failed to update product stocks for product ID: ' . $product_id);
         }
 
         // Check if product stocks are now zero or less
@@ -71,29 +70,29 @@ try {
         if ($stockResult) {
             $stockRow = mysqli_fetch_assoc($stockResult);
             if ($stockRow['product_stocks'] < 0) {
-                throw new Exception('Stock cannot go negative');
+                throw new Exception('Stock cannot go negative for product ID: ' . $product_id);
             }
         } else {
-            throw new Exception('Failed to check product stocks');
+            throw new Exception('Failed to check product stocks for product ID: ' . $product_id);
         }
     }
 
-    // Update the cart status for items being processed (set 'Processing')
+    // Update the cart status for all items in 'Cart' for the current user
     $updateCartSql = "UPDATE cart SET cart_status = 'Processing', reference_no = '$referenceNo', payment_method = '$paymentMethod' 
-                      WHERE user_id = '$user_id' AND cart_id = '$cart_id' AND cart_status = 'Cart'";
+                      WHERE user_id = '$user_id' AND cart_status = 'Cart'";
     
     if ($proofOfPaymentPath) {
         // Save the path of the proof of payment if available
         $updateProofSql = "UPDATE cart SET proof_of_payment = '$proofOfPaymentPath' 
-                           WHERE user_id = '$user_id' AND cart_id = '$cart_id'";
+                           WHERE user_id = '$user_id' AND cart_status = 'Cart'";
         if (!mysqli_query($conn, $updateProofSql)) {
             throw new Exception('Failed to update proof of payment');
         }
     }
 
-    // Execute the cart status update
+    // Execute the cart status update for all items
     if (!mysqli_query($conn, $updateCartSql)) {
-        throw new Exception('Failed to update cart status');
+        throw new Exception('Failed to update cart status for all items');
     }
 
     // Commit the transaction
@@ -101,7 +100,7 @@ try {
 
     // Success response
     $response['success'] = true;
-    $response['message'] = 'Checkout successful';
+    $response['message'] = 'Checkout successful for all items in the cart';
 
 } catch (Exception $e) {
     // Rollback the transaction on error

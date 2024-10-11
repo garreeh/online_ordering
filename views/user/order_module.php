@@ -139,15 +139,13 @@
 </html>
 
 <script type="text/javascript">
-  $(document).ready(function() {
-      function updateCart() {
+$(document).ready(function() {
+    function updateCart() {
         $.ajax({
             url: '/online_ordering/controllers/users/fetch_order_process.php',
             method: 'GET',
             dataType: 'json',
             success: function(response) {
-                console.log('Cart Data:', response);
-
                 if (response.success) {
                     var cartContent = '';
                     var totalPrice = response.total_price;
@@ -165,7 +163,7 @@
                         cartContent += '<td class="goods-page-quantity"><div class="product-quantity"><input type="text" value="' + cartQuantity + '" readonly class="form-control input-sm"></div></td>';
                         cartContent += '<td class="goods-page-price"><strong><span>₱ </span>' + productPrice.toFixed(2) + '</strong></td>';
                         cartContent += '<td class="goods-page-total"><strong><span>₱ </span>' + (productPrice * cartQuantity).toFixed(2) + '</strong></td>';
-                        cartContent += '<td class="del-goods-col"><button class="btn btn-primary" href="javascript:;" data-product-id="' + item.product_id + '">Cancel</button></td>';
+                        cartContent += '<td class="del-goods-col"><button class="btn btn-primary cancel-order-btn" data-product-id="' + item.product_id + '" data-cart-quantity="' + cartQuantity + '" data-order-id="' + item.cart_id + '">Cancel</button></td>';
                         cartContent += '</tr>';
                     });
 
@@ -173,6 +171,14 @@
                     $('#cart-subtotal').text('₱ ' + response.total_price.toFixed(2));
                     $('#cart-total').text('₱ ' + (response.total_price + 35).toFixed(2));
 
+                    // Attach event handler to Cancel buttons
+                    $('.cancel-order-btn').on('click', function() {
+                        var productId = $(this).data('product-id');
+                        var cartQuantity = $(this).data('cart-quantity');
+                        var orderId = $(this).data('order-id');
+
+                        cancelOrder(productId, cartQuantity, orderId);
+                    });
                 } else {
                     console.error('Failed to fetch cart data:', response.message);
                 }
@@ -181,9 +187,49 @@
                 console.error('AJAX Error:', error);
             }
         });
-      }
+    }
 
-      // Initial cart update
-      updateCart();
-  });
+    function cancelOrder(productId, cartQuantity, orderId) {
+        $.ajax({
+            url: '/online_ordering/controllers/users/cancel_order_process.php',
+            method: 'POST',
+            data: {
+                product_id: productId,
+                cart_quantity: cartQuantity,
+                cart_id: orderId
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    Toastify({
+                        text: response.message,
+                        duration: 3000,
+                        close: true,
+                        gravity: "top",
+                        position: "right",
+                        backgroundColor: "green"
+                    }).showToast();
+                    // Reload the cart after successful cancellation
+                    updateCart();
+                } else {
+                    Toastify({
+                        text: response.message,
+                        duration: 3000,
+                        close: true,
+                        gravity: "top",
+                        position: "right",
+                        backgroundColor: "red"
+                    }).showToast();
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error:', error);
+            }
+        });
+    }
+
+    // Initial cart update
+    updateCart();
+});
+
 </script>
