@@ -19,7 +19,7 @@ if (session_status() == PHP_SESSION_NONE) {
   <link href="./../../assets/img/favicon.ico" rel="icon">
 
 
-  <title>Admin | Orders</title>
+  <title>Admin | Deliveries</title>
 
   <link href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
@@ -54,7 +54,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Orders Module</h1>
+            <h1 class="h3 mb-0 text-gray-800">Delivery Module</h1>
           </div>
 
           <a href="./../../excels/supplier_export.php" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm mb-4"><i class="fas fa-file-excel"></i> Export Excel</a>
@@ -67,7 +67,7 @@ if (session_status() == PHP_SESSION_NONE) {
                 <div id="modalContainerProvider"></div>
 
 
-                  <table class="table custom-table table-hover" name="order_table" id="order_table">
+                  <table class="table custom-table table-hover" name="delivery_table" id="delivery_table">
                     <thead>
                       <tr>
                         <th>ID</th>
@@ -133,39 +133,39 @@ if (session_status() == PHP_SESSION_NONE) {
 
 <script>
   $('#sidebarToggle').click(function () {
-    $('#order_table').css('width', '100%');
+    $('#delivery_table').css('width', '100%');
     // console.log(table) //This is for testing only
   });
   
   //Table for Transactions
   $(document).ready(function() {
-    var order_table = $('#order_table').DataTable({
+    var delivery_table = $('#delivery_table').DataTable({
       "pagingType": "numbers",
       "processing": true,
       "serverSide": true,
-      "ajax": "./../../controllers/tables/orders_table.php",
+      "ajax": "./../../controllers/tables/delivery_table.php",
     });
 
     window.reloadDataTable = function() {
-      order_table.ajax.reload();
+      delivery_table.ajax.reload();
     };
 
   });
 
   $(document).ready(function() {
     // Function to handle click event on datatable rows
-    $('#order_table').on('click', 'tr td:nth-child(9) .fetchDataDelivery', function() {
+    $('#delivery_table').on('click', 'tr td:nth-child(9) .fetchDataFinish', function() {
         var cart_id = $(this).closest('tr').find('td').first().text(); // Get the cart_id from the clicked row
 
         $.ajax({
-            url: './../../modals/delivery/modal_add_delivery.php', // Path to PHP script to fetch modal content
+            url: './../../modals/delivery/modal_add_delivered.php', // Path to PHP script to fetch modal content
             method: 'POST',
             data: { cart_id: cart_id },
             success: function(response) {
                 $('#modalContainerProvider').html(response);
-                $('#addDeliveryModal').modal('show');
+                $('#addDeliveredModal').modal('show');
                 $('#cart_id').val(cart_id); // Set the cart_id here
-                console.log("#addDeliveryModal: " + cart_id);
+                console.log("#addDeliveredModal: " + cart_id);
             },
             error: function(xhr, status, error) {
                 console.error(xhr.responseText);

@@ -15,8 +15,17 @@ $columns = array(
 	),
 
 	array(
-		'db' => 'users.user_fullname',
+		'db' => 'reference_no',
 		'dt' => 1,
+		'field' =>'reference_no',
+		'formatter' => function ($lab1, $row) {
+      return $row['reference_no'];
+		}
+	),
+
+	array(
+		'db' => 'users.user_fullname',
+		'dt' => 2,
 		'field' => 'user_fullname',
 		'formatter' => function ($lab2, $row) {
 			return $row['user_fullname'];
@@ -25,7 +34,7 @@ $columns = array(
 
 	array(
 		'db' => 'cart_status',
-		'dt' => 2,
+		'dt' => 3,
 		'field' => 'cart_status',
 		'formatter' => function ($lab3, $row) {
 			return $row['cart_status'];
@@ -35,7 +44,7 @@ $columns = array(
 
 	array(
 		'db' => 'total_price',
-		'dt' => 3,
+		'dt' => 4,
 		'field' => 'total_price',
 		'formatter' => function ($lab4, $row) {
       return $row['total_price'];
@@ -44,7 +53,7 @@ $columns = array(
 
   array(
 		'db' => 'payment_method',
-		'dt' => 4,
+		'dt' => 5,
 		'field' => 'payment_method',
 		'formatter' => function ($lab4, $row) {
       return $row['payment_method'];
@@ -53,7 +62,7 @@ $columns = array(
 
   array(
     'db' => 'proof_of_payment',
-    'dt' => 5,
+    'dt' => 6,
     'field' => 'proof_of_payment',
     'formatter' => function ($lab4, $row) {
         // Check if the value is null or empty
@@ -67,7 +76,7 @@ $columns = array(
 
 	array(
     'db' => 'cart.updated_at',
-    'dt' => 6,
+    'dt' => 7,
     'field' => 'updated_at',
     'formatter' => function ($lab5, $row) {
 			return $row['updated_at'];
@@ -76,10 +85,21 @@ $columns = array(
 
   array(
     'db' => 'cart_id',
-    'dt' => 7,
+    'dt' => 8,
     'field' => 'cart_id',
     'formatter' => function ($lab5, $row) {
-			return $row['cart_id'];
+			return '
+      <div class="dropdown">
+          <button class="btn btn-info" type="button" id="dropdownMenuButton' . $row['cart_id'] . '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              &#x22EE;
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton' . $row['cart_id'] . '">
+              <a class="dropdown-item fetchDataDelivery" href="#">Assign Delivery</a>
+              <a class="dropdown-item delete-user" href="#" data-user-id="' . $row['cart_id'] . '">Void</a>
+              <a class="dropdown-item delete-user" href="#" data-user-id="' . $row['cart_id'] . '">Delete</a>
+
+          </div>
+      </div>';
     }
 	),
 );

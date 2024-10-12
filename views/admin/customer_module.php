@@ -71,6 +71,7 @@ if (session_status() == PHP_SESSION_NONE) {
                       <tr>
                         <th>ID</th>
                         <th>Fullname</th>
+                        <th>Username</th>
                         <th>Email</th>
                         <th>Password</th>
                         <th>Account Status</th>
@@ -137,12 +138,12 @@ if (session_status() == PHP_SESSION_NONE) {
   //Bridge for Modal Backend to Frontend
   $(document).ready(function() {
     // Function to handle click event on datatable rows
-    $('#users_table').on('click', 'tr td:nth-child(8) .fetchDataUser', function() {
+    $('#users_table').on('click', 'tr td:nth-child(5) .fetchDataPassword', function() {
         var user_id = $(this).closest('tr').find('td').first().text(); // Get the user_id from the clicked row
         console.log('Button clicked, User ID: ' + user_id);
 
         $.ajax({
-            url: './../../modals/users/modal_edit_user.php', // Path to PHP script to fetch modal content
+            url: './../../modals/customer/modal_view_password.php', // Path to PHP script to fetch modal content
             method: 'POST',
             data: { user_id: user_id },
             success: function(response) {

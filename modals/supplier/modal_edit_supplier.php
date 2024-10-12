@@ -63,7 +63,7 @@ if (isset($_POST['supplier_id'])) {
             <input type="hidden" name="edit_supplier" value="1">
 
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">Save</button>
+              <button type="submit" class="btn btn-primary" id="saveButton">Save</button>
               <!-- <input type="hidden" name="item_id" value="</?php echo $row['supplier_id']; ?>"> -->
               <button type="button" class="btn btn btn-danger" data-dismiss="modal">Close</button>
             </div>
@@ -80,7 +80,7 @@ if (isset($_POST['supplier_id'])) {
 ?>
 
 <script>
-  //Save Button in Edit Supplier
+  // Save Button in Edit Supplier
   $(document).ready(function() {
     $('#fetchDataSupplierModal form').submit(function(event) {
       event.preventDefault(); // Prevent default form submission
@@ -89,6 +89,11 @@ if (isset($_POST['supplier_id'])) {
       
       // Serialize form data
       var formData = $form.serialize();
+
+      // Change button text to "Saving..." and disable it
+      var $saveButton = $('#saveButton');
+      $saveButton.text('Saving...');
+      $saveButton.prop('disabled', true);
 
       // Send AJAX request
       $.ajax({
@@ -126,9 +131,13 @@ if (isset($_POST['supplier_id'])) {
             duration: 2000,
             backgroundColor: "linear-gradient(to right, #ff6a00, #ee0979)"
           }).showToast();
+        },
+        complete: function() {
+          // Reset button text and re-enable it
+          $saveButton.text('Save');
+          $saveButton.prop('disabled', false);
         }
       });
     });
   });
-
 </script>

@@ -1,3 +1,18 @@
+<?php
+include './../../connections/connections.php';
+
+// Fetch user types from the database
+$sql = "SELECT * FROM users";
+$result = mysqli_query($conn, $sql);
+
+$user_names = [];
+if ($result) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $user_names[] = $row;
+    }
+}
+
+?>
 <style>
   /* Custom CSS for label color */
   .modal-body label {
@@ -6,11 +21,11 @@
   }
 </style>
 
-<div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
+<div class="modal fade" id="addDeliveredModal" tabindex="-1" role="dialog" aria-labelledby="addDeliveredModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-l" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addCategoryModalLabel">Add Category</h5>
+        <h5 class="modal-title" id="addDeliveredModalLabel">Deliveries</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -18,19 +33,19 @@
 
       <div class="modal-body">
         <form method="post" enctype="multipart/form-data">
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <label for="supplier_name">Category Name:</label>
-              <input type="text" class="form-control" id="category_name" name="category_name" placeholder="Enter Supplier Name" required>
-            </div>
+          <div class="form-group col-md-12">
+            <h3>Do you want to Tag as Delivered?</h3>
+
           </div>
 
           <!-- Add a hidden input field to submit the form with the button click -->
-          <input type="hidden" name="add_category" value="1">
+          <input type="hidden" name="cart_id" id="cart_id" value="">
+
+          <input type="hidden" name="tag_as_delivered" value="1">
 
           <div class="modal-footer">
-            <button type="submit" class="btn btn-primary" id="addCategoryButton">Add</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" id="addDeliveryRiderButton">Yes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
           </div>
         </form>
       </div>
@@ -38,14 +53,9 @@
   </div>
 </div>
 
-<!-- Include jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- Include Toastify JS -->
-<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-
 <script>
   $(document).ready(function() {
-    $('#addCategoryModal form').submit(function(event) {
+    $('#addDeliveredModal form').submit(function(event) {
       event.preventDefault(); // Prevent default form submission
       
       // Store a reference to $(this)
@@ -55,14 +65,14 @@
       var formData = $form.serialize();
 
       // Change button text to "Adding..." and disable it
-      var $addButton = $('#addCategoryButton');
-      $addButton.text('Adding...');
+      var $addButton = $('#addDeliveryRiderButton');
+      $addButton.text('Tagging...');
       $addButton.prop('disabled', true);
 
       // Send AJAX request
       $.ajax({
         type: 'POST',
-        url: '/online_ordering/controllers/admin/add_category_process.php',
+        url: '/online_ordering/controllers/admin/tas_as_delivered_process.php',
         data: formData,
         success: function(response) {
           // Handle success response
@@ -79,7 +89,7 @@
             $form.trigger('reset');
             
             // Optionally, close the modal
-            $('#addCategoryModal').modal('hide');
+            $('#addDeliveredModal').modal('hide');
             window.reloadDataTable();
             
           } else {
@@ -101,7 +111,7 @@
         },
         complete: function() {
           // Reset button text and re-enable it
-          $addButton.text('Add');
+          $addButton.text('Yes');
           $addButton.prop('disabled', false);
         }
       });

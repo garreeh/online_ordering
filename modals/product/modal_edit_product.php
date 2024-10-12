@@ -133,7 +133,7 @@ if (isset($_POST['product_id'])) {
             <input type="hidden" name="edit_product" value="1">
 
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">Save</button>
+              <button type="submit" class="btn btn-primary" id="saveProductButton">Save</button>
               <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
           </form>
@@ -161,15 +161,20 @@ if (isset($_POST['product_id'])) {
 }
 ?>
 
-
 <script>
   $(document).ready(function() {
     $('#editProductModal form').submit(function(event) {
       event.preventDefault(); // Prevent default form submission
+      
       var $form = $(this);
       
       // Create a FormData object to handle file uploads
       var formData = new FormData($form[0]);
+
+      // Change button text to "Saving..." and disable it
+      var $saveButton = $('#saveProductButton');
+      $saveButton.text('Saving...');
+      $saveButton.prop('disabled', true);
 
       // Send AJAX request
       $.ajax({
@@ -206,6 +211,11 @@ if (isset($_POST['product_id'])) {
             duration: 2000,
             backgroundColor: "linear-gradient(to right, #ff6a00, #ee0979)"
           }).showToast();
+        },
+        complete: function() {
+          // Reset button text and re-enable it
+          $saveButton.text('Save');
+          $saveButton.prop('disabled', false);
         }
       });
     });

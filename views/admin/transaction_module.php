@@ -70,10 +70,14 @@ if (session_status() == PHP_SESSION_NONE) {
                     <thead>
                       <tr>
                         <th>ID</th>
+                        <th>Ref No.</th>
                         <th>Customer Name</th>
-                        <th>Total</th>
-                        <th>Payment Status</th>
+                        <th>Status</th>
+                        <th>Total Payment</th>
+                        <th>Payment Method</th>
+                        <th>Proof of Payment</th>
                         <th>Date Created</th>
+                        <th>Manage</th>
                       </tr>
                     </thead>
                   </table>

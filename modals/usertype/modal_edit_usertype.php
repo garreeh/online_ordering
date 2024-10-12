@@ -90,13 +90,17 @@ if (isset($_POST['user_type_id'])) {
 ?>
 
 <script>
-  //Save Button in Edit Supplier
+  // Save Button in Edit User Type
   $(document).ready(function() {
     $('#fetchDataUsertypeModal form').submit(function(event) {
       event.preventDefault(); // Prevent default form submission
-      // Store a reference to $(this)
+
       var $form = $(this);
-      
+      var $button = $form.find('button[type="submit"]'); // Reference to the submit button
+
+      // Change button text to 'Saving...' and disable it
+      $button.text('Saving...').prop('disabled', true);
+
       // Serialize form data
       var formData = $form.serialize();
 
@@ -106,7 +110,6 @@ if (isset($_POST['user_type_id'])) {
         url: '/online_ordering/controllers/admin/edit_usertype_process.php',
         data: formData,
         success: function(response) {
-          // Handle success response
           console.log(response); // Log the response for debugging
           response = JSON.parse(response);
           if (response.success) {
@@ -115,11 +118,10 @@ if (isset($_POST['user_type_id'])) {
               duration: 2000,
               backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)"
             }).showToast();
-            
+
             // Optionally, close the modal
             $('#fetchDataUsertypeModal').modal('hide');
             window.reloadDataTable();
-
           } else {
             Toastify({
               text: response.message,
@@ -129,16 +131,18 @@ if (isset($_POST['user_type_id'])) {
           }
         },
         error: function(xhr, status, error) {
-          // Handle error response
           console.error(xhr.responseText);
           Toastify({
-            text: "Error occurred while editing supplier. Please try again later.",
+            text: "Error occurred while editing user type. Please try again later.",
             duration: 2000,
             backgroundColor: "linear-gradient(to right, #ff6a00, #ee0979)"
           }).showToast();
+        },
+        complete: function() {
+          // Reset button text and re-enable it
+          $button.text('Save').prop('disabled', false);
         }
       });
     });
   });
-
 </script>

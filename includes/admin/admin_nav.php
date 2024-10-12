@@ -57,13 +57,19 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== "1") {
 
     <!-- Heading -->
     <div class="sidebar-heading">
-      Billing & PO
+      Admin Panel
     </div>
 
     <li class="nav-item">
       <a class="nav-link" href="/online_ordering/views/admin/orders_module.php">
         <i class="fas fa-fw fa-money-bill"></i>
         <span>Client Orders</span></a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="/online_ordering/views/admin/deliveries_module.php">
+        <i class="fas fa-fw fa-money-bill"></i>
+        <span>Deliveries</span></a>
     </li>
 
     <li class="nav-item">
@@ -101,10 +107,10 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== "1") {
       <div id="collapse1" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
           <!-- <h6 class="collapse-header">Setup:</h6> -->
-          <a class="collapse-item" href="/online_ordering/views/admin/supplier_module.php">Sales Report</a>
-          <a class="collapse-item" href="/online_ordering/views/admin/supplier_module.php">Voucher Report</a>
-          <a class="collapse-item" href="/online_ordering/views/admin/supplier_module.php">Item Category Report</a>
-          <a class="collapse-item" href="/online_ordering/views/admin/supplier_module.php">Turnover Report</a>
+          <a class="collapse-item" href="/online_ordering/views/admin/sales_report_module.php">Sales Report</a>
+          <!-- <a class="collapse-item" href="/online_ordering/views/admin/supplier_module.php">Voucher Report</a> -->
+          <!-- <a class="collapse-item" href="/online_ordering/views/admin/supplier_module.php">Item Category Report</a> -->
+          <!-- <a class="collapse-item" href="/online_ordering/views/admin/supplier_module.php">Turnover Report</a> -->
         </div>
         
       </div>

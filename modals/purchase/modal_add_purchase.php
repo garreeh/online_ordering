@@ -100,13 +100,18 @@ if ($resultProduct) {
     console.log('Supplier ID:', supplierId);
   }
 
-
   $(document).ready(function() {
     // Handle form submission
     $('#addPurchaseOrderModal form').on('submit', function(event) {
       event.preventDefault();
       
       var $form = $(this);
+      var $submitButton = $form.find('button[type="submit"]');
+      var originalButtonText = $submitButton.text();
+
+      // Change button text to "Adding..."
+      $submitButton.text('Adding...').prop('disabled', true);
+
       var formData = new FormData($form[0]);
 
       $.ajax({
@@ -143,6 +148,10 @@ if ($resultProduct) {
             duration: 2000,
             backgroundColor: "linear-gradient(to right, #ff6a00, #ee0979)"
           }).showToast();
+        },
+        complete: function() {
+          // Revert button text and re-enable it
+          $submitButton.text(originalButtonText).prop('disabled', false);
         }
       });
     });

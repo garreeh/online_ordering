@@ -58,13 +58,16 @@ if (isset($_POST['purchase_order_id'])) {
 ?>
 
 <script>
-  //Save Button in Edit Supplier
+  // Save Button in Edit Purchase Order
   $(document).ready(function() {
     $('#editPurchaseModal form').submit(function(event) {
       event.preventDefault(); // Prevent default form submission
-      // Store a reference to $(this)
       var $form = $(this);
-      
+      var $button = $form.find('button[type="submit"]'); // Reference to the submit button
+
+      // Change button text to 'Saving...' and disable it
+      $button.text('Saving...').prop('disabled', true);
+
       // Serialize form data
       var formData = $form.serialize();
 
@@ -74,8 +77,7 @@ if (isset($_POST['purchase_order_id'])) {
         url: '/online_ordering/controllers/admin/edit_purchase_process.php',
         data: formData,
         success: function(response) {
-          // Handle success response
-          console.log(response); // Log the response for debugging
+          console.log(response);
           response = JSON.parse(response);
           if (response.success) {
             Toastify({
@@ -83,11 +85,9 @@ if (isset($_POST['purchase_order_id'])) {
               duration: 2000,
               backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)"
             }).showToast();
-            
-            // Optionally, close the modal
+
             $('#editPurchaseModal').modal('hide');
             window.reloadDataTable();
-
           } else {
             Toastify({
               text: response.message,
@@ -97,16 +97,18 @@ if (isset($_POST['purchase_order_id'])) {
           }
         },
         error: function(xhr, status, error) {
-          // Handle error response
           console.error(xhr.responseText);
           Toastify({
-            text: "Error occurred while editing supplier. Please try again later.",
+            text: "Error occurred while editing purchase. Please try again later.",
             duration: 2000,
             backgroundColor: "linear-gradient(to right, #ff6a00, #ee0979)"
           }).showToast();
+        },
+        complete: function() {
+          // Reset button text and re-enable it
+          $button.text('Save').prop('disabled', false);
         }
       });
     });
   });
-
 </script>

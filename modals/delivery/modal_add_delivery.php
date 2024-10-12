@@ -1,3 +1,18 @@
+<?php
+include './../../connections/connections.php';
+
+// Fetch user types from the database
+$sql = "SELECT * FROM users";
+$result = mysqli_query($conn, $sql);
+
+$user_names = [];
+if ($result) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $user_names[] = $row;
+    }
+}
+
+?>
 <style>
   /* Custom CSS for label color */
   .modal-body label {
@@ -6,11 +21,11 @@
   }
 </style>
 
-<div class="modal fade" id="addSupplierModal" tabindex="-1" role="dialog" aria-labelledby="addSupplierModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl" role="document">
+<div class="modal fade" id="addDeliveryModal" tabindex="-1" role="dialog" aria-labelledby="addDeliveryModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-l" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addSupplierModalLabel">Add Supplier</h5>
+        <h5 class="modal-title" id="addDeliveryModalLabel">Assign Delivery</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -18,40 +33,25 @@
 
       <div class="modal-body">
         <form method="post" enctype="multipart/form-data">
-          <div class="form-row">
-            <div class="form-group col-md-4">
-              <label for="supplier_name">Supplier Name:</label>
-              <input type="text" class="form-control" id="supplier_name" name="supplier_name" placeholder="Enter Supplier Name" required>
-            </div>
-            <div class="form-group col-md-4">
-              <label for="address">Address:</label>
-              <input type="text" class="form-control" id="address" name="address" placeholder="Enter Address">
-            </div>
-            <div class="form-group col-md-4">
-              <label for="landline">Landline:</label>
-              <input type="text" class="form-control" id="landline" name="landline" placeholder="Enter Landline">
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-4">
-              <label for="mobile">Mobile:</label>
-              <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Enter Mobile">
-            </div>
-            <div class="form-group col-md-4">
-              <label for="email">Email:</label>
-              <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email">
-            </div>
-            <div class="form-group col-md-4">
-              <label for="tin">TIN:</label>
-              <input type="text" class="form-control" id="tin" name="tin" placeholder="Enter TIN">
-            </div>
+          <div class="form-group col-md-12">
+            <label for="user_id">Assign Delivery Rider:</label>
+            <select class="form-control" id="user_id" name="user_id" required>
+              <option value="">Select Delivery Rider</option>
+              <?php foreach ($user_names as $user_rows) : ?>
+                <option value="<?php echo $user_rows['user_id']; ?>">
+                  <?php echo $user_rows['user_fullname']; ?>
+                </option>
+              <?php endforeach; ?>
+            </select>
           </div>
 
           <!-- Add a hidden input field to submit the form with the button click -->
-          <input type="hidden" name="add_supplier" value="1">
+          <input type="hidden" name="cart_id" id="cart_id" value="">
+
+          <input type="hidden" name="add_delivery_rider" value="1">
 
           <div class="modal-footer">
-            <button type="submit" class="btn btn-primary" id="addButton">Add</button>
+            <button type="submit" class="btn btn-primary" id="addDeliveryRiderButton">Add</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
         </form>
@@ -60,15 +60,9 @@
   </div>
 </div>
 
-<!-- Include jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- Include Toastify JS -->
-<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-
-
 <script>
   $(document).ready(function() {
-    $('#addSupplierModal form').submit(function(event) {
+    $('#addDeliveryModal form').submit(function(event) {
       event.preventDefault(); // Prevent default form submission
       
       // Store a reference to $(this)
@@ -78,14 +72,14 @@
       var formData = $form.serialize();
 
       // Change button text to "Adding..." and disable it
-      var $addButton = $('#addButton');
+      var $addButton = $('#addDeliveryRiderButton');
       $addButton.text('Adding...');
       $addButton.prop('disabled', true);
 
       // Send AJAX request
       $.ajax({
         type: 'POST',
-        url: '/online_ordering/controllers/admin/add_supplier_process.php',
+        url: '/online_ordering/controllers/admin/update_order_process.php',
         data: formData,
         success: function(response) {
           // Handle success response
@@ -102,11 +96,9 @@
             $form.trigger('reset');
             
             // Optionally, close the modal
-            $('#addSupplierModal').modal('hide');
+            $('#addDeliveryModal').modal('hide');
             window.reloadDataTable();
             
-            // Optionally, reload the DataTable or update it with the new data
-            // Example: $('#dataTable').DataTable().ajax.reload();
           } else {
             Toastify({
               text: response.message,
@@ -119,7 +111,7 @@
           // Handle error response
           console.error(xhr.responseText);
           Toastify({
-            text: "Error occurred while adding supplier. Please try again later.",
+            text: "Error occurred while adding category. Please try again later.",
             duration: 2000,
             backgroundColor: "linear-gradient(to right, #ff6a00, #ee0979)"
           }).showToast();

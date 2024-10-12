@@ -106,7 +106,7 @@ if ($result) {
           <input type="hidden" name="add_product" value="1">
 
           <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Add</button>
+            <button type="submit" class="btn btn-primary" id="addProductButton">Add</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
         </form>
@@ -130,6 +130,11 @@ if ($result) {
       
       // Serialize form data
       var formData = new FormData($form[0]);
+
+      // Change button text to "Adding..." and disable it
+      var $addButton = $('#addProductButton');
+      $addButton.text('Adding...');
+      $addButton.prop('disabled', true);
 
       // Send AJAX request
       $.ajax({
@@ -155,8 +160,6 @@ if ($result) {
             // Optionally, close the modal
             $('#addProductModal').modal('hide');
             window.reloadDataTable();
-            // Optionally, reload the DataTable or update it with the new data
-            // Example: $('#dataTable').DataTable().ajax.reload();
           } else {
             Toastify({
               text: response.message,
@@ -173,6 +176,11 @@ if ($result) {
             duration: 2000,
             backgroundColor: "linear-gradient(to right, #ff6a00, #ee0979)"
           }).showToast();
+        },
+        complete: function() {
+          // Reset button text and re-enable it
+          $addButton.text('Add');
+          $addButton.prop('disabled', false);
         }
       });
     });

@@ -77,7 +77,7 @@ if ($result && mysqli_num_rows($result) > 0) {
             <input type="file" id="proofOfPayment" name="proofOfPayment" class="form-control-file" required>
           </div>
 
-          <input type="text" name="cart_id" value="<?php echo $cart_id; ?>">
+          <input type="hidden" name="cart_id" value="<?php echo $cart_id; ?>">
         </form>
       </div>
       <div class="modal-footer">

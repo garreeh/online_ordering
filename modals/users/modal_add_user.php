@@ -101,10 +101,13 @@ if ($result) {
   $(document).ready(function() {
     $('#addUserModal form').submit(function(event) {
       event.preventDefault(); // Prevent default form submission
-      
-      // Store a reference to $(this)
+
       var $form = $(this);
-      
+      var $button = $form.find('button[type="submit"]'); // Reference to the submit button
+
+      // Change button text to 'Adding...' and disable it
+      $button.text('Adding...').prop('disabled', true);
+
       // Serialize form data
       var formData = $form.serialize();
 
@@ -114,8 +117,7 @@ if ($result) {
         url: '/online_ordering/controllers/admin/add_user_process.php',
         data: formData,
         success: function(response) {
-          // Handle success response
-          console.log(response); // Log the response for debugging
+          console.log(response);
           response = JSON.parse(response);
           if (response.success) {
             Toastify({
@@ -123,16 +125,10 @@ if ($result) {
               duration: 2000,
               backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)"
             }).showToast();
-            
-            // Optionally, reset the form
+
             $form.trigger('reset');
-            
-            // Optionally, close the modal
             $('#addUserModal').modal('hide');
             window.reloadDataTable();
-            
-            // Optionally, reload the DataTable or update it with the new data
-            // Example: $('#dataTable').DataTable().ajax.reload();
           } else {
             Toastify({
               text: response.message,
@@ -142,13 +138,16 @@ if ($result) {
           }
         },
         error: function(xhr, status, error) {
-          // Handle error response
           console.error(xhr.responseText);
           Toastify({
-            text: "Error occurred while adding ticket. Please try again later.",
+            text: "Error occurred while adding user. Please try again later.",
             duration: 2000,
             backgroundColor: "linear-gradient(to right, #ff6a00, #ee0979)"
           }).showToast();
+        },
+        complete: function() {
+          // Reset button text and re-enable it
+          $button.text('Add').prop('disabled', false);
         }
       });
     });

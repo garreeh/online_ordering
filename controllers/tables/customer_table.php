@@ -29,22 +29,35 @@ $columns = array(
             return $row['user_email'];
         }
     ),
+
+    array(
+        'db' => 'username',
+        'dt' => 3,
+        'field' => 'username',
+        'formatter' => function ($lab3, $row) {
+            return $row['username'];
+        }
+    ),
+
     array(
         'db' => 'user_confirm_password',
-        'dt' => 3,
+        'dt' => 4,
         'field' => 'user_confirm_password',
         'formatter' => function ($lab4, $row) {
-            $password = $row['user_confirm_password'];
-            $color = '#FFCCCB'; // Light Red
-            $width = '70px'; // Adjust the value as needed
-            $height = '30px'; // Adjust the value as needed
-            $border_radius = '10px'; // Adjust the value as needed
-            return '<span style="display: inline-block; background-color: ' . $color . '; width: ' . $width . '; height: ' . $height . '; border-radius: ' . $border_radius . '; text-align: center; line-height: ' . $height . ';">' . $password . '</span>';
+            // $password = $row['user_confirm_password'];
+            // $color = '#FFCCCB'; // Light Red
+            // $width = '70px'; // Adjust the value as needed
+            // $height = '30px'; // Adjust the value as needed
+            // $border_radius = '10px'; // Adjust the value as needed
+            // return '<span style="display: inline-block; background-color: ' . $color . '; width: ' . $width . '; height: ' . $height . '; border-radius: ' . $border_radius . '; text-align: center; line-height: ' . $height . ';">' . $password . '</span>';
+
+            return '<a class="fetchDataPassword" href="#"> Click to View</a> ';
+
         }
     ),
     array(
         'db' => 'account_status',
-        'dt' => 4,
+        'dt' => 5,
         'field' => 'account_status',
         'formatter' => function ($lab5, $row) {
             $account_status = $row['account_status'];
@@ -57,9 +70,9 @@ $columns = array(
     ),
     array(
         'db' => 'created_at',
-        'dt' => 5,
+        'dt' => 6,
         'field' => 'created_at',
-        'formatter' => function ($lab5, $row) {
+        'formatter' => function ($lab6, $row) {
             // Format date to 'Y-m-d' (e.g., 2024-09-03)
             return date('Y-m-d', strtotime($row['created_at']));
         }
@@ -67,9 +80,9 @@ $columns = array(
 
     array(
         'db' => 'updated_at',
-        'dt' => 6,
+        'dt' => 7,
         'field' => 'updated_at',
-        'formatter' => function ($lab5, $row) {
+        'formatter' => function ($lab7, $row) {
             // Format date to 'Y-m-d' (e.g., 2024-09-03)
             return date('Y-m-d', strtotime($row['updated_at']));
         }
