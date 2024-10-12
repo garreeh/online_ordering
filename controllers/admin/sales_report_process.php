@@ -21,6 +21,9 @@ if (isset($_POST['searchSalesReport'])) {
     }
 }
 
+// Format total sales with peso sign
+$formatted_sales = '₱ ' . number_format($total_sales, 2);
+
 // Return total sales as JSON for AJAX
-echo json_encode(['total_sales' => $total_sales]);
+echo json_encode(['total_sales' => $formatted_sales]);
 ?>

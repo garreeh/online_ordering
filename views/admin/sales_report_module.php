@@ -82,11 +82,11 @@ if (session_status() == PHP_SESSION_NONE) {
 
                       <hr>
                         <div id="dateRangeDisplay" class="mb-4">
-                        <h4> From: <span id="displayFrom"></span> </h4>
+                        <h4> From: <span id="displayFrom"> </span> </h4>
                         <br>
-                        <h4> To: <span id="displayTo"></span> </h4>
+                        <h4> To: <span id="displayTo"> </span> </h4>
                         <hr>
-                          <h4>Total Sales: <span id="totalSales">0</span></h4>
+                          <h4>Total Sales: <span id="totalSales"> </span></h4>
                         </div>
                       <br>
 
