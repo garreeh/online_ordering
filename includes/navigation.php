@@ -49,6 +49,7 @@ if (session_status() == PHP_SESSION_NONE) {
                             <li><a href="/online_ordering/views/user/account_module.php">My Account</a></li>
                             <li><a href="/online_ordering/views/user/checkout_module.php">Checkout</a></li>
                             <li><a href="/online_ordering/views/user/order_module.php">Orders</a></li>
+                            <li><a href="/online_ordering/views/user/received_module.php">Received</a></li>
                             <li><a href="/online_ordering/controllers/logout_process.php">Logout</a></li>
                         <?php else: ?>
                             <li><a href="views/login.php">Log In</a></li>

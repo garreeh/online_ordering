@@ -40,7 +40,6 @@ if (session_status() == PHP_SESSION_NONE) {
     <?php include './../../includes/admin/admin_nav.php'; ?>
     <!-- End of Sidebar -->
 
-    <?php include './../../modals/purchase/modal_add_purchase.php'; ?>
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -58,37 +57,60 @@ if (session_status() == PHP_SESSION_NONE) {
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Sales Report Module</h1>
           </div>
-          <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm mb-4" data-toggle="modal" data-target="#addPurchaseOrderModal"> <i class="fas fa-search"></i> Search Sales Report</a>
-
-          <a href="./../../excels/supplier_export.php" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm mb-4"><i class="fas fa-file-excel"></i> Export Excel</a>
-
-          <div class="row">
-            <div class="col-xl-12 col-lg-12">
-              <div class="tab-pane fade show active" id="aa" role="tabpanel" aria-labelledby="aa-tab">
-                
-                <div class="table-responsive">
-                <div id="modalContainerProvider"></div>
 
 
-                  <table class="table custom-table table-hover" name="delivery_table" id="delivery_table">
-                    <thead>
-                      <tr>
-                        <th>ID</th>
-                        <th>Ref No.</th>
-                        <th>Customer Name</th>
-                        <th>Status</th>
-                        <th>Total Payment</th>
-                        <th>Payment Method</th>
-                        <th>Proof of Payment</th>
-                        <th>Date Created</th>
-                        <th>Manage</th>
+          <div class="row mb-4">
+              <div class="col-xl-12 col-lg-12">
+                  <div class="tab-pane fade show active" id="aa" role="tabpanel" aria-labelledby="aa-tab">
+                      <div class="form-row align-items-end">
+                          <div class="col-auto">
+                              <label for="dateFrom">Date From:</label>
+                              <input type="date" id="dateFrom" name="dateFrom" class="form-control">
+                          </div>
+                          <div class="col-auto">
+                              <label for="dateTo">Date To:</label>
+                              <input type="date" id="dateTo" name="dateTo" class="form-control">
+                          </div>
+                          <div class="col-auto">
+                              <button class="btn btn-success shadow-sm mb-4" id="searchSalesReport">Search</button>
+                          </div>
 
-                      </tr>
-                    </thead>
-                  </table>
-                </div>
+                          <div class="col-auto">
+                            <a href="./../../excels/supplier_export.php" class="btn btn-success shadow-sm mb-4"><i class="fas fa-file-excel"></i> Export Excel</a>
+                          </div>
+                      </div>
+
+                      <hr>
+                        <div id="dateRangeDisplay" class="mb-4">
+                        <h4> From: <span id="displayFrom"></span> </h4>
+                        <br>
+                        <h4> To: <span id="displayTo"></span> </h4>
+                        <hr>
+                          <h4>Total Sales: <span id="totalSales">0</span></h4>
+                        </div>
+                      <br>
+
+                      
+
+                      <table class="table custom-table table-hover" name="sales_report_table" id="sales_report_table">
+                          <thead>
+                              <tr>
+                                  <th>ID</th>
+                                  <th>Ref No.</th>
+                                  <th>Customer Name</th>
+                                  <th>Status</th>
+                                  <th>Total Payment</th>
+                                  <th>Payment Method</th>
+                                  <th>Proof of Payment</th>
+                                  <th>Date Created</th>
+                                  <th>Manage</th>
+                              </tr>
+                          </thead>
+                      </table>
+                  </div>
               </div>
-            </div>
+          </div>
+
           </div>
           <!-- /.container-fluid -->
         </div>
@@ -135,44 +157,54 @@ if (session_status() == PHP_SESSION_NONE) {
 
 <script>
   $('#sidebarToggle').click(function () {
-    $('#delivery_table').css('width', '100%');
-    // console.log(table) //This is for testing only
+    $('#sales_report_table').css('width', '100%');
   });
   
-  //Table for Transactions
   $(document).ready(function() {
-    var delivery_table = $('#delivery_table').DataTable({
-      "pagingType": "numbers",
-      "processing": true,
-      "serverSide": true,
-      "ajax": "./../../controllers/tables/delivery_table.php",
+    var sales_report_table = $('#sales_report_table').DataTable({
+        "pagingType": "numbers",
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+            "url": "./../../controllers/tables/sales_report_table.php",
+            "data": function(d) {
+                d.date_from = $('#dateFrom').val();
+                d.date_to = $('#dateTo').val();
+            }
+        },
     });
 
-    window.reloadDataTable = function() {
-      delivery_table.ajax.reload();
-    };
+    $('#searchSalesReport').click(function() {
+        $(this).text('Searching...').prop('disabled', true);
+        // Get the selected dates
+        var dateFrom = $('#dateFrom').val();
+        var dateTo = $('#dateTo').val();
 
-  });
+        // Update the displayed date range
+        $('#displayFrom').text(dateFrom);
+        $('#displayTo').text(dateTo);
 
-  $(document).ready(function() {
-    // Function to handle click event on datatable rows
-    $('#delivery_table').on('click', 'tr td:nth-child(9) .fetchDataFinish', function() {
-        var cart_id = $(this).closest('tr').find('td').first().text(); // Get the cart_id from the clicked row
-
-        $.ajax({
-            url: './../../modals/delivery/modal_add_delivered.php', // Path to PHP script to fetch modal content
-            method: 'POST',
-            data: { cart_id: cart_id },
-            success: function(response) {
-                $('#modalContainerProvider').html(response);
-                $('#addDeliveredModal').modal('show');
-                $('#cart_id').val(cart_id); // Set the cart_id here
-                console.log("#addDeliveredModal: " + cart_id);
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-            }
+        // Reload the table and fetch total sales
+        sales_report_table.ajax.reload(function() {
+            // Fetch total sales
+            $.ajax({
+                type: 'POST',
+                url: './../../controllers/admin/sales_report_process.php', // Update with your PHP file path
+                data: {
+                    searchSalesReport: true,
+                    date_from: $('#dateFrom').val(),
+                    date_to: $('#dateTo').val()
+                },
+                success: function(response) {
+                    const data = JSON.parse(response);
+                    // Update the total sales display
+                    $('#totalSales').text(data.total_sales);
+                    $('#searchSalesReport').text('Search').prop('disabled', false);
+                }
+            });
         });
     });
-  });
+});
+
 </script>
+

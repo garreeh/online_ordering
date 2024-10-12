@@ -15,11 +15,11 @@ $columns = array(
 	),
 
 	array(
-		'db' => 'reference_no',
+		'db' => 'user_address',
 		'dt' => 1,
-		'field' =>'reference_no',
+		'field' =>'user_address',
 		'formatter' => function ($lab1, $row) {
-      return $row['reference_no'];
+      return $row['user_address'];
 		}
 	),
 

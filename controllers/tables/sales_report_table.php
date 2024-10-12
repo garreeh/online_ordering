@@ -84,12 +84,22 @@ $columns = array(
 	),
 
   array(
-    'db' => 'cart.delivery_rider_id',
+    'db' => 'cart_id',
     'dt' => 8,
-    'field' => 'delivery_rider_id',
+    'field' => 'cart_id',
     'formatter' => function ($lab5, $row) {
-			return $row['delivery_rider_id'];
+			return '
+      <div class="dropdown">
+          <button class="btn btn-info" type="button" id="dropdownMenuButton' . $row['cart_id'] . '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              &#x22EE;
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton' . $row['cart_id'] . '">
+              <a class="dropdown-item fetchDataFinish" href="#">Tag as Delivered</a>
+              <a class="dropdown-item delete-user" href="#" data-user-id="' . $row['cart_id'] . '">Void</a>
+              <a class="dropdown-item delete-user" href="#" data-user-id="' . $row['cart_id'] . '">Delete</a>
 
+          </div>
+      </div>';
     }
 	),
 );
@@ -105,8 +115,13 @@ $sql_details = array(
 // Include the SSP class
 require('../../assets/datatables/ssp.class.php');
 
+
+// Fetch the date filters from the request
+$dateFrom = isset($_GET['date_from']) ? $_GET['date_from'] : null;
+$dateTo = isset($_GET['date_to']) ? $_GET['date_to'] : null;
+
 // Build the where condition
-$where = "cart_status = 'Delivered'";
+$where = "cart_status = 'Delivered' AND cart.updated_at BETWEEN '$dateFrom' AND '$dateTo'";
 
 // Fetch and encode ONLY WHERE
 // echo json_encode(SSP::simple($_GET, $sql_details, $table, $primaryKey, $columns, $where));

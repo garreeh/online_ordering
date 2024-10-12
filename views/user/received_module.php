@@ -65,7 +65,7 @@
         <div class="row margin-bottom-40">
           <!-- BEGIN CONTENT -->
           <div class="col-md-12 col-sm-12">
-            <h1>PENDING ORDERS</h1>
+            <h1>Received Orders</h1>
             <div class="goods-page">
               <div class="goods-data clearfix">
                 <div class="table-wrapper-responsive">
@@ -142,7 +142,7 @@
 $(document).ready(function() {
     function updateCart() {
         $.ajax({
-            url: '/online_ordering/controllers/users/fetch_order_process.php',
+            url: '/online_ordering/controllers/users/fetch_received_orders_process.php',
             method: 'GET',
             dataType: 'json',
             success: function(response) {
@@ -165,8 +165,8 @@ $(document).ready(function() {
                         cartContent += '<td class="goods-page-total"><strong><span>₱ </span>' + (productPrice * cartQuantity).toFixed(2) + '</strong></td>';
                         
                         // Check the cart status and modify the cancel button accordingly
-                        if (item.cart_status === 'Out For Delivery') {
-                            cartContent += '<td class="del-goods-col">Out For Delivery</td>'; // Display status
+                        if (item.cart_status === 'Delivered') {
+                            cartContent += '<td class="del-goods-col">Delivered</td>'; // Display status
                         } else {
                             cartContent += '<td class="del-goods-col"><button class="btn btn-primary cancel-order-btn" data-product-id="' + item.product_id + '" data-cart-quantity="' + cartQuantity + '" data-order-id="' + item.cart_id + '">Cancel</button></td>';
                         }
