@@ -20,7 +20,7 @@
         <form method="post" enctype="multipart/form-data">
           <div class="form-row">
             <div class="form-group col-md-12">
-              <label for="supplier_name">Category Name:</label>
+              <label for="category_name">Category Name:</label>
               <input type="text" class="form-control" id="category_name" name="category_name" placeholder="Enter Supplier Name" required>
             </div>
           </div>
