@@ -97,9 +97,6 @@
       </div>
     </div>
 
-    <?php include './../../includes/footer.php'?>
-
-
     <script src="./../../assets/user/plugins/jquery.min.js" type="text/javascript"></script>
     <script src="./../../assets/user/plugins/jquery-migrate.min.js" type="text/javascript"></script>
     <script src="./../../assets/user/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>      

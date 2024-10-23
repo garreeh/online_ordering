@@ -57,6 +57,10 @@ if (session_status() == PHP_SESSION_NONE) {
             <h1 class="h3 mb-0 text-gray-800">Delivery Module</h1>
           </div>
 
+          <hr>
+          <h1 class="h3 mb-0 text-gray-800">These Deliveries are assigned to you</h1>
+          <br>
+
           <a href="./../../excels/supplier_export.php" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm mb-4"><i class="fas fa-file-excel"></i> Export Excel</a>
 
           <div class="row">

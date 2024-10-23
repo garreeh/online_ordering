@@ -114,15 +114,34 @@ $sql_details = array(
 
 // Include the SSP class
 require('../../assets/datatables/ssp.class.php');
+include '../../connections/connections.php';
 
+session_start();
+$user_id = $_SESSION['user_id'];
+$joinQuery = "FROM $table 
+									 LEFT JOIN users ON $table.user_id = users.user_id
+									 LEFT JOIN usertype ON users.user_type_id = usertype.user_type_id";
+
+// Fetch the user type for the logged-in user
+$query = "SELECT usertype.user_type_id FROM users 
+								 LEFT JOIN usertype ON users.user_type_id = usertype.user_type_id 
+								 WHERE users.user_id = '$user_id'";
+
+$result = mysqli_query($conn, $query);
+$row = mysqli_fetch_assoc($result);
+
+if ($row['user_type_id'] == 1) {  // Assuming 1 is the Admin user_type_id
+	$where = "cart_status = 'Out For Delivery'"; // Admin can see all deliveries
+} else {
+	$where = "cart_status = 'Out For Delivery' AND delivery_rider_id = $user_id"; // Non-admins see only their assigned deliveries
+}
 
 // THIS IS A SAMPLE ONLY
-$where = "cart_status = 'Out For Delivery'";
 
 // Fetch and encode ONLY WHERE
 // echo json_encode(SSP::simple($_GET, $sql_details, $table, $primaryKey, $columns, $where));
 
-$joinQuery = "FROM $table LEFT JOIN users ON $table.user_id = users.user_id";
+
 
 // Fetch and encode JOIN AND WHERE
 echo json_encode(SSP::simple($_GET, $sql_details, $table, $primaryKey, $columns, $joinQuery, $where));
