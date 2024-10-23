@@ -135,24 +135,6 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== "1") {
       </div>
     </li>
 
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse3" aria-expanded="true"
-        aria-controls="collapse3">
-        <i class="fas fa-fw fa-clipboard-list"></i>
-        <span>Delivery</span>
-      </a>
-      <div id="collapse3" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-          <!-- <h6 class="collapse-header">Setup:</h6> -->
-          <a class="collapse-item" href="/online_ordering/views/admin/delivery_module.php">Assign Delivery</a>
-          <a class="collapse-item" href="/online_ordering/views/admin/category_module.php">Delivery Status</a>
-          <!-- <a class="collapse-item" href="/online_ordering/views/admin/product_module.php">Delivery History</a> -->
-        </div>
-        
-      </div>
-      
-    </li>
-
     <!-- Divider -->
     <hr class="sidebar-divider">
     <!-- Heading -->
