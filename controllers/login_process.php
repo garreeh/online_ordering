@@ -32,6 +32,8 @@ if (isset($_POST['username_or_email'], $_POST['user_password'])) {
                 $_SESSION['user_email'] = $row['user_email'];
                 $_SESSION['username'] = $row['username'];
                 $_SESSION['is_admin'] = $row['is_admin'];
+                $_SESSION['user_type_id'] = $row['user_type_id'];
+
 
                 if ($rememberMe == "1") {
                     $token = bin2hex(random_bytes(32));
@@ -67,4 +69,3 @@ if (isset($_POST['username_or_email'], $_POST['user_password'])) {
         exit();
     }
 }
-?>

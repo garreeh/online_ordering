@@ -53,13 +53,13 @@ $columns = array(
                         &#x22EE;
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton' . $row['user_type_id'] . '">
-                        <a class="dropdown-item fetchDataUserType" href="#">Edit</a>
+                        <a class="dropdown-item fetchDataUserType" href="#">Modify Access</a>
                         <a class="dropdown-item delete-user" href="#" data-user-id="' . $row['user_type_id'] . '">Delete</a>
                     </div>
                 </div>';
         }
     ),
-    
+
 );
 
 // Database connection details
@@ -78,5 +78,3 @@ $where = "user_type_id";
 
 // Fetch and encode data
 echo json_encode(SSP::simple($_GET, $sql_details, $table, $primaryKey, $columns, $where));
-
-?>

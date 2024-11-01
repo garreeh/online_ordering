@@ -1,6 +1,6 @@
 <?php
 if (session_status() == PHP_SESSION_NONE) {
-    session_start();
+  session_start();
 }
 
 if (!isset($_SESSION['user_id'])) {
@@ -18,6 +18,7 @@ if (!isset($_SESSION['user_id'])) {
 <!--<![endif]-->
 
 <!-- Head BEGIN -->
+
 <head>
   <meta charset="utf-8">
   <title>Shopping cart | Metronic Shop UI</title>
@@ -39,14 +40,14 @@ if (!isset($_SESSION['user_id'])) {
   <link rel="shortcut icon" href="favicon.ico">
 
   <!-- Fonts START -->
-  <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|PT+Sans+Narrow|Source+Sans+Pro:200,300,400,600,700,900&amp;subset=all" rel="stylesheet" type="text/css"> 
+  <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|PT+Sans+Narrow|Source+Sans+Pro:200,300,400,600,700,900&amp;subset=all" rel="stylesheet" type="text/css">
   <!-- Fonts END -->
 
-  <!-- Global styles START -->          
+  <!-- Global styles START -->
   <link href="./../../assets/user/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
   <link href="./../../assets/user/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Global styles END --> 
-   
+  <!-- Global styles END -->
+
   <!-- Page level plugin styles START -->
   <link href="./../../assets/user/plugins/fancybox/source/jquery.fancybox.css" rel="stylesheet">
 
@@ -68,111 +69,113 @@ if (!isset($_SESSION['user_id'])) {
 <!-- Head END -->
 
 <!-- Body BEGIN -->
+
 <body class="ecommerce">
-  <?php include './../../includes/navigation.php'?>
+  <?php include './../../includes/navigation.php' ?>
 
 
 
-    <div class="main">
-      <div class="container">
-        <!-- BEGIN SIDEBAR & CONTENT -->
-        <div class="row margin-bottom-40">
-          <!-- BEGIN CONTENT -->
-          <div class="col-md-12 col-sm-12">
-            <h1>Shopping cart</h1>
-            <div class="goods-page">
-              <div class="goods-data clearfix">
-                <div class="table-wrapper-responsive">
-                  <table summary="Shopping cart">
-                    <thead>
-                      <tr>
-                        <th class="goods-page-image">Image</th>
-                        <th class="goods-page-description">Description</th>
-                        <th class="goods-page-ref-no">SKU</th>
-                        <th class="goods-page-quantity">Quantity</th>
-                        <th class="goods-page-price">Unit price</th>
-                        <th class="goods-page-total" colspan="2">Total</th>
-                      </tr>
-                    </thead>
-                    <tbody id="cart-items">
-                      <!-- Cart items will be inserted here by JavaScript -->
-                    </tbody>
-                  </table>
-                </div>
-
-                <div class="shopping-total">
-                  <ul>
-                    <li>
-                      <em>Sub total</em>
-                      <strong class="price" id="cart-subtotal"><span>₱ </span>0.00</strong>
-                    </li>
-                    <li>
-                      <em>Delivery cost</em>
-                      <strong class="price" id="cart-shipping"><span>₱ </span>35.00</strong>
-                    </li>
-                    <li class="shopping-total-price">
-                      <em>Total</em>
-                      <strong class="price" id="cart-total"><span>₱ </span>0.00</strong>
-                    </li>
-                  </ul>
-                </div>
+  <div class="main">
+    <div class="container">
+      <!-- BEGIN SIDEBAR & CONTENT -->
+      <div class="row margin-bottom-40">
+        <!-- BEGIN CONTENT -->
+        <div class="col-md-12 col-sm-12">
+          <h1>Shopping cart</h1>
+          <div class="goods-page">
+            <div class="goods-data clearfix">
+              <div class="table-wrapper-responsive">
+                <table summary="Shopping cart">
+                  <thead>
+                    <tr>
+                      <th class="goods-page-image">Image</th>
+                      <th class="goods-page-description">Description</th>
+                      <th class="goods-page-ref-no">SKU</th>
+                      <th class="goods-page-quantity">Quantity</th>
+                      <th class="goods-page-price">Unit price</th>
+                      <th class="goods-page-total" colspan="2">Total</th>
+                    </tr>
+                  </thead>
+                  <tbody id="cart-items">
+                    <!-- Cart items will be inserted here by JavaScript -->
+                  </tbody>
+                </table>
               </div>
-              <a href="/online_ordering/index.php" class="btn btn-default" type="submit">Continue shopping <i class="fa fa-shopping-cart"></i></a>
-              <?php include './../../modals/checkout_modal.php' ?>
-              <!-- Update this button to trigger the modal -->
-              <button class="btn btn-primary" type="submit" data-toggle="modal" data-target="#checkoutModal" id="checkout-button">Checkout <i class="fa fa-check"></i></button>
 
-
+              <div class="shopping-total">
+                <ul>
+                  <li>
+                    <em>Sub total</em>
+                    <strong class="price" id="cart-subtotal"><span>₱ </span>0.00</strong>
+                  </li>
+                  <li>
+                    <em>Delivery cost</em>
+                    <strong class="price" id="cart-shipping"><span>₱ </span>35.00</strong>
+                  </li>
+                  <li class="shopping-total-price">
+                    <em>Total</em>
+                    <strong class="price" id="cart-total"><span>₱ </span>0.00</strong>
+                  </li>
+                </ul>
+              </div>
             </div>
+            <a href="/online_ordering/index.php" class="btn btn-default" type="submit">Continue shopping <i class="fa fa-shopping-cart"></i></a>
+            <?php include './../../modals/checkout_modal.php' ?>
+            <!-- Update this button to trigger the modal -->
+            <button class="btn btn-primary" type="submit" data-toggle="modal" data-target="#checkoutModal" id="checkout-button">Checkout <i class="fa fa-check"></i></button>
+
+
           </div>
-          <!-- END CONTENT -->
         </div>
-        <!-- END SIDEBAR & CONTENT -->
-
+        <!-- END CONTENT -->
       </div>
+      <!-- END SIDEBAR & CONTENT -->
+
     </div>
+  </div>
 
-    <script src="./../../assets/user/plugins/jquery.min.js" type="text/javascript"></script>
-    <script src="./../../assets/user/plugins/jquery-migrate.min.js" type="text/javascript"></script>
-    <script src="./../../assets/user/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>      
-    <script src="./../../assets/user/corporate/scripts/back-to-top.js" type="text/javascript"></script>
-    <script src="./../../assets/user/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-    <!-- END CORE PLUGINS -->
+  <script src="./../../assets/user/plugins/jquery.min.js" type="text/javascript"></script>
+  <script src="./../../assets/user/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+  <script src="./../../assets/user/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+  <script src="./../../assets/user/corporate/scripts/back-to-top.js" type="text/javascript"></script>
+  <script src="./../../assets/user/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+  <!-- END CORE PLUGINS -->
 
-    <!-- BEGIN PAGE LEVEL JAVASCRIPTS (REQUIRED ONLY FOR CURRENT PAGE) -->
-    <script src="./../../assets/user/plugins/fancybox/source/jquery.fancybox.pack.js" type="text/javascript"></script><!-- pop up -->
-    <script src="./../../assets/user/plugins/bootstrap-touchspin/bootstrap.touchspin.js" type="text/javascript"></script><!-- Quantity -->
-    <script src="./../../assets/user/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
-    <script src="./../../assets/user/plugins/rateit/src/jquery.rateit.js" type="text/javascript"></script>
+  <!-- BEGIN PAGE LEVEL JAVASCRIPTS (REQUIRED ONLY FOR CURRENT PAGE) -->
+  <script src="./../../assets/user/plugins/fancybox/source/jquery.fancybox.pack.js" type="text/javascript"></script><!-- pop up -->
+  <script src="./../../assets/user/plugins/bootstrap-touchspin/bootstrap.touchspin.js" type="text/javascript"></script><!-- Quantity -->
+  <script src="./../../assets/user/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+  <script src="./../../assets/user/plugins/rateit/src/jquery.rateit.js" type="text/javascript"></script>
 
-    <script src="./../../assets/user/corporate/scripts/layout.js" type="text/javascript"></script>
+  <script src="./../../assets/user/corporate/scripts/layout.js" type="text/javascript"></script>
 
-    <!-- Add Toastify CSS and JS -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+  <!-- Add Toastify CSS and JS -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 
 
-    <script type="text/javascript">
-        jQuery(document).ready(function() {
-            Layout.init();    
-            Layout.initOWL();
-            Layout.initTwitter();
-            Layout.initImageZoom();
-            Layout.initTouchspin();
-            Layout.initUniform();
-            Layout.initSliderRange();
-        });
-    </script>
-    <!-- END PAGE LEVEL JAVASCRIPTS -->
+  <script type="text/javascript">
+    jQuery(document).ready(function() {
+      Layout.init();
+      Layout.initOWL();
+      Layout.initTwitter();
+      Layout.initImageZoom();
+      Layout.initTouchspin();
+      Layout.initUniform();
+      Layout.initSliderRange();
+    });
+  </script>
+  <!-- END PAGE LEVEL JAVASCRIPTS -->
 </body>
 <!-- END BODY -->
+
 </html>
 
 <script type="text/javascript">
   $(document).ready(function() {
-    
+
     // Function to update the cart content
     function updateCart() {
       $.ajax({
@@ -188,23 +191,26 @@ if (!isset($_SESSION['user_id'])) {
 
             // Clear the existing cart items
             $('#cart-items').empty();
+            if (response.items.length === 0) {
+              cartContent = '<tr><td colspan="7" class="text-center">Cart is empty</td></tr>';
+            } else {
+              // Iterate over cart items and generate HTML content
+              $.each(response.items, function(index, item) {
+                var productPrice = parseFloat(item.product_sellingprice) || 0;
+                var cartQuantity = parseInt(item.cart_quantity, 10) || 0;
+                var baseURL = "./../uploads/";
 
-            // Iterate over cart items and generate HTML content
-            $.each(response.items, function(index, item) {
-              var productPrice = parseFloat(item.product_sellingprice) || 0;
-              var cartQuantity = parseInt(item.cart_quantity, 10) || 0;
-              var baseURL = "./../uploads/";
-
-              cartContent += '<tr>';
-              cartContent += '<td class="goods-page-image"><a href="javascript:;"><img src="' + baseURL + item.product_image + '" alt="' + item.product_name + '" style="width: 90px; height: 100px;" /></a></td>';
-              cartContent += '<td class="goods-page-description"><h3><a href="javascript:;"></a></h3><p><strong>' + item.product_name + '</strong></p><em>' + item.product_description + '</em></td>';
-              cartContent += '<td class="goods-page-ref-no">' + item.product_sku + '</td>';
-              cartContent += '<td class="goods-page-quantity"><div class="product-quantity"><input type="text" value="' + cartQuantity + '" readonly class="form-control input-sm"></div></td>';
-              cartContent += '<td class="goods-page-price"><strong><span>₱ </span>' + productPrice.toFixed(2) + '</strong></td>';
-              cartContent += '<td class="goods-page-total"><strong><span>₱ </span>' + (productPrice * cartQuantity).toFixed(2) + '</strong></td>';
-              cartContent += '<td class="del-goods-col"><a class="del-goods" href="javascript:;" data-product-id="' + item.product_id + '">&nbsp;</a></td>';
-              cartContent += '</tr>';
-            });
+                cartContent += '<tr>';
+                cartContent += '<td class="goods-page-image"><a href="javascript:;"><img src="' + baseURL + item.product_image + '" alt="' + item.product_name + '" style="width: 90px; height: 100px;" /></a></td>';
+                cartContent += '<td class="goods-page-description"><h3><a href="javascript:;"></a></h3><p><strong>' + item.product_name + '</strong></p><em>' + item.product_description + '</em></td>';
+                cartContent += '<td class="goods-page-ref-no">' + item.product_sku + '</td>';
+                cartContent += '<td class="goods-page-quantity"><div class="product-quantity"><input type="text" value="' + cartQuantity + '" readonly class="form-control input-sm"></div></td>';
+                cartContent += '<td class="goods-page-price"><strong><span>₱ </span>' + productPrice.toFixed(2) + '</strong></td>';
+                cartContent += '<td class="goods-page-total"><strong><span>₱ </span>' + (productPrice * cartQuantity).toFixed(2) + '</strong></td>';
+                cartContent += '<td class="del-goods-col"><a class="del-goods" href="javascript:;" data-product-id="' + item.product_id + '">&nbsp;</a></td>';
+                cartContent += '</tr>';
+              });
+            }
 
             // Update the DOM with the new cart content
             $('#cart-items').html(cartContent);
@@ -234,7 +240,9 @@ if (!isset($_SESSION['user_id'])) {
       $.ajax({
         url: '/online_ordering/controllers/users/delete_cart_process.php',
         method: 'POST',
-        data: { product_id: productId },
+        data: {
+          product_id: productId
+        },
         dataType: 'json',
         success: function(response) {
           if (response.success) {

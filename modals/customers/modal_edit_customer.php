@@ -8,7 +8,7 @@
 </style>
 
 <?php
-include './../../connections/connections.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/online_ordering/connections/connections.php';
 
 // Fetch user types from the database
 $sql = "SELECT * FROM usertype";
@@ -21,8 +21,8 @@ if ($result) {
   }
 }
 
-if (isset($_POST['user_id'])) {
-  $user_id = $_POST['user_id'];
+if (isset($_SESSION['user_id'])) {
+  $user_id = $_SESSION['user_id'];
   $sql = "SELECT * FROM users WHERE user_id = '$user_id'";
   $result = mysqli_query($conn, $sql);
 
@@ -73,21 +73,10 @@ if (isset($_POST['user_id'])) {
                     <input type="password" class="form-control" id="user_confirm_password" name="user_confirm_password" placeholder="Enter Password" value="<?php echo $row['user_confirm_password']; ?>" required>
                   </div>
 
-                  <div class="form-group col-md-12">
-                    <label for="user_type_id">User Type:</label>
-                    <select class="form-control" id="user_type_id" name="user_type_id" required>
-                      <option value="">Select User Type</option>
-                      <?php foreach ($userTypes as $userType) : ?>
-                        <option value="<?php echo $userType['user_type_id']; ?>" <?php echo ($userType['user_type_id'] == $row['user_type_id']) ? 'selected' : ''; ?>>
-                          <?php echo $userType['user_type_name']; ?>
-                        </option>
-                      <?php endforeach; ?>
-                    </select>
-                  </div>
                 </div>
 
                 <!-- Add a hidden input field to submit the form with the button click -->
-                <input type="hidden" name="edit_user" value="1">
+                <input type="hidden" name="edit_customers" value="1">
 
                 <div class="modal-footer">
                   <button type="submit" class="btn btn-primary">Save</button>
@@ -124,7 +113,7 @@ if (isset($_POST['user_id'])) {
       // Send AJAX request
       $.ajax({
         type: 'POST',
-        url: '/online_ordering/controllers/admin/edit_user_process.php',
+        url: '/online_ordering/controllers/users/edit_customers_process.php',
         data: formData,
         success: function(response) {
           console.log(response); // Log the response for debugging
@@ -137,7 +126,7 @@ if (isset($_POST['user_id'])) {
             }).showToast();
 
             $('#fetchDataUserModal').modal('hide');
-            window.reloadDataTable();
+            $('.modal-backdrop').remove(); // Manually remove backdrop
           } else {
             Toastify({
               text: response.message,

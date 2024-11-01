@@ -5,8 +5,8 @@ $total_sales = 0; // Initialize total sales
 
 // Check if the button is clicked
 if (isset($_POST['searchSalesReport'])) {
-    $date_from = $_POST['date_from'];
-    $date_to = $_POST['date_to'];
+    $date_from = $_POST['date_from'] . ' 00:00:00'; // Append time for start of day
+    $date_to = $_POST['date_to'] . ' 23:59:59'; // Append time for end of day
 
     // Validate dates
     if ($date_from && $date_to) {
@@ -26,4 +26,3 @@ $formatted_sales = '₱ ' . number_format($total_sales, 2);
 
 // Return total sales as JSON for AJAX
 echo json_encode(['total_sales' => $formatted_sales]);
-?>

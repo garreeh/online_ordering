@@ -1,7 +1,8 @@
 <style>
   /* Custom CSS for label color */
   .modal-body label {
-    color: #333; /* Darker label color */
+    color: #333;
+    /* Darker label color */
     font-weight: bolder;
   }
 </style>
@@ -17,73 +18,100 @@ if (isset($_POST['user_type_id'])) {
   if ($result) {
     while ($row = mysqli_fetch_assoc($result)) {
 ?>
-  <div class="modal fade" id="fetchDataUsertypeModal" tabindex="-1" role="dialog" aria-labelledby="requestModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-l" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Update User Type Details ID: <?php echo $row['user_type_id']; ?></h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-
-        <div class="modal-body">
-          <form method="post" enctype="multipart/form-data">
-            <input type="hidden" name="user_type_id" value="<?php echo $row['user_type_id']; ?>">
-            <div class="form-row">
-              <div class="form-group col-md-12">
-                <label for="user_type_name">User Type:</label>
-                <input type="text" class="form-control" id="user_type_name" name="user_type_name" placeholder="Enter User Type" value="<?php echo $row['user_type_name']; ?>" required>
-              </div>
+      <div class="modal fade" id="fetchDataUsertypeModal" tabindex="-1" role="dialog" aria-labelledby="requestModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-l" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Update User Type Details ID: <?php echo $row['user_type_id']; ?></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
 
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="inventory_module">Inventory Module:</label>
-                <select class="form-control" id="inventory_module" name="inventory_module">
-                  <option value="1" <?php echo $row['inventory_module'] == 1 ? 'selected' : ''; ?>>Yes</option>
-                  <option value="0" <?php echo $row['inventory_module'] == 0 ? 'selected' : ''; ?>>No</option>
-                </select>
-              </div>
-              <div class="form-group col-md-6">
-                <label for="user_module">User Module:</label>
-                <select class="form-control" id="user_module" name="user_module">
-                  <option value="1" <?php echo $row['user_module'] == 1 ? 'selected' : ''; ?>>Yes</option>
-                  <option value="0" <?php echo $row['user_module'] == 0 ? 'selected' : ''; ?>>No</option>
-                </select>
-              </div>
-            </div>
+            <div class="modal-body">
+              <form method="post" enctype="multipart/form-data">
+                <input type="hidden" name="user_type_id" value="<?php echo $row['user_type_id']; ?>">
+                <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <label for="user_type_name">User Type:</label>
+                    <input type="text" class="form-control" id="user_type_name" name="user_type_name" placeholder="Enter User Type" value="<?php echo $row['user_type_name']; ?>" required>
+                  </div>
+                </div>
 
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="reports_module">Reports Module:</label>
-                <select class="form-control" id="reports_module" name="reports_module">
-                  <option value="1" <?php echo $row['reports_module'] == 1 ? 'selected' : ''; ?>>Yes</option>
-                  <option value="0" <?php echo $row['reports_module'] == 0 ? 'selected' : ''; ?>>No</option>
-                </select>
-              </div>
-              <div class="form-group col-md-6">
-                <label for="po_module">PO Module:</label>
-                <select class="form-control" id="po_module" name="po_module">
-                  <option value="1" <?php echo $row['po_module'] == 1 ? 'selected' : ''; ?>>Yes</option>
-                  <option value="0" <?php echo $row['po_module'] == 0 ? 'selected' : ''; ?>>No</option>
-                </select>
-              </div>
-            </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="orders_module">Orders Module:</label>
+                    <select class="form-control" id="orders_module" name="orders_module">
+                      <option value="1" <?php echo $row['orders_module'] == 1 ? 'selected' : ''; ?>>Yes</option>
+                      <option value="0" <?php echo $row['orders_module'] == 0 ? 'selected' : ''; ?>>No</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="transaction_module">Transaction Module:</label>
+                    <select class="form-control" id="transaction_module" name="transaction_module">
+                      <option value="1" <?php echo $row['transaction_module'] == 1 ? 'selected' : ''; ?>>Yes</option>
+                      <option value="0" <?php echo $row['transaction_module'] == 0 ? 'selected' : ''; ?>>No</option>
+                    </select>
+                  </div>
+                </div>
 
-            <input type="hidden" name="edit_user_type" value="1">
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="po_module">PO Module:</label>
+                    <select class="form-control" id="po_module" name="po_module">
+                      <option value="1" <?php echo $row['po_module'] == 1 ? 'selected' : ''; ?>>Yes</option>
+                      <option value="0" <?php echo $row['po_module'] == 0 ? 'selected' : ''; ?>>No</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="inventory_module">Inventory Module:</label>
+                    <select class="form-control" id="inventory_module" name="inventory_module">
+                      <option value="1" <?php echo $row['inventory_module'] == 1 ? 'selected' : ''; ?>>Yes</option>
+                      <option value="0" <?php echo $row['inventory_module'] == 0 ? 'selected' : ''; ?>>No</option>
+                    </select>
+                  </div>
+                </div>
 
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-primary">Save</button>
-              <button type="button" class="btn btn btn-danger" data-dismiss="modal">Close</button>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="reports_module">Reports Module:</label>
+                    <select class="form-control" id="reports_module" name="reports_module">
+                      <option value="1" <?php echo $row['reports_module'] == 1 ? 'selected' : ''; ?>>Yes</option>
+                      <option value="0" <?php echo $row['reports_module'] == 0 ? 'selected' : ''; ?>>No</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="user_module">User Module:</label>
+                    <select class="form-control" id="user_module" name="user_module">
+                      <option value="1" <?php echo $row['user_module'] == 1 ? 'selected' : ''; ?>>Yes</option>
+                      <option value="0" <?php echo $row['user_module'] == 0 ? 'selected' : ''; ?>>No</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <label for="deliveries_module">Deliveries Module:</label>
+                    <select class="form-control" id="deliveries_module" name="deliveries_module">
+                      <option value="1" <?php echo $row['deliveries_module'] == 1 ? 'selected' : ''; ?>>Yes</option>
+                      <option value="0" <?php echo $row['deliveries_module'] == 0 ? 'selected' : ''; ?>>No</option>
+                    </select>
+                  </div>
+                </div>
+
+                <input type="hidden" name="edit_user_type" value="1">
+
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary">Save</button>
+                  <button type="button" class="btn btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+              </form>
             </div>
-          </form>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
 
-<?php 
+<?php
     }
   }
 }

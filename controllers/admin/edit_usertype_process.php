@@ -11,6 +11,10 @@ if (isset($_POST['edit_user_type'])) {
   $reports_module = $conn->real_escape_string($_POST['reports_module']);
   $po_module = $conn->real_escape_string($_POST['po_module']);
 
+  $transaction_module = $conn->real_escape_string($_POST['transaction_module']);
+  $orders_module = $conn->real_escape_string($_POST['orders_module']);
+  $deliveries_module = $conn->real_escape_string($_POST['deliveries_module']);
+
   // Construct SQL query for UPDATE
   $sql = "UPDATE `usertype` 
           SET 
@@ -18,7 +22,11 @@ if (isset($_POST['edit_user_type'])) {
             inventory_module = '$inventory_module',
             user_module = '$user_module',
             reports_module = '$reports_module',
-            po_module = '$po_module'
+            po_module = '$po_module',
+
+            transaction_module = '$transaction_module',
+            orders_module = '$orders_module',
+            deliveries_module = '$deliveries_module'
           WHERE user_type_id = '$user_type_id'";
 
   // Execute SQL query
@@ -32,6 +40,5 @@ if (isset($_POST['edit_user_type'])) {
     $response = array('success' => false, 'message' => 'Error updating user: ' . mysqli_error($conn));
     echo json_encode($response);
     exit();
-  } 
+  }
 }
-?>

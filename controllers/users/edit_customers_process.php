@@ -2,7 +2,7 @@
 
 include '../../connections/connections.php';
 
-if (isset($_POST['edit_user'])) {
+if (isset($_POST['edit_customers'])) {
 
   $user_id = $conn->real_escape_string($_POST['user_id']);
   $user_fullname = $conn->real_escape_string($_POST['user_fullname']);
@@ -10,7 +10,6 @@ if (isset($_POST['edit_user'])) {
   $user_contact = $conn->real_escape_string($_POST['user_contact']);
   $username = $conn->real_escape_string($_POST['username']);
   $user_email = $conn->real_escape_string($_POST['user_email']);
-  $user_type_id = $conn->real_escape_string($_POST['user_type_id']);
 
   $user_confirm_password = $conn->real_escape_string($_POST['user_confirm_password']);
 
@@ -26,7 +25,6 @@ if (isset($_POST['edit_user'])) {
             username = '$username',
             user_email = '$user_email',
             user_password = '$user_password',
-            user_type_id = '$user_type_id',
             user_confirm_password = '$user_confirm_password'
 
           WHERE user_id = '$user_id'";

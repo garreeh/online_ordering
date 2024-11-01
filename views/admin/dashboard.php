@@ -18,9 +18,9 @@ if (session_status() == PHP_SESSION_NONE) {
   <meta name="author" content="">
 
   <title>Inventory | Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <!-- Custom fonts for this template-->
   <link href="./../../assets/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link
@@ -51,14 +51,14 @@ if (session_status() == PHP_SESSION_NONE) {
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
-        <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-        </div>
+          </div>
 
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <div id="clockAndDate" class="h1 mb-0 font-weight-bold text-gray-800"></div>
-        </div>
+          </div>
 
           <!-- Content Row -->
           <div class="row">
@@ -68,14 +68,14 @@ if (session_status() == PHP_SESSION_NONE) {
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                          Daily Sales
-                        </div>
-                        <?php include './../../controllers/admin/daily_sales_process.php'; ?>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800"> <?php echo '₱ ' . number_format($daily_sales, 2); ?> </div>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        Daily Sales
+                      </div>
+                      <?php include './../../controllers/admin/daily_sales_process.php'; ?>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"> <?php echo '₱ ' . number_format($daily_sales, 2); ?> </div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                      <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
                     </div>
                   </div>
                 </div>
@@ -83,65 +83,66 @@ if (session_status() == PHP_SESSION_NONE) {
             </div>
 
             <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-info shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                  Monthly Sales
-                                </div>
-                                <?php include './../../controllers/admin/monthly_sales_process.php'; ?>
+              <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                        Monthly Sales
+                      </div>
+                      <?php include './../../controllers/admin/monthly_sales_process.php'; ?>
 
-                                <div class="h5 mb-0 font-weight-bold text-gray-800"> <?php echo '₱ ' . number_format($monthly_sales, 2); ?> </div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"> <?php echo '₱ ' . number_format($monthly_sales, 2); ?> </div>
                     </div>
+                    <div class="col-auto">
+                      <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
                 </div>
+              </div>
             </div>
 
             <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-success shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                  Annual Sales
-                                </div>
-                                <?php include './../../controllers/admin/annual_sales_process.php'; ?>
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col-auto">
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800"> <?php echo '₱ ' . number_format($annual_sales, 2); ?> </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                            </div>
+              <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                        Annual Sales
+                      </div>
+                      <?php include './../../controllers/admin/annual_sales_process.php'; ?>
+                      <div class="row no-gutters align-items-center">
+                        <div class="col-auto">
+                          <div class="h5 mb-0 font-weight-bold text-gray-800"> <?php echo '₱ ' . number_format($annual_sales, 2); ?> </div>
                         </div>
+                      </div>
                     </div>
+                    <div class="col-auto">
+                      <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
                 </div>
+              </div>
             </div>
 
           </div>
 
-          <div class="row">
-
+          <!-- <div class="row">
             <div class="col-xl-3 col-md-6 mb-4">
               <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                          Staff
-                        </div>
-                        <?php include './../../controllers/admin/daily_sales_process.php'; ?>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800"> </?php echo '₱ ' . number_format($daily_sales, 2); ?> </div>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        Staff
+                      </div>
+                      <?php include './../../controllers/admin/daily_sales_process.php'; ?>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">
+                        </?php echo '₱ ' . number_format($daily_sales, 2); ?>
+                      </div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                      <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
                     </div>
                   </div>
                 </div>
@@ -158,7 +159,9 @@ if (session_status() == PHP_SESSION_NONE) {
                       </div>
                       <?php include './../../controllers/admin/monthly_sales_process.php'; ?>
 
-                      <div class="h5 mb-0 font-weight-bold text-gray-800"> </?php echo '₱ ' . number_format($monthly_sales, 2); ?> </div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">
+                        </?php echo '₱ ' . number_format($monthly_sales, 2); ?>
+                      </div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
@@ -172,26 +175,28 @@ if (session_status() == PHP_SESSION_NONE) {
               <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
-                      <div class="col mr-2">
-                          <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                            Test here ANY
-                          </div>
-                          <?php include './../../controllers/admin/annual_sales_process.php'; ?>
-                          <div class="row no-gutters align-items-center">
-                              <div class="col-auto">
-                                  <div class="h5 mb-0 font-weight-bold text-gray-800"> </?php echo '₱ ' . number_format($annual_sales, 2); ?> </div>
-                              </div>
-                          </div>
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                        Test here ANY
                       </div>
-                      <div class="col-auto">
-                        <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                      <?php include './../../controllers/admin/annual_sales_process.php'; ?>
+                      <div class="row no-gutters align-items-center">
+                        <div class="col-auto">
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            </?php echo '₱ ' . number_format($annual_sales, 2); ?>
+                          </div>
+                        </div>
                       </div>
                     </div>
+                    <div class="col-auto">
+                      <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
-            </div>
+          </div> -->
         </div>
         <!-- /.container-fluid -->
       </div>
