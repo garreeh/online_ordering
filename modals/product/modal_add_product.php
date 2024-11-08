@@ -7,9 +7,9 @@ $result = mysqli_query($conn, $sql);
 
 $supplier_names = [];
 if ($result) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        $supplier_names[] = $row;
-    }
+  while ($row = mysqli_fetch_assoc($result)) {
+    $supplier_names[] = $row;
+  }
 }
 
 // Fetch user types from the database
@@ -18,15 +18,16 @@ $resultCategory = mysqli_query($conn, $sql);
 
 $category_names = [];
 if ($result) {
-    while ($row = mysqli_fetch_assoc($resultCategory)) {
-        $category_names[] = $row;
-    }
+  while ($row = mysqli_fetch_assoc($resultCategory)) {
+    $category_names[] = $row;
+  }
 }
 ?>
 <style>
   /* Custom CSS for label color */
   .modal-body label {
-    color: #333; /* Darker label color */
+    color: #333;
+    /* Darker label color */
     font-weight: bolder;
   }
 </style>
@@ -124,10 +125,10 @@ if ($result) {
   $(document).ready(function() {
     $('#addProductModal form').submit(function(event) {
       event.preventDefault(); // Prevent default form submission
-      
+
       // Store a reference to $(this)
       var $form = $(this);
-      
+
       // Serialize form data
       var formData = new FormData($form[0]);
 
@@ -153,10 +154,13 @@ if ($result) {
               duration: 2000,
               backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)"
             }).showToast();
-            
+
             // Optionally, reset the form
             $form.trigger('reset');
-            
+
+            // Optionally, reset select for selectized
+            $('#category_id')[0].selectize.clear();
+            $('#supplier_id')[0].selectize.clear();
             // Optionally, close the modal
             $('#addProductModal').modal('hide');
             window.reloadDataTable();
@@ -183,6 +187,15 @@ if ($result) {
           $addButton.prop('disabled', false);
         }
       });
+    });
+
+    $('#addProductModal').on('hidden.bs.modal', function() {
+
+      // Reset the dropdowns to their default states
+      $('#category_id')[0].selectize.clear();
+
+      $('#supplier_id')[0].selectize.clear();
+
     });
   });
 </script>

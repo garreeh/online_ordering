@@ -10,21 +10,29 @@ if (!isset($_SESSION['user_id'])) {
 
 include '../../connections/connections.php';
 
-if (isset($_POST['product_id'])) {
+if (isset($_POST['product_id']) && isset($_POST['cart_quantity'])) {
     // Get product_id from POST request and user_id from session
     $product_id = $conn->real_escape_string($_POST['product_id']);
     $user_id = $_SESSION['user_id'];
+    $cart_quantity = (int) $_POST['cart_quantity']; // Get the quantity from the POST data
 
     // Get the current stock and selling price of the product
     $product_query = "SELECT product_stocks, product_sellingprice FROM product WHERE product_id = '$product_id'";
     $product_result = $conn->query($product_query);
-    
+
     if ($product_result->num_rows > 0) {
         $product_row = $product_result->fetch_assoc();
         $product_stock = $product_row['product_stocks'];
         $product_price = $product_row['product_sellingprice'];
     } else {
         $response = array('success' => false, 'message' => 'Product not found.');
+        echo json_encode($response);
+        exit();
+    }
+
+    // Check if requested quantity exceeds stock
+    if ($cart_quantity > $product_stock) {
+        $response = array('success' => false, 'message' => 'Low on Stock. Available stock: ' . $product_stock);
         echo json_encode($response);
         exit();
     }
@@ -36,7 +44,7 @@ if (isset($_POST['product_id'])) {
     if ($cart_result->num_rows > 0) {
         // Product is already in the cart with status 'Cart', update the quantity
         $cart_row = $cart_result->fetch_assoc();
-        $new_quantity = $cart_row['cart_quantity'] + 1;
+        $new_quantity = $cart_row['cart_quantity'] + $cart_quantity;
 
         // Check if the new quantity exceeds available stock
         if ($new_quantity > $product_stock) {
@@ -55,7 +63,6 @@ if (isset($_POST['product_id'])) {
         } else {
             $response = array('success' => false, 'message' => 'Error updating cart: ' . $conn->error);
         }
-
     } else {
         // If the product is in the cart but with status 'Processing'
         $cart_processing_query = "SELECT * FROM cart WHERE user_id = '$user_id' AND product_id = '$product_id' AND cart_status = 'Processing'";
@@ -77,7 +84,6 @@ if (isset($_POST['product_id'])) {
             } else {
                 $response = array('success' => false, 'message' => 'Error adding product to cart: ' . $conn->error);
             }
-
         } else {
             // Product is not in the cart at all, add it with quantity 1
             if ($product_stock < 1) {
@@ -90,7 +96,7 @@ if (isset($_POST['product_id'])) {
             $total_price = $product_price;
 
             // Insert the new product into the cart with cart_status set to 'Cart'
-            $insert_query = "INSERT INTO cart (user_id, product_id, cart_quantity, total_price, cart_status) VALUES ('$user_id', '$product_id', 1, '$total_price', 'Cart')";
+            $insert_query = "INSERT INTO cart (user_id, product_id, cart_quantity, total_price, cart_status) VALUES ('$user_id', '$product_id', $cart_quantity, '$total_price', 'Cart')";
             if ($conn->query($insert_query)) {
                 $response = array('success' => true, 'message' => 'Product added to cart successfully!');
             } else {
@@ -106,4 +112,3 @@ if (isset($_POST['product_id'])) {
     echo json_encode($response);
     exit();
 }
-?>

@@ -101,9 +101,6 @@ if ($result) {
           </li>
         <?php endif; ?>
 
-
-
-
         <!-- <li class="nav-item">
       <a class="nav-link" href="/online_ordering/views/admin/billing_module.php">
         <i class="fas fa-fw fa-clipboard-list"></i>

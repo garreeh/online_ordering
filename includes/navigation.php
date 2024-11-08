@@ -87,7 +87,7 @@ if (session_status() == PHP_SESSION_NONE) {
             </ul>
             <div class="text-right">
               <a href="/online_ordering/views/user/checkout_module.php" class="btn btn-default">View Cart</a>
-              <a href="#" class="btn btn-primary">Checkout</a>
+              <a href="/online_ordering/views/user/checkout_module.php" class="btn btn-primary">Checkout</a>
             </div>
           </div>
         </div>
