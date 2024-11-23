@@ -22,7 +22,7 @@ if (session_status() == PHP_SESSION_NONE) {
   <title>Admin | Sales Report</title>
 
   <link href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" rel="stylesheet">
-	<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
   <link href="./../../assets/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -60,66 +60,66 @@ if (session_status() == PHP_SESSION_NONE) {
 
 
           <div class="row mb-4">
-              <div class="col-xl-12 col-lg-12">
-                  <div class="tab-pane fade show active" id="aa" role="tabpanel" aria-labelledby="aa-tab">
-                      <div class="form-row align-items-end">
-                          <div class="col-auto">
-                              <label for="dateFrom">Date From:</label>
-                              <input type="date" id="dateFrom" name="dateFrom" class="form-control">
-                          </div>
-                          <div class="col-auto">
-                              <label for="dateTo">Date To:</label>
-                              <input type="date" id="dateTo" name="dateTo" class="form-control">
-                          </div>
-                          <div class="col-auto">
-                              <button class="btn btn-success shadow-sm mb-4" id="searchSalesReport">Search</button>
-                          </div>
-
-                          <div class="col-auto">
-                            <a href="./../../excels/supplier_export.php" class="btn btn-success shadow-sm mb-4"><i class="fas fa-file-excel"></i> Export Excel</a>
-                          </div>
-                      </div>
-
-                      <hr>
-                        <div id="dateRangeDisplay" class="mb-4">
-                        <h4> From: <span id="displayFrom"> </span> </h4>
-                        <br>
-                        <h4> To: <span id="displayTo"> </span> </h4>
-                        <hr>
-                          <h4>Total Sales: <span id="totalSales"> </span></h4>
-                        </div>
-                      <br>
-
-                      
-
-                      <table class="table custom-table table-hover" name="sales_report_table" id="sales_report_table">
-                          <thead>
-                              <tr>
-                                  <th>ID</th>
-                                  <th>Ref No.</th>
-                                  <th>Customer Name</th>
-                                  <th>Status</th>
-                                  <th>Total Payment</th>
-                                  <th>Payment Method</th>
-                                  <th>Proof of Payment</th>
-                                  <th>Date Created</th>
-                                  <th>Manage</th>
-                              </tr>
-                          </thead>
-                      </table>
+            <div class="col-xl-12 col-lg-12">
+              <div class="tab-pane fade show active" id="aa" role="tabpanel" aria-labelledby="aa-tab">
+                <div class="form-row align-items-end">
+                  <div class="col-auto">
+                    <label for="dateFrom">Date From:</label>
+                    <input type="date" id="dateFrom" name="dateFrom" class="form-control">
                   </div>
+                  <div class="col-auto">
+                    <label for="dateTo">Date To:</label>
+                    <input type="date" id="dateTo" name="dateTo" class="form-control">
+                  </div>
+                  <div class="col-auto">
+                    <button class="btn btn-success shadow-sm mb-4" id="searchSalesReport">Search</button>
+                  </div>
+
+                  <div class="col-auto">
+                    <a href="./../../excels/supplier_export.php" class="btn btn-success shadow-sm mb-4"><i class="fas fa-file-excel"></i> Export Excel</a>
+                  </div>
+                </div>
+
+                <hr>
+                <div id="dateRangeDisplay" class="mb-4">
+                  <h4> From: <span id="displayFrom"> </span> </h4>
+                  <br>
+                  <h4> To: <span id="displayTo"> </span> </h4>
+                  <hr>
+                  <h4>Total Sales: <span id="totalSales"> </span></h4>
+                </div>
+                <br>
+
+
+
+                <table class="table custom-table table-hover" name="sales_report_table" id="sales_report_table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Ref No.</th>
+                      <th>Customer Name</th>
+                      <th>Status</th>
+                      <th>Total Payment</th>
+                      <th>Payment Method</th>
+                      <th>Proof of Payment</th>
+                      <th>Date Created</th>
+                      <th>Manage</th>
+                    </tr>
+                  </thead>
+                </table>
               </div>
+            </div>
           </div>
 
-          </div>
-          <!-- /.container-fluid -->
         </div>
-
+        <!-- /.container-fluid -->
       </div>
-      <!-- End of Main Content -->
 
     </div>
-    <!-- End of Content Wrapper -->
+    <!-- End of Main Content -->
+
+  </div>
+  <!-- End of Content Wrapper -->
 
   </div>
   <!-- End of Page Wrapper -->
@@ -150,61 +150,59 @@ if (session_status() == PHP_SESSION_NONE) {
   </script>
   <!-- END OF SELECT -->
 
- 
+
 </body>
 
 </html>
 
 <script>
-  $('#sidebarToggle').click(function () {
+  $('#sidebarToggle').click(function() {
     $('#sales_report_table').css('width', '100%');
   });
-  
+
   $(document).ready(function() {
     var sales_report_table = $('#sales_report_table').DataTable({
-        "pagingType": "numbers",
-        "processing": true,
-        "serverSide": true,
-        "ajax": {
-            "url": "./../../controllers/tables/sales_report_table.php",
-            "data": function(d) {
-                d.date_from = $('#dateFrom').val();
-                d.date_to = $('#dateTo').val();
-            }
-        },
+      "pagingType": "numbers",
+      "processing": true,
+      "serverSide": true,
+      "ajax": {
+        "url": "./../../controllers/tables/sales_report_table.php",
+        "data": function(d) {
+          d.date_from = $('#dateFrom').val();
+          d.date_to = $('#dateTo').val();
+        }
+      },
     });
 
     $('#searchSalesReport').click(function() {
-        $(this).text('Searching...').prop('disabled', true);
-        // Get the selected dates
-        var dateFrom = $('#dateFrom').val();
-        var dateTo = $('#dateTo').val();
+      $(this).text('Searching...').prop('disabled', true);
+      // Get the selected dates
+      var dateFrom = $('#dateFrom').val();
+      var dateTo = $('#dateTo').val();
 
-        // Update the displayed date range
-        $('#displayFrom').text(dateFrom);
-        $('#displayTo').text(dateTo);
+      // Update the displayed date range
+      $('#displayFrom').text(dateFrom);
+      $('#displayTo').text(dateTo);
 
-        // Reload the table and fetch total sales
-        sales_report_table.ajax.reload(function() {
-            // Fetch total sales
-            $.ajax({
-                type: 'POST',
-                url: './../../controllers/admin/sales_report_process.php', // Update with your PHP file path
-                data: {
-                    searchSalesReport: true,
-                    date_from: $('#dateFrom').val(),
-                    date_to: $('#dateTo').val()
-                },
-                success: function(response) {
-                    const data = JSON.parse(response);
-                    // Update the total sales display
-                    $('#totalSales').text(data.total_sales);
-                    $('#searchSalesReport').text('Search').prop('disabled', false);
-                }
-            });
+      // Reload the table and fetch total sales
+      sales_report_table.ajax.reload(function() {
+        // Fetch total sales
+        $.ajax({
+          type: 'POST',
+          url: './../../controllers/admin/sales_report_process.php', // Update with your PHP file path
+          data: {
+            searchSalesReport: true,
+            date_from: $('#dateFrom').val(),
+            date_to: $('#dateTo').val()
+          },
+          success: function(response) {
+            const data = JSON.parse(response);
+            // Update the total sales display
+            $('#totalSales').text(data.total_sales);
+            $('#searchSalesReport').text('Search').prop('disabled', false);
+          }
         });
+      });
     });
-});
-
+  });
 </script>
-
