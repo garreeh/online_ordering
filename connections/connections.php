@@ -1,14 +1,14 @@
 <?php
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "ecommerce";
-
 // $servername = "localhost";
-// $username = "u759574209_online_order";
-// $password = "Mybossrocks081677!";
-// $dbname = "u759574209_online_order";
+// $username = "root";
+// $password = "";
+// $dbname = "ecommerce";
+
+$servername = "localhost";
+$username = "u759574209_online_order";
+$password = "Mybossrocks081677!";
+$dbname = "u759574209_online_order";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
