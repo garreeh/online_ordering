@@ -144,6 +144,8 @@
               $.each(response.items, function(index, item) {
                 var productPrice = parseFloat(item.product_sellingprice) || 0;
                 var cartQuantity = parseInt(item.cart_quantity, 10) || 0;
+                var baseURL = "./../uploads/";
+
 
                 cartContent += '<tr>';
                 cartContent += '<td class="goods-page-image"><a href="javascript:;"><img src="' + baseURL + item.product_image + '" alt="' + item.product_name + '" style="width: 90px; height: 100px;" /></a></td>';
