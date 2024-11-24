@@ -126,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <div class='email-body'>
                                             <p>Dear $user_fullname,</p>
                                             <p>Thank you for registering with us. To complete your registration, please verify your email address by clicking the button below:</p>
-                                            <a href='http://localhost/online_ordering/controllers/verification_process.php?email=$user_email' class='verify-button'>Verify Email</a>
+                                            <a href='online_ordering/controllers/verification_process.php?email=$user_email' class='verify-button'>Verify Email</a>
                                             <p>If you did not sign up for this account, please disregard this email.</p>
                                             <p>Best Regards,<br>Sterling</p>
                                         </div>
@@ -143,10 +143,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo json_encode($response);
             exit();
         }
-        
+
         session_start();
         $_SESSION['email_verified'] = true;
-            
+
         // Redirect to verification page
         $response = array('success' => true, 'message' => 'Registration successful. Please check your email for verification.');
         echo json_encode($response);
