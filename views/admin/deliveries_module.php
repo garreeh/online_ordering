@@ -22,7 +22,7 @@ if (session_status() == PHP_SESSION_NONE) {
   <title>Admin | Deliveries</title>
 
   <link href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" rel="stylesheet">
-	<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
   <link href="./../../assets/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -61,14 +61,14 @@ if (session_status() == PHP_SESSION_NONE) {
           <h1 class="h3 mb-0 text-gray-800">These Deliveries are assigned to you</h1>
           <br>
 
-          <a href="./../../excels/supplier_export.php" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm mb-4"><i class="fas fa-file-excel"></i> Export Excel</a>
+          <!-- <a href="./../../excels/supplier_export.php" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm mb-4"><i class="fas fa-file-excel"></i> Export Excel</a> -->
 
           <div class="row">
             <div class="col-xl-12 col-lg-12">
               <div class="tab-pane fade show active" id="aa" role="tabpanel" aria-labelledby="aa-tab">
-                
+
                 <div class="table-responsive">
-                <div id="modalContainerProvider"></div>
+                  <div id="modalContainerProvider"></div>
 
 
                   <table class="table custom-table table-hover" name="delivery_table" id="delivery_table">
@@ -130,17 +130,17 @@ if (session_status() == PHP_SESSION_NONE) {
   </script>
   <!-- END OF SELECT -->
 
- 
+
 </body>
 
 </html>
 
 <script>
-  $('#sidebarToggle').click(function () {
+  $('#sidebarToggle').click(function() {
     $('#delivery_table').css('width', '100%');
     // console.log(table) //This is for testing only
   });
-  
+
   //Table for Transactions
   $(document).ready(function() {
     var delivery_table = $('#delivery_table').DataTable({
@@ -159,22 +159,24 @@ if (session_status() == PHP_SESSION_NONE) {
   $(document).ready(function() {
     // Function to handle click event on datatable rows
     $('#delivery_table').on('click', 'tr td:nth-child(9) .fetchDataFinish', function() {
-        var cart_id = $(this).closest('tr').find('td').first().text(); // Get the cart_id from the clicked row
+      var cart_id = $(this).closest('tr').find('td').first().text(); // Get the cart_id from the clicked row
 
-        $.ajax({
-            url: './../../modals/delivery/modal_add_delivered.php', // Path to PHP script to fetch modal content
-            method: 'POST',
-            data: { cart_id: cart_id },
-            success: function(response) {
-                $('#modalContainerProvider').html(response);
-                $('#addDeliveredModal').modal('show');
-                $('#cart_id').val(cart_id); // Set the cart_id here
-                console.log("#addDeliveredModal: " + cart_id);
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-            }
-        });
+      $.ajax({
+        url: './../../modals/delivery/modal_add_delivered.php', // Path to PHP script to fetch modal content
+        method: 'POST',
+        data: {
+          cart_id: cart_id
+        },
+        success: function(response) {
+          $('#modalContainerProvider').html(response);
+          $('#addDeliveredModal').modal('show');
+          $('#cart_id').val(cart_id); // Set the cart_id here
+          console.log("#addDeliveredModal: " + cart_id);
+        },
+        error: function(xhr, status, error) {
+          console.error(xhr.responseText);
+        }
+      });
     });
   });
 </script>

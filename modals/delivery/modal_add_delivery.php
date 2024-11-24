@@ -2,21 +2,22 @@
 include './../../connections/connections.php';
 
 // Fetch user types from the database
-$sql = "SELECT * FROM users";
+$sql = "SELECT * FROM users WHERE user_type_id = 4";
 $result = mysqli_query($conn, $sql);
 
 $user_names = [];
 if ($result) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        $user_names[] = $row;
-    }
+  while ($row = mysqli_fetch_assoc($result)) {
+    $user_names[] = $row;
+  }
 }
 
 ?>
 <style>
   /* Custom CSS for label color */
   .modal-body label {
-    color: #333; /* Darker label color */
+    color: #333;
+    /* Darker label color */
     font-weight: bolder;
   }
 </style>
@@ -64,10 +65,10 @@ if ($result) {
   $(document).ready(function() {
     $('#addDeliveryModal form').submit(function(event) {
       event.preventDefault(); // Prevent default form submission
-      
+
       // Store a reference to $(this)
       var $form = $(this);
-      
+
       // Serialize form data
       var formData = $form.serialize();
 
@@ -91,14 +92,14 @@ if ($result) {
               duration: 2000,
               backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)"
             }).showToast();
-            
+
             // Optionally, reset the form
             $form.trigger('reset');
-            
+
             // Optionally, close the modal
             $('#addDeliveryModal').modal('hide');
             window.reloadDataTable();
-            
+
           } else {
             Toastify({
               text: response.message,

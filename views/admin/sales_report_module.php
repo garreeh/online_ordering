@@ -76,7 +76,7 @@ if (session_status() == PHP_SESSION_NONE) {
                   </div>
 
                   <div class="col-auto">
-                    <a href="./../../excels/supplier_export.php" class="btn btn-success shadow-sm mb-4"><i class="fas fa-file-excel"></i> Export Excel</a>
+                    <!-- <a href="./../../excels/supplier_export.php" class="btn btn-success shadow-sm mb-4"><i class="fas fa-file-excel"></i> Export Excel</a> -->
                   </div>
                 </div>
 

@@ -22,7 +22,7 @@ if (session_status() == PHP_SESSION_NONE) {
   <title>Admin | Category</title>
 
   <link href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" rel="stylesheet">
-	<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
 
   <link href="./../../assets/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -61,12 +61,12 @@ if (session_status() == PHP_SESSION_NONE) {
           </div>
 
           <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm mb-4" data-toggle="modal" data-target="#addCategoryModal"> <i class="fas fa-plus"></i> Add Category</a>
-          <a href="./../../excels/supplier_export.php" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm mb-4"><i class="fas fa-file-excel"></i> Export Excel</a>
+          <!-- <a href="./../../excels/supplier_export.php" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm mb-4"><i class="fas fa-file-excel"></i> Export Excel</a> -->
 
           <div class="row">
             <div class="col-xl-12 col-lg-12">
               <div class="tab-pane fade show active" id="aa" role="tabpanel" aria-labelledby="aa-tab">
-                
+
                 <div class="table-responsive">
                   <div id="modalContainerCategory"></div>
 
@@ -118,11 +118,11 @@ if (session_status() == PHP_SESSION_NONE) {
 </html>
 
 <script>
-  $('#sidebarToggle').click(function () {
+  $('#sidebarToggle').click(function() {
     $('#category_table').css('width', '100%');
     // console.log(table) //This is for testing only
   });
-  
+
   //Table for Supplier
   $(document).ready(function() {
     var category_table = $('#category_table').DataTable({
@@ -142,23 +142,23 @@ if (session_status() == PHP_SESSION_NONE) {
   $(document).ready(function() {
     // Function to handle click event on datatable rows
     $('#category_table').on('click', 'tr td:nth-child(5) .fetchDataCategory', function() {
-        var category_id = $(this).closest('tr').find('td').first().text(); // Get the user_id from the clicked row
+      var category_id = $(this).closest('tr').find('td').first().text(); // Get the user_id from the clicked row
 
-        $.ajax({
-            url: './../../modals/category/modal_edit_category.php', // Path to PHP script to fetch modal content
-            method: 'POST',
-            data: { category_id: category_id },
-            success: function(response) {
-                $('#modalContainerCategory').html(response);
-                $('#editCategoryModal').modal('show');
-                console.log("#editCategoryModal" + category_id);
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-            }
-        });
+      $.ajax({
+        url: './../../modals/category/modal_edit_category.php', // Path to PHP script to fetch modal content
+        method: 'POST',
+        data: {
+          category_id: category_id
+        },
+        success: function(response) {
+          $('#modalContainerCategory').html(response);
+          $('#editCategoryModal').modal('show');
+          console.log("#editCategoryModal" + category_id);
+        },
+        error: function(xhr, status, error) {
+          console.error(xhr.responseText);
+        }
+      });
     });
   });
-
-
 </script>
