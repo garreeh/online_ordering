@@ -134,71 +134,62 @@ if (!isset($_SESSION['user_id'])) {
       <h1>Recommendation for you</h1>
       <div class="col-md-9 col-sm-8 col-xs-7 special-product">
         <?php
-        $categoryQuery = "SELECT * FROM category";
-        $categoryResult = $conn->query($categoryQuery);
-        while ($categoryRow = $categoryResult->fetch_assoc()) {
-          $category_id = $categoryRow['category_id'];
-          $category_name = htmlspecialchars($categoryRow['category_name']);
-          $productQuery = "SELECT * FROM product WHERE category_id = '$category_id'";
-          $productResult = $conn->query($productQuery);
+        // Fetch random 3 products from the product table
+        $productQuery = "SELECT * FROM product ORDER BY RAND() LIMIT 3";
+        $productResult = $conn->query($productQuery);
 
-          if ($productResult->num_rows > 0) {
-            echo "<div class='category-products' data-category-id='$category_id'>";
-            echo "<h3 style='font-size: 2rem; color: #800000; margin-top: 30px;'>$category_name:</h3>";
-            echo "<div class='row'>";
-
-            while ($row = $productResult->fetch_assoc()) {
-              $product_image = basename($row['product_image']);
-              $image_url = './../../uploads/' . $product_image;
+        if ($productResult->num_rows > 0) {
+          while ($row = $productResult->fetch_assoc()) {
+            $product_image = basename($row['product_image']);
+            $image_url = './../../uploads/' . $product_image;
         ?>
-              <div class="col-xs-12 col-sm-6 col-md-4" style="margin-bottom: 2rem;">
-                <div class="product-item"
-                  style="display: flex; flex-direction: column; padding-bottom: 1rem; border: 1px solid #ddd; border-radius: 10px; position: relative; box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: transform 0.3s; overflow: hidden;">
-                  <div class="pi-img-wrapper" style="text-align: center; position: relative;">
-                    <img src="<?php echo $image_url; ?>" class="img-responsive"
-                      alt="<?php echo htmlspecialchars($row['product_name']); ?>"
-                      style="width: 100%; height: auto; border-radius: 8px; transition: transform 0.3s;">
-                  </div>
-                  <h3 style="text-align: center; color: #333; font-size: 1.8rem; font-weight: bold;">
-                    <?php echo htmlspecialchars($row['product_name']); ?>
-                  </h3>
-                  <div class="pi-price" style="text-align: center; color: #2E8B57; font-size: 1.5rem;">
-                    ₱<?php echo number_format($row['product_sellingprice'], 2); ?>
-                  </div>
-
-                  <div class="pi-price" style="text-align: center; color: #2E8B57; font-size: 1.5rem;">
-                    Stocks: <?php echo $row['product_stocks']; ?>
-                  </div>
-                  <div class="quantity-controls"
-                    style="display: flex; justify-content: center; align-items: center; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; padding: 10px; background-color: #f9f9f9; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-                    <button class="minus-btn"
-                      style="background-color: #ff6f61; color: white; border: none; border-radius: 5px; width: 50px; height: 50px; cursor: pointer; transition: background-color 0.3s; font-size: 1.5rem; display: flex; align-items: center; justify-content: center;">
-                      -
-                    </button>
-                    <input type="number" class="cart_quantity" value="1" min="1"
-                      style="width: 60px; text-align: center; border: none; outline: none; font-size: 1.5rem; margin: 0 10px; border-radius: 5px; height: 50px;">
-                    <button class="add-btn"
-                      style="background-color: #4CAF50; color: white; border: none; border-radius: 5px; width: 50px; height: 50px; cursor: pointer; transition: background-color 0.3s; font-size: 1.5rem; display: flex; align-items: center; justify-content: center;">
-                      +
-                    </button>
-                  </div>
-                  <br>
-                  <br>
-                  <a href="javascript:void(0)" class="btn btn-default add-to-cart add2cart"
-                    data-product-id="<?php echo $row['product_id']; ?>"
-                    style="position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%); width: 90%; text-align: center; padding: 0.5rem 0; background-color: #4682B4; color: #fff; font-weight: bold; border-radius: 5px; transition: background-color 0.3s;">
-                    Add to Order
-                  </a>
+            <div class="col-xs-12 col-sm-6 col-md-4" style="margin-bottom: 2rem;">
+              <div class="product-item"
+                style="display: flex; flex-direction: column; padding-bottom: 1rem; border: 1px solid #ddd; border-radius: 10px; position: relative; box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: transform 0.3s; overflow: hidden;">
+                <div class="pi-img-wrapper" style="text-align: center; position: relative;">
+                  <img src="<?php echo $image_url; ?>" class="img-responsive"
+                    alt="<?php echo htmlspecialchars($row['product_name']); ?>"
+                    style="width: 100%; height: auto; border-radius: 8px; transition: transform 0.3s;">
                 </div>
+                <h3 style="text-align: center; color: #333; font-size: 1.8rem; font-weight: bold;">
+                  <?php echo htmlspecialchars($row['product_name']); ?>
+                </h3>
+                <div class="pi-price" style="text-align: center; color: #2E8B57; font-size: 1.5rem;">
+                  ₱<?php echo number_format($row['product_sellingprice'], 2); ?>
+                </div>
+
+                <div class="pi-price" style="text-align: center; color: #2E8B57; font-size: 1.5rem;">
+                  Stocks: <?php echo $row['product_stocks']; ?>
+                </div>
+                <div class="quantity-controls"
+                  style="display: flex; justify-content: center; align-items: center; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; padding: 10px; background-color: #f9f9f9; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                  <button class="minus-btn"
+                    style="background-color: #ff6f61; color: white; border: none; border-radius: 5px; width: 50px; height: 50px; cursor: pointer; transition: background-color 0.3s; font-size: 1.5rem; display: flex; align-items: center; justify-content: center;">
+                    -
+                  </button>
+                  <input type="number" class="cart_quantity" value="1" min="1"
+                    style="width: 60px; text-align: center; border: none; outline: none; font-size: 1.5rem; margin: 0 10px; border-radius: 5px; height: 50px;">
+                  <button class="add-btn"
+                    style="background-color: #4CAF50; color: white; border: none; border-radius: 5px; width: 50px; height: 50px; cursor: pointer; transition: background-color 0.3s; font-size: 1.5rem; display: flex; align-items: center; justify-content: center;">
+                    +
+                  </button>
+                </div>
+                <br>
+                <br>
+                <a href="javascript:void(0)" class="btn btn-default add-to-cart add2cart"
+                  data-product-id="<?php echo $row['product_id']; ?>"
+                  style="position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%); width: 90%; text-align: center; padding: 0.5rem 0; background-color: #4682B4; color: #fff; font-weight: bold; border-radius: 5px; transition: background-color 0.3s;">
+                  Add to Order
+                </a>
               </div>
+            </div>
         <?php
-            }
-            echo "</div>";
-            echo "</div>";
           }
         }
         ?>
       </div>
+
+
     </div>
   </div>
 
