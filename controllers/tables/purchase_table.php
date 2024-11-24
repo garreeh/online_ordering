@@ -8,9 +8,9 @@ $columns = array(
 	array(
 		'db' => 'purchase_order_id',
 		'dt' => 0,
-		'field' =>'purchase_order_id',
+		'field' => 'purchase_order_id',
 		'formatter' => function ($lab1, $row) {
-      return $row['purchase_order_id'];
+			return $row['purchase_order_id'];
 		}
 	),
 
@@ -29,7 +29,6 @@ $columns = array(
 		'field' => 'supplier_name',
 		'formatter' => function ($lab3, $row) {
 			return $row['supplier_name'];
-
 		}
 	),
 
@@ -38,44 +37,44 @@ $columns = array(
 		'dt' => 3,
 		'field' => 'product_name',
 		'formatter' => function ($lab4, $row) {
-      return $row['product_name'];
+			return $row['product_name'];
 		}
 	),
 
 	array(
-    'db' => 'quantity',
-    'dt' => 4,
-    'field' => 'quantity',
-    'formatter' => function ($lab5, $row) {
+		'db' => 'quantity',
+		'dt' => 4,
+		'field' => 'quantity',
+		'formatter' => function ($lab5, $row) {
 			return $row['quantity'];
-    }
+		}
 	),
 
 	array(
-    'db' => 'purchase_order.created_at',
-    'dt' => 5,
-    'field' => 'created_at',
-    'formatter' => function ($lab5, $row) {
+		'db' => 'purchase_order.created_at',
+		'dt' => 5,
+		'field' => 'created_at',
+		'formatter' => function ($lab5, $row) {
 			return $row['created_at'];
-    }
+		}
 	),
 
 	array(
-    'db' => 'purchase_order.updated_at',
-    'dt' => 6,
-    'field' => 'updated_at',
-    'formatter' => function ($lab5, $row) {
+		'db' => 'purchase_order.updated_at',
+		'dt' => 6,
+		'field' => 'updated_at',
+		'formatter' => function ($lab5, $row) {
 			return $row['updated_at'];
-    }
+		}
 	),
 
 	array(
-    'db' => 'purchase_order_id',
-    'dt' => 7,
-    'field' => 'purchase_order_id',
-    'formatter' => function ($lab6, $row) {
+		'db' => 'purchase_order_id',
+		'dt' => 7,
+		'field' => 'purchase_order_id',
+		'formatter' => function ($lab6, $row) {
 
-      return '
+			return '
       <div class="dropdown">
           <button class="btn btn-info" type="button" id="dropdownMenuButton' . $row['purchase_order_id'] . '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               &#x22EE;
@@ -85,18 +84,14 @@ $columns = array(
               <a class="dropdown-item delete-user" href="#" data-user-id="' . $row['purchase_order_id'] . '">Delete</a>
           </div>
       </div>';
-    }
+		}
 	),
 
 );
 
 // Database connection details
-$sql_details = array(
-	'user' => 'root',
-	'pass' => '',
-	'db' => 'ecommerce',
-	'host' => 'localhost',
-);
+include '../../connections/ssp_connection.php';
+
 
 // Include the SSP class
 require('../../assets/datatables/ssp.class.php');
@@ -113,6 +108,3 @@ $joinQuery = "FROM $table LEFT JOIN supplier ON $table.supplier_id = supplier.su
 
 // Fetch and encode JOIN AND WHERE
 echo json_encode(SSP::simple($_GET, $sql_details, $table, $primaryKey, $columns, $joinQuery, $where));
-
-
-?>

@@ -42,7 +42,6 @@ $columns = array(
             // $imageUrl = '../../uploads/' . basename($row['product_image']);
             // return '<img src="' . $imageUrl . '" alt="Product Image" style="max-width: 100px; height: auto;">';
             return '<a class="fetchDataProductImage" href="#"> View Image</a> ';
-
         }
     ),
 
@@ -84,12 +83,7 @@ $columns = array(
 );
 
 // Database connection details
-$sql_details = array(
-    'user' => 'root',
-    'pass' => '',
-    'db' => 'ecommerce',
-    'host' => 'localhost',
-);
+include '../../connections/ssp_connection.php';
 
 // Include the SSP class
 require('../../assets/datatables/ssp.class_with_where.php');
@@ -98,5 +92,3 @@ $where = "product_id";
 
 // Fetch and encode ONLY WHERE
 echo json_encode(SSP::simple($_GET, $sql_details, $table, $primaryKey, $columns, $where));
-
-?>

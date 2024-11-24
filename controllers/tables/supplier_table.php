@@ -8,9 +8,9 @@ $columns = array(
 	array(
 		'db' => 'supplier_id',
 		'dt' => 0,
-		'field' =>'supplier_id',
+		'field' => 'supplier_id',
 		'formatter' => function ($lab1, $row) {
-      return $row['supplier_id'];
+			return $row['supplier_id'];
 		}
 	),
 
@@ -29,7 +29,7 @@ $columns = array(
 		'field' => 'supplier_name',
 		'formatter' => function ($lab3, $row) {
 			// return '<a href="#" class="fetchDataSupplierDetails" >Click to View Details</a> ';
-      return '<a class="fetchDataSupplierDetails" href="#"> Click to View Details</a> ';
+			return '<a class="fetchDataSupplierDetails" href="#"> Click to View Details</a> ';
 		}
 	),
 
@@ -43,21 +43,21 @@ $columns = array(
 	),
 
 	array(
-    'db' => 'updated_at',
-    'dt' => 4,
-    'field' => 'updated_at',
-    'formatter' => function ($lab5, $row) {
+		'db' => 'updated_at',
+		'dt' => 4,
+		'field' => 'updated_at',
+		'formatter' => function ($lab5, $row) {
 			return date('Y-m-d', strtotime($row['updated_at']));
-    }
+		}
 	),
 
 	array(
-    'db' => 'supplier_id',
-    'dt' => 5,
-    'field' => 'supplier_id',
-    'formatter' => function ($lab6, $row) {
+		'db' => 'supplier_id',
+		'dt' => 5,
+		'field' => 'supplier_id',
+		'formatter' => function ($lab6, $row) {
 
-      return '
+			return '
       <div class="dropdown">
           <button class="btn btn-info" type="button" id="dropdownMenuButton' . $row['supplier_id'] . '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               &#x22EE;
@@ -67,18 +67,14 @@ $columns = array(
               <a class="dropdown-item delete-user" href="#" data-user-id="' . $row['supplier_id'] . '">Delete</a>
           </div>
       </div>';
-    }
+		}
 	),
 
 );
 
 // Database connection details
-$sql_details = array(
-	'user' => 'root',
-	'pass' => '',
-	'db' => 'ecommerce',
-	'host' => 'localhost',
-);
+include '../../connections/ssp_connection.php';
+
 
 // Include the SSP class
 require('../../assets/datatables/ssp.class_with_where.php');
@@ -94,6 +90,3 @@ $where = "supplier_id";
 
 // Fetch and encode ONLY WHERE
 echo json_encode(SSP::simple($_GET, $sql_details, $table, $primaryKey, $columns, $where));
-
-
-?>

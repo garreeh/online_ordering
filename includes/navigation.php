@@ -69,7 +69,7 @@ if (session_status() == PHP_SESSION_NONE) {
   <div class="header">
     <div class="container">
       <a class="site-logo" href="/online_ordering/index.php">
-        <img src="/online_ordering/assets/user/corporate/img/logos/logo-shop-red.png" alt="Metronic Shop UI">
+        <img src="/online_ordering/assets/user/corporate/img/logos/" alt="LOGO STERLING HERE">
       </a>
 
       <!-- BEGIN CART -->

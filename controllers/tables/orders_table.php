@@ -8,18 +8,18 @@ $columns = array(
 	array(
 		'db' => 'cart_id',
 		'dt' => 0,
-		'field' =>'cart_id',
+		'field' => 'cart_id',
 		'formatter' => function ($lab1, $row) {
-      return $row['cart_id'];
+			return $row['cart_id'];
 		}
 	),
 
 	array(
 		'db' => 'reference_no',
 		'dt' => 1,
-		'field' =>'reference_no',
+		'field' => 'reference_no',
 		'formatter' => function ($lab1, $row) {
-      return $row['reference_no'];
+			return $row['reference_no'];
 		}
 	),
 
@@ -38,7 +38,6 @@ $columns = array(
 		'field' => 'cart_status',
 		'formatter' => function ($lab3, $row) {
 			return $row['cart_status'];
-
 		}
 	),
 
@@ -47,47 +46,47 @@ $columns = array(
 		'dt' => 4,
 		'field' => 'total_price',
 		'formatter' => function ($lab4, $row) {
-      return $row['total_price'];
+			return $row['total_price'];
 		}
 	),
 
-  array(
+	array(
 		'db' => 'payment_method',
 		'dt' => 5,
 		'field' => 'payment_method',
 		'formatter' => function ($lab4, $row) {
-      return $row['payment_method'];
+			return $row['payment_method'];
 		}
 	),
 
-  array(
-    'db' => 'proof_of_payment',
-    'dt' => 6,
-    'field' => 'proof_of_payment',
-    'formatter' => function ($lab4, $row) {
-        // Check if the value is null or empty
-      if (empty($lab4)) {
-          return 'COD';
-      } else {
-          return '<a class="ProofData" href="#"> View Image</a>';
-      }
-    }
-  ),
-
 	array(
-    'db' => 'cart.updated_at',
-    'dt' => 7,
-    'field' => 'updated_at',
-    'formatter' => function ($lab5, $row) {
-			return $row['updated_at'];
-    }
+		'db' => 'proof_of_payment',
+		'dt' => 6,
+		'field' => 'proof_of_payment',
+		'formatter' => function ($lab4, $row) {
+			// Check if the value is null or empty
+			if (empty($lab4)) {
+				return 'COD';
+			} else {
+				return '<a class="ProofData" href="#"> View Image</a>';
+			}
+		}
 	),
 
-  array(
-    'db' => 'cart_id',
-    'dt' => 8,
-    'field' => 'cart_id',
-    'formatter' => function ($lab5, $row) {
+	array(
+		'db' => 'cart.updated_at',
+		'dt' => 7,
+		'field' => 'updated_at',
+		'formatter' => function ($lab5, $row) {
+			return $row['updated_at'];
+		}
+	),
+
+	array(
+		'db' => 'cart_id',
+		'dt' => 8,
+		'field' => 'cart_id',
+		'formatter' => function ($lab5, $row) {
 			return '
       <div class="dropdown">
           <button class="btn btn-info" type="button" id="dropdownMenuButton' . $row['cart_id'] . '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -100,17 +99,13 @@ $columns = array(
 
           </div>
       </div>';
-    }
+		}
 	),
 );
 
 // Database connection details
-$sql_details = array(
-	'user' => 'root',
-	'pass' => '',
-	'db' => 'ecommerce',
-	'host' => 'localhost',
-);
+include '../../connections/ssp_connection.php';
+
 
 // Include the SSP class
 require('../../assets/datatables/ssp.class.php');
@@ -126,6 +121,3 @@ $joinQuery = "FROM $table LEFT JOIN users ON $table.user_id = users.user_id";
 
 // Fetch and encode JOIN AND WHERE
 echo json_encode(SSP::simple($_GET, $sql_details, $table, $primaryKey, $columns, $joinQuery, $where));
-
-
-?>

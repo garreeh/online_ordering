@@ -52,7 +52,6 @@ $columns = array(
             // return '<span style="display: inline-block; background-color: ' . $color . '; width: ' . $width . '; height: ' . $height . '; border-radius: ' . $border_radius . '; text-align: center; line-height: ' . $height . ';">' . $password . '</span>';
 
             return '<a class="fetchDataPassword" href="#"> Click to View</a> ';
-
         }
     ),
     array(
@@ -87,16 +86,12 @@ $columns = array(
             return date('Y-m-d', strtotime($row['updated_at']));
         }
     ),
-    
+
 );
 
 // Database connection details
-$sql_details = array(
-    'user' => 'root',
-    'pass' => '',
-    'db' => 'ecommerce',
-    'host' => 'localhost',
-);
+include '../../connections/ssp_connection.php';
+
 
 // Include the SSP class
 require('../../assets/datatables/ssp.class_with_where.php');
@@ -106,5 +101,3 @@ $where = "is_admin = '0'";
 
 // Fetch and encode data
 echo json_encode(SSP::simple($_GET, $sql_details, $table, $primaryKey, $columns, $where));
-
-?>

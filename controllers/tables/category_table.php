@@ -8,9 +8,9 @@ $columns = array(
 	array(
 		'db' => 'category_id',
 		'dt' => 0,
-		'field' =>'category_id',
+		'field' => 'category_id',
 		'formatter' => function ($lab1, $row) {
-      return $row['category_id'];
+			return $row['category_id'];
 		}
 	),
 
@@ -33,21 +33,21 @@ $columns = array(
 	),
 
 	array(
-    'db' => 'updated_at',
-    'dt' => 3,
-    'field' => 'updated_at',
-    'formatter' => function ($lab5, $row) {
+		'db' => 'updated_at',
+		'dt' => 3,
+		'field' => 'updated_at',
+		'formatter' => function ($lab5, $row) {
 			return date('Y-m-d', strtotime($row['updated_at']));
-    }
+		}
 	),
 
 	array(
-    'db' => 'category_id',
-    'dt' => 4,
-    'field' => 'category_id',
-    'formatter' => function ($lab6, $row) {
+		'db' => 'category_id',
+		'dt' => 4,
+		'field' => 'category_id',
+		'formatter' => function ($lab6, $row) {
 
-      return '
+			return '
       <div class="dropdown">
           <button class="btn btn-info" type="button" id="dropdownMenuButton' . $row['category_id'] . '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               &#x22EE;
@@ -57,18 +57,14 @@ $columns = array(
               <a class="dropdown-item delete-user" href="#" data-user-id="' . $row['category_id'] . '">Delete</a>
           </div>
       </div>';
-    }
+		}
 	),
 
 );
 
 // Database connection details
-$sql_details = array(
-	'user' => 'root',
-	'pass' => '',
-	'db' => 'ecommerce',
-	'host' => 'localhost',
-);
+include '../../connections/ssp_connection.php';
+
 
 // Include the SSP class
 require('../../assets/datatables/ssp.class_with_where.php');
@@ -84,6 +80,3 @@ $where = "category_id";
 
 // Fetch and encode ONLY WHERE
 echo json_encode(SSP::simple($_GET, $sql_details, $table, $primaryKey, $columns, $where));
-
-
-?>
