@@ -421,7 +421,7 @@ if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === "1") {
         // Function to fetch regular products based on selected category
         function fetchProducts(categoryId) {
             $.ajax({
-                url: '/restaurant/controllers/users/fetch_products_process.php',
+                url: '/online_ordering/controllers/users/fetch_products_process.php',
                 type: 'GET',
                 data: {
                     category_id: categoryId

@@ -131,6 +131,74 @@ if (!isset($_SESSION['user_id'])) {
       </div>
       <!-- END SIDEBAR & CONTENT -->
 
+      <h1>Recommendation for you</h1>
+      <div class="col-md-9 col-sm-8 col-xs-7 special-product">
+        <?php
+        $categoryQuery = "SELECT * FROM category";
+        $categoryResult = $conn->query($categoryQuery);
+        while ($categoryRow = $categoryResult->fetch_assoc()) {
+          $category_id = $categoryRow['category_id'];
+          $category_name = htmlspecialchars($categoryRow['category_name']);
+          $productQuery = "SELECT * FROM product WHERE category_id = '$category_id'";
+          $productResult = $conn->query($productQuery);
+
+          if ($productResult->num_rows > 0) {
+            echo "<div class='category-products' data-category-id='$category_id'>";
+            echo "<h3 style='font-size: 2rem; color: #800000; margin-top: 30px;'>$category_name:</h3>";
+            echo "<div class='row'>";
+
+            while ($row = $productResult->fetch_assoc()) {
+              $product_image = basename($row['product_image']);
+              $image_url = './../../uploads/' . $product_image;
+        ?>
+              <div class="col-xs-12 col-sm-6 col-md-4" style="margin-bottom: 2rem;">
+                <div class="product-item"
+                  style="display: flex; flex-direction: column; padding-bottom: 1rem; border: 1px solid #ddd; border-radius: 10px; position: relative; box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: transform 0.3s; overflow: hidden;">
+                  <div class="pi-img-wrapper" style="text-align: center; position: relative;">
+                    <img src="<?php echo $image_url; ?>" class="img-responsive"
+                      alt="<?php echo htmlspecialchars($row['product_name']); ?>"
+                      style="width: 100%; height: auto; border-radius: 8px; transition: transform 0.3s;">
+                  </div>
+                  <h3 style="text-align: center; color: #333; font-size: 1.8rem; font-weight: bold;">
+                    <?php echo htmlspecialchars($row['product_name']); ?>
+                  </h3>
+                  <div class="pi-price" style="text-align: center; color: #2E8B57; font-size: 1.5rem;">
+                    ₱<?php echo number_format($row['product_sellingprice'], 2); ?>
+                  </div>
+
+                  <div class="pi-price" style="text-align: center; color: #2E8B57; font-size: 1.5rem;">
+                    Stocks: <?php echo $row['product_stocks']; ?>
+                  </div>
+                  <div class="quantity-controls"
+                    style="display: flex; justify-content: center; align-items: center; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; padding: 10px; background-color: #f9f9f9; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                    <button class="minus-btn"
+                      style="background-color: #ff6f61; color: white; border: none; border-radius: 5px; width: 50px; height: 50px; cursor: pointer; transition: background-color 0.3s; font-size: 1.5rem; display: flex; align-items: center; justify-content: center;">
+                      -
+                    </button>
+                    <input type="number" class="cart_quantity" value="1" min="1"
+                      style="width: 60px; text-align: center; border: none; outline: none; font-size: 1.5rem; margin: 0 10px; border-radius: 5px; height: 50px;">
+                    <button class="add-btn"
+                      style="background-color: #4CAF50; color: white; border: none; border-radius: 5px; width: 50px; height: 50px; cursor: pointer; transition: background-color 0.3s; font-size: 1.5rem; display: flex; align-items: center; justify-content: center;">
+                      +
+                    </button>
+                  </div>
+                  <br>
+                  <br>
+                  <a href="javascript:void(0)" class="btn btn-default add-to-cart add2cart"
+                    data-product-id="<?php echo $row['product_id']; ?>"
+                    style="position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%); width: 90%; text-align: center; padding: 0.5rem 0; background-color: #4682B4; color: #fff; font-weight: bold; border-radius: 5px; transition: background-color 0.3s;">
+                    Add to Order
+                  </a>
+                </div>
+              </div>
+        <?php
+            }
+            echo "</div>";
+            echo "</div>";
+          }
+        }
+        ?>
+      </div>
     </div>
   </div>
 
@@ -295,21 +363,13 @@ if (!isset($_SESSION['user_id'])) {
 
       // Validate payment method selection
       if (!selectedPayment) {
-        Toastify({
-          text: "Please select a payment method.",
-          duration: 2000,
-          backgroundColor: "#dc3545" // Red for error
-        }).showToast();
+
         return;
       }
 
       // If GCash is selected, validate proof of payment
       if (selectedPayment === 'GCash' && !proofOfPayment) {
-        Toastify({
-          text: "Please upload proof of payment for GCash.",
-          duration: 2000,
-          backgroundColor: "#dc3545" // Red for error
-        }).showToast();
+
         return;
       }
 
@@ -375,5 +435,223 @@ if (!isset($_SESSION['user_id'])) {
 
     // Initial cart update when the page loads
     updateCart();
+  });
+
+  function filterProducts(categoryId) {
+    document.querySelectorAll('.category-products').forEach(categoryProducts => {
+      categoryProducts.style.display = categoryProducts.getAttribute('data-category-id') === categoryId || categoryId === '' ? 'block' : 'none';
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => filterProducts(''));
+
+
+  // Handle quantity increase and decrease buttons
+  $(document).on('click', '.add-btn', function() {
+    var quantityInput = $(this).siblings('.cart_quantity');
+    var currentValue = parseInt(quantityInput.val());
+    quantityInput.val(currentValue + 1);
+  });
+
+  $(document).on('click', '.minus-btn', function() {
+    var quantityInput = $(this).siblings('.cart_quantity');
+    var currentValue = parseInt(quantityInput.val());
+    if (currentValue > 1) {
+      quantityInput.val(currentValue - 1);
+    }
+  });
+
+  $(document).ready(function() {
+    $('#categorySelect').change(function() {
+      var categoryId = $(this).val();
+      fetchProducts(categoryId);
+      // fetchSpecialProducts(categoryId);
+    });
+
+    // Function to fetch regular products based on selected category
+    function fetchProducts(categoryId) {
+      $.ajax({
+        url: '/online_ordering/controllers/users/fetch_products_process.php',
+        type: 'GET',
+        data: {
+          category_id: categoryId
+        },
+        success: function(data) {
+          $('#allProducts .row').html(data);
+        },
+        error: function(xhr, status, error) {
+          console.error("Error fetching products:", error);
+        }
+      });
+    }
+
+    // Add to Cart button click handler
+    $('.add-to-cart').click(function() {
+      var productId = $(this).data('product-id');
+      var $button = $(this);
+      var quantityInput = $button.closest('.product-item').find('.cart_quantity');
+      var quantity = parseInt(quantityInput.val()) || 1; // Default to 1 if no valid quantity
+
+      // Make AJAX call to add_cart_process.php
+      $.ajax({
+        url: '/online_ordering/controllers/users/add_cart_process.php',
+        method: 'POST',
+        data: {
+          product_id: productId,
+          cart_quantity: quantity
+        },
+        success: function(response) {
+          try {
+            var res = JSON.parse(response);
+            if (res.success) {
+              // Show success message using Toastify
+              Toastify({
+                text: res.message,
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: "right",
+                backgroundColor: "#4CAF50", // Green background for success
+              }).showToast();
+
+              // Update the cart in real-time after adding the item
+              updateCart(); // This calls the function to update the cart display
+            } else {
+              if (res.message === 'You are not logged in.') {
+                // Show the modal instead of Toast
+                $('#loginModal').modal('show');
+              } else {
+                // Show error message using Toastify
+                Toastify({
+                  text: res.message,
+                  duration: 3000,
+                  close: true,
+                  gravity: "top",
+                  position: "right",
+                  backgroundColor: "#FF0000", // Red background for error
+                }).showToast();
+              }
+            }
+          } catch (e) {
+            console.error("Invalid JSON response:", response);
+            Toastify({
+              text: "An unexpected error occurred.",
+              duration: 3000,
+              close: true,
+              gravity: "top",
+              position: "right",
+              backgroundColor: "#FF0000", // Red background for error
+            }).showToast();
+          }
+        },
+        error: function(xhr, status, error) {
+          console.log('Error: ' + error);
+          Toastify({
+            text: "An error occurred. Please try again.",
+            duration: 3000,
+            close: true,
+            gravity: "top",
+            position: "right",
+            backgroundColor: "#FF0000", // Red background for error
+          }).showToast();
+        }
+      });
+    });
+
+    // Function to update the cart in real-time
+    function updateCart() {
+      $.ajax({
+        url: '/online_ordering/controllers/users/fetch_cart_process.php',
+        method: 'GET',
+        dataType: 'json',
+        success: function(response) {
+          console.log('Cart Data:', response);
+
+          if (response.success) {
+            var cartContent = '';
+            var totalPrice = response.total_price;
+
+            // Clear the existing cart items
+            $('#cart-items').empty();
+            if (response.items.length === 0) {
+              cartContent = '<tr><td colspan="7" class="text-center">Cart is empty</td></tr>';
+            } else {
+              // Iterate over cart items and generate HTML content
+              $.each(response.items, function(index, item) {
+                var productPrice = parseFloat(item.product_sellingprice) || 0;
+                var cartQuantity = parseInt(item.cart_quantity, 10) || 0;
+                var baseURL = "./../uploads/";
+
+                cartContent += '<tr>';
+                cartContent += '<td class="goods-page-image"><a href="javascript:;"><img src="' + baseURL + item.product_image + '" alt="' + item.product_name + '" style="width: 90px; height: 100px;" /></a></td>';
+                cartContent += '<td class="goods-page-description"><h3><a href="javascript:;"></a></h3><p><strong>' + item.product_name + '</strong></p><em>' + item.product_description + '</em></td>';
+                cartContent += '<td class="goods-page-ref-no">' + item.product_sku + '</td>';
+                cartContent += '<td class="goods-page-quantity"><div class="product-quantity"><input type="text" value="' + cartQuantity + '" readonly class="form-control input-sm"></div></td>';
+                cartContent += '<td class="goods-page-price"><strong><span>₱ </span>' + productPrice.toFixed(2) + '</strong></td>';
+                cartContent += '<td class="goods-page-total"><strong><span>₱ </span>' + (productPrice * cartQuantity).toFixed(2) + '</strong></td>';
+                cartContent += '<td class="del-goods-col"><a class="del-goods" href="javascript:;" data-product-id="' + item.product_id + '">&nbsp;</a></td>';
+                cartContent += '</tr>';
+              });
+            }
+
+            // Update the DOM with the new cart content
+            $('#cart-items').html(cartContent);
+
+            // Update the subtotal and total price
+            $('#cart-subtotal').text('₱ ' + response.total_price.toFixed(2));
+            $('#cart-total').text('₱ ' + (response.total_price + 35).toFixed(2));
+
+            // Toggle the checkout button visibility based on cart contents
+            if (response.items.length > 0) {
+              $('#checkout-button').show();
+            } else {
+              $('#checkout-button').hide();
+            }
+          } else {
+            console.error('Failed to fetch cart data:', response.message);
+          }
+        },
+        error: function(xhr, status, error) {
+          console.error('AJAX Error:', error);
+        }
+      });
+    }
+
+    $('#checkoutModal').on('show.bs.modal', function() {
+      $.ajax({
+        type: 'POST',
+        url: '/online_ordering/controllers/users/fetch_cart_last_process.php',
+        dataType: 'json',
+        success: function(response) {
+          if (response.success) {
+            var cartItemsHtml = '';
+            var totalPrice = 0;
+
+            // Loop through cart items and create table rows
+            response.cartItems.forEach(function(item) {
+              cartItemsHtml += '<tr>';
+              cartItemsHtml += '<td>' + item.product_name + '</td>';
+              cartItemsHtml += '<td>' + item.cart_quantity + '</td>';
+              cartItemsHtml += '<td>₱ ' + item.product_sellingprice.toFixed(2) + '</td>';
+              cartItemsHtml += '<td>₱ ' + (item.cart_quantity * item.product_sellingprice).toFixed(2) + '</td>';
+              cartItemsHtml += '</tr>';
+              totalPrice += item.cart_quantity * item.product_sellingprice + 35;
+            });
+
+            // Update the cart content and total price in the modal
+            $('#order-summary').html(cartItemsHtml);
+            $('#total-amount').text('₱ ' + totalPrice.toFixed(2));
+          } else {
+            alert('Error fetching cart items');
+          }
+        },
+        error: function(xhr, status, error) {
+          console.error('Error fetching cart:', error);
+          alert('An error occurred while fetching the cart.');
+        }
+      });
+    });
+
+
   });
 </script>

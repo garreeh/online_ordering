@@ -4,7 +4,7 @@
 // $sql_details = array(
 //   'user' => 'root',
 //   'pass' => '',
-//   'db' => 'appointment',
+//   'db' => 'ecommerce',
 //   'host' => 'localhost',
 // );
 
