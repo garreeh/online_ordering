@@ -69,8 +69,12 @@ if (session_status() == PHP_SESSION_NONE) {
   <div class="header">
     <div class="container">
       <a class="site-logo" href="/online_ordering/index.php">
-        <img src="/online_ordering/assets/user/corporate/img/logos/" alt="LOGO STERLING HERE">
+        <img
+          src="/online_ordering/assets/user/corporate/img/logos/logo.jpeg"
+          alt="LOGO STERLING HERE"
+          style="width: 100px; height: 100px;">
       </a>
+
 
       <!-- BEGIN CART -->
       <div class="top-cart-block">
