@@ -1,6 +1,5 @@
 <?php
 include '../connections/connections.php';
-include '../connections/connections.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     // Retrieve and sanitize email parameter
@@ -22,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         if (mysqli_query($conn, $sql_update)) {
             session_start();
             $_SESSION['email_verified'] = true;
-            
+
             header("Location: ../views/success_verification.php");
             exit();
         } else {
@@ -32,4 +31,3 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         echo "Invalid email address.";
     }
 }
-?>
