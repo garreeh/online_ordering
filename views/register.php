@@ -7,14 +7,14 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 if (isset($_SESSION['user_id'])) {
-  if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == "1") {
-      // If the user is an admin, redirect to the admin dashboard
-      header("Location: /online_ordering/views/admin/dashboard.php");
-  } else {
-      // If the user is not an admin, redirect to the user dashboard
-      header("Location: /online_ordering/views/user/product_showcase.php");
-  }
-  exit();
+	if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == "1") {
+		// If the user is an admin, redirect to the admin dashboard
+		header("Location: /online_ordering/views/admin/dashboard.php");
+	} else {
+		// If the user is not an admin, redirect to the user dashboard
+		header("Location: /online_ordering/views/user/product_showcase.php");
+	}
+	exit();
 }
 
 ?>
@@ -73,7 +73,7 @@ if (isset($_SESSION['user_id'])) {
 											<input type="email" class="form-control form-control-user" placeholder="Email" name="user_email" id="user_email" required>
 										</div>
 										<div class="form-group">
-											<input type="text" class="form-control form-control-user" placeholder="Register" name="user_address" id="user_address" required>
+											<input type="text" class="form-control form-control-user" placeholder="Address" name="user_address" id="user_address" required>
 										</div>
 										<div class="form-group">
 											<input type="text" class="form-control form-control-user" placeholder="Contact" name="user_contact" id="user_contact" required>
@@ -122,25 +122,25 @@ if (isset($_SESSION['user_id'])) {
 	<script src="./../assets/admin/js/sb-admin-2.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 	<div id="loaderContainer" class="loader-container">
-			<div class="loader"></div>
+		<div class="loader"></div>
 	</div>
 
 </body>
 
 </html>
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-	document.getElementById('togglePassword').addEventListener('click', function () {
-		var passwordInput = document.getElementById('user_password');
-		var type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-		passwordInput.setAttribute('type', type);
-		var icon = document.querySelector('#togglePassword i');
-		icon.classList.toggle('fa-eye-slash');
+	document.addEventListener('DOMContentLoaded', function() {
+		document.getElementById('togglePassword').addEventListener('click', function() {
+			var passwordInput = document.getElementById('user_password');
+			var type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+			passwordInput.setAttribute('type', type);
+			var icon = document.querySelector('#togglePassword i');
+			icon.classList.toggle('fa-eye-slash');
+		});
 	});
-});
 
 
-	document.getElementById('registerForm').addEventListener('keydown', function (e) {
+	document.getElementById('registerForm').addEventListener('keydown', function(e) {
 		if (e.key === 'Enter') {
 			submitForm();
 		}
@@ -158,59 +158,58 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 
 	function submitForm() {
-    // Show the loader
-    document.getElementById('loaderContainer').style.display = 'flex';
+		// Show the loader
+		document.getElementById('loaderContainer').style.display = 'flex';
 
-    // Get form data
-    var fullname = document.getElementById('user_fullname').value;
-    var username = document.getElementById('username').value;
-    var email = document.getElementById('user_email').value;
-    var contact = document.getElementById('user_contact').value;
-    var user_address = document.getElementById('user_address').value;
-    var password = document.getElementById('user_password').value;
-    var confirm_password = document.getElementById('user_confirm_password').value;
+		// Get form data
+		var fullname = document.getElementById('user_fullname').value;
+		var username = document.getElementById('username').value;
+		var email = document.getElementById('user_email').value;
+		var contact = document.getElementById('user_contact').value;
+		var user_address = document.getElementById('user_address').value;
+		var password = document.getElementById('user_password').value;
+		var confirm_password = document.getElementById('user_confirm_password').value;
 
 
-    // Check if passwords match
-    if (password !== confirm_password) {
-        showToast("Passwords do not match.");
-        document.getElementById('loaderContainer').style.display = 'none'; // Hide the loader if validation fails
-        return;
-    }
+		// Check if passwords match
+		if (password !== confirm_password) {
+			showToast("Passwords do not match.");
+			document.getElementById('loaderContainer').style.display = 'none'; // Hide the loader if validation fails
+			return;
+		}
 
-    // Create data object
-    var data = {
-        user_fullname: fullname,
-        username: username,
-        user_email: email,
-        user_contact: contact,
-        user_address: user_address,
-        user_password: password,
-        user_confirm_password: confirm_password
+		// Create data object
+		var data = {
+			user_fullname: fullname,
+			username: username,
+			user_email: email,
+			user_contact: contact,
+			user_address: user_address,
+			user_password: password,
+			user_confirm_password: confirm_password
 
-    };
+		};
 
-    $.ajax({
-        type: 'POST',
-        url: '../controllers/register_process.php',
-        data: data,
-        dataType: 'json',
-        success: function(response) {
-            console.log(response);
-            document.getElementById('loaderContainer').style.display = 'none'; // Hide the loader when request completes
-            if (response.success) {
-                window.location.href = "./verification.php"; // Redirect to verification page after successful registration
-            } else {
-                showToast(response.message);
-            }
-        },
-        error: function(xhr, status, error) {
-            document.getElementById('loaderContainer').style.display = 'none'; // Hide the loader when request completes
-            showToast('Error occurred while processing the request.');
-        }
-    });
+		$.ajax({
+			type: 'POST',
+			url: '../controllers/register_process.php',
+			data: data,
+			dataType: 'json',
+			success: function(response) {
+				console.log(response);
+				document.getElementById('loaderContainer').style.display = 'none'; // Hide the loader when request completes
+				if (response.success) {
+					window.location.href = "./verification.php"; // Redirect to verification page after successful registration
+				} else {
+					showToast(response.message);
+				}
+			},
+			error: function(xhr, status, error) {
+				document.getElementById('loaderContainer').style.display = 'none'; // Hide the loader when request completes
+				showToast('Error occurred while processing the request.');
+			}
+		});
 	}
-
 </script>
 
 <style>
@@ -248,30 +247,39 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	/* Loader Styles */
 	.loader-container {
-			display: none; /* Hidden by default */
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background-color: rgba(0, 0, 0, 0.5); /* Dimmed background */
-			z-index: 9999; /* Make sure it stays on top */
-			justify-content: center;
-			align-items: center;
+		display: none;
+		/* Hidden by default */
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.5);
+		/* Dimmed background */
+		z-index: 9999;
+		/* Make sure it stays on top */
+		justify-content: center;
+		align-items: center;
 	}
 
 	.loader {
-			border: 8px solid #f3f3f3; /* Light grey */
-			border-top: 8px solid #3498db; /* Blue */
-			border-radius: 50%;
-			width: 60px;
-			height: 60px;
-			animation: spin 2s linear infinite;
+		border: 8px solid #f3f3f3;
+		/* Light grey */
+		border-top: 8px solid #3498db;
+		/* Blue */
+		border-radius: 50%;
+		width: 60px;
+		height: 60px;
+		animation: spin 2s linear infinite;
 	}
 
 	@keyframes spin {
-			0% { transform: rotate(0deg); }
-			100% { transform: rotate(360deg); }
-	}
+		0% {
+			transform: rotate(0deg);
+		}
 
+		100% {
+			transform: rotate(360deg);
+		}
+	}
 </style>
