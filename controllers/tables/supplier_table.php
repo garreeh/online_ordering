@@ -64,7 +64,7 @@ $columns = array(
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton' . $row['supplier_id'] . '">
               <a class="dropdown-item fetchDataSupplier" href="#">Edit</a>
-              <a class="dropdown-item delete-user" href="#" data-user-id="' . $row['supplier_id'] . '">Delete</a>
+							<a class="dropdown-item fetchDataSupplierDelete" href="#">Delete</a>
           </div>
       </div>';
 		}

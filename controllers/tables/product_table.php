@@ -58,15 +58,6 @@ $columns = array(
         'db' => 'product_id',
         'dt' => 5,
         'field' => 'product_id',
-        'formatter' => function ($lab4, $row) {
-            return $row['product_id'];
-        }
-    ),
-
-    array(
-        'db' => 'product_id',
-        'dt' => 6,
-        'field' => 'product_id',
         'formatter' => function ($lab5, $row) {
             return '
             <div class="dropdown">
@@ -75,7 +66,8 @@ $columns = array(
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton' . $row['product_id'] . '">
                     <a class="dropdown-item fetchDataProduct" href="#">Edit</a>
-                    <a class="dropdown-item delete-user" href="#" data-user-id="' . $row['product_id'] . '">Delete</a>
+                    <a class="dropdown-item fetchDataProductDelete" href="#">Delete</a>
+
                 </div>
             </div>';
         }

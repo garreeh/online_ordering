@@ -70,6 +70,8 @@ if (session_status() == PHP_SESSION_NONE) {
 
                 <div class="table-responsive">
                   <div id="modalContainerProduct"></div>
+                  <div id="modalContainerProductDelete"></div>
+
 
                   <table class="table custom-table table-hover" name="product_table" id="product_table">
                     <thead>
@@ -79,7 +81,6 @@ if (session_status() == PHP_SESSION_NONE) {
                         <th>Name</th>
                         <th>Image</th>
                         <th>Stocks</th>
-                        <th>Details</th>
                         <th>Manage</th>
                       </tr>
                     </thead>
@@ -181,7 +182,7 @@ if (session_status() == PHP_SESSION_NONE) {
   //Column 5
   $(document).ready(function() {
     // Function to handle click event on datatable rows
-    $('#product_table').on('click', 'tr td:nth-child(7) .fetchDataProduct', function() {
+    $('#product_table').on('click', 'tr td:nth-child(6) .fetchDataProduct', function() {
       var product_id = $(this).closest('tr').find('td').first().text(); // Get the product_id from the clicked row
 
       $.ajax({
@@ -194,6 +195,29 @@ if (session_status() == PHP_SESSION_NONE) {
           $('#modalContainerProduct').html(response);
           $('#editProductModal').modal('show');
           console.log("#editProductModal" + product_id);
+        },
+        error: function(xhr, status, error) {
+          console.error(xhr.responseText);
+        }
+      });
+    });
+  });
+
+  $(document).ready(function() {
+    // Function to handle click event on datatable rows
+    $('#product_table').on('click', 'tr td:nth-child(6) .fetchDataProductDelete', function() {
+      var product_id = $(this).closest('tr').find('td').first().text(); // Get the product_id from the clicked row
+
+      $.ajax({
+        url: './../../modals/product/modal_delete_product.php', // Path to PHP script to fetch modal content
+        method: 'POST',
+        data: {
+          product_id: product_id
+        },
+        success: function(response) {
+          $('#modalContainerProductDelete').html(response);
+          $('#deleteProductModal').modal('show');
+          console.log("#deleteProductModal" + product_id);
         },
         error: function(xhr, status, error) {
           console.error(xhr.responseText);

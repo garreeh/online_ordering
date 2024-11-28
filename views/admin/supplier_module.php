@@ -69,6 +69,8 @@ if (session_status() == PHP_SESSION_NONE) {
 
                 <div class="table-responsive">
                   <div id="modalContainerSupplier"></div>
+                  <div id="modalContainerSupplierDelete"></div>
+
 
                   <table class="table custom-table table-hover" name="supplier_table" id="supplier_table">
                     <thead>
@@ -179,6 +181,29 @@ if (session_status() == PHP_SESSION_NONE) {
           $('#modalContainerSupplier').html(response);
           $('#fetchDataSupplierModal').modal('show');
           console.log("#fetchDataSupplierModal" + supplier_id);
+        },
+        error: function(xhr, status, error) {
+          console.error(xhr.responseText);
+        }
+      });
+    });
+  });
+
+  $(document).ready(function() {
+    // Function to handle click event on datatable rows
+    $('#supplier_table').on('click', 'tr td:nth-child(6) .fetchDataSupplierDelete', function() {
+      var supplier_id = $(this).closest('tr').find('td').first().text(); // Get the user_id from the clicked row
+
+      $.ajax({
+        url: './../../modals/supplier/modal_delete_supplier.php', // Path to PHP script to fetch modal content
+        method: 'POST',
+        data: {
+          supplier_id: supplier_id
+        },
+        success: function(response) {
+          $('#modalContainerSupplierDelete').html(response);
+          $('#fetchDataSupplierModalDelete').modal('show');
+          console.log("#fetchDataSupplierModalDelete" + supplier_id);
         },
         error: function(xhr, status, error) {
           console.error(xhr.responseText);

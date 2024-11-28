@@ -184,11 +184,11 @@ if ($result) {
           </li>
         <?php endif; ?>
 
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" href="/online_ordering/views/admin/billing_module.php">
             <i class="fas fa-fw fa-cog"></i>
             <span>Account Setting</span></a>
-        </li>
+        </li> -->
 
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
