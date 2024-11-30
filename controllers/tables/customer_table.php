@@ -21,21 +21,22 @@ $columns = array(
             return $row['user_fullname'];
         }
     ),
+
     array(
-        'db' => 'user_email',
+        'db' => 'username',
         'dt' => 2,
-        'field' => 'user_email',
+        'field' => 'username',
         'formatter' => function ($lab3, $row) {
-            return $row['user_email'];
+            return $row['username'];
         }
     ),
 
     array(
-        'db' => 'username',
+        'db' => 'user_email',
         'dt' => 3,
-        'field' => 'username',
+        'field' => 'user_email',
         'formatter' => function ($lab3, $row) {
-            return $row['username'];
+            return $row['user_email'];
         }
     ),
 

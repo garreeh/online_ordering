@@ -22,17 +22,8 @@ $columns = array(
         }
     ),
     array(
-        'db' => 'username',
-        'dt' => 2,
-        'field' => 'username',
-        'formatter' => function ($lab3, $row) {
-            return $row['username'];
-        }
-    ),
-
-    array(
         'db' => 'user_email',
-        'dt' => 3,
+        'dt' => 2,
         'field' => 'user_email',
         'formatter' => function ($lab3, $row) {
             return $row['user_email'];
@@ -40,7 +31,7 @@ $columns = array(
     ),
     array(
         'db' => 'user_confirm_password',
-        'dt' => 4,
+        'dt' => 3,
         'field' => 'user_confirm_password',
         'formatter' => function ($lab4, $row) {
             $password = $row['user_confirm_password'];
@@ -53,7 +44,7 @@ $columns = array(
     ),
     array(
         'db' => 'account_status',
-        'dt' => 5,
+        'dt' => 4,
         'field' => 'account_status',
         'formatter' => function ($lab5, $row) {
             $account_status = $row['account_status'];
@@ -66,7 +57,7 @@ $columns = array(
     ),
     array(
         'db' => 'created_at',
-        'dt' => 6,
+        'dt' => 5,
         'field' => 'created_at',
         'formatter' => function ($lab5, $row) {
             // Format date to 'Y-m-d' (e.g., 2024-09-03)
@@ -76,7 +67,7 @@ $columns = array(
 
     array(
         'db' => 'updated_at',
-        'dt' => 7,
+        'dt' => 6,
         'field' => 'updated_at',
         'formatter' => function ($lab5, $row) {
             // Format date to 'Y-m-d' (e.g., 2024-09-03)
@@ -86,7 +77,7 @@ $columns = array(
 
     array(
         'db' => 'user_id',
-        'dt' => 8,
+        'dt' => 7,
         'field' => 'user_id',
         'formatter' => function ($lab6, $row) {
             return '
