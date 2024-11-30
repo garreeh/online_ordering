@@ -94,8 +94,6 @@ $columns = array(
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton' . $row['cart_id'] . '">
               <a class="dropdown-item fetchDataFinish" href="#">Tag as Delivered</a>
-              <a class="dropdown-item delete-user" href="#" data-user-id="' . $row['cart_id'] . '">Void</a>
-              <a class="dropdown-item delete-user" href="#" data-user-id="' . $row['cart_id'] . '">Delete</a>
 
           </div>
       </div>';

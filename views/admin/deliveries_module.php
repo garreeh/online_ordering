@@ -158,7 +158,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
   $(document).ready(function() {
     // Function to handle click event on datatable rows
-    $('#order_table').on('click', 'tr td:nth-child(7) .ProofData', function() {
+    $('#delivery_table').on('click', 'tr td:nth-child(7) .ProofData', function() {
       var cart_id = $(this).closest('tr').find('td').first().text(); // Get the cart_id from the clicked row
 
       $.ajax({
