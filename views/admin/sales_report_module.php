@@ -90,7 +90,7 @@ if (session_status() == PHP_SESSION_NONE) {
                 </div>
                 <br>
 
-
+                <div id="modalContainerProvider"></div>
 
                 <table class="table custom-table table-hover" name="sales_report_table" id="sales_report_table">
                   <thead>
@@ -158,6 +158,30 @@ if (session_status() == PHP_SESSION_NONE) {
 <script>
   $('#sidebarToggle').click(function() {
     $('#sales_report_table').css('width', '100%');
+  });
+
+  $(document).ready(function() {
+    // Function to handle click event on datatable rows
+    $('#sales_report_table').on('click', 'tr td:nth-child(7) .ProofData', function() {
+      var cart_id = $(this).closest('tr').find('td').first().text(); // Get the cart_id from the clicked row
+
+      $.ajax({
+        url: './../../modals/order/proof_modal.php', // Path to PHP script to fetch modal content
+        method: 'POST',
+        data: {
+          cart_id: cart_id
+        },
+        success: function(response) {
+          $('#modalContainerProvider').html(response);
+          $('#showPhoto').modal('show');
+          $('#cart_id').val(cart_id); // Set the cart_id here
+          console.log("#showPhoto: " + cart_id);
+        },
+        error: function(xhr, status, error) {
+          console.error(xhr.responseText);
+        }
+      });
+    });
   });
 
   $(document).ready(function() {
