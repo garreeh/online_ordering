@@ -125,7 +125,7 @@ if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === "1") {
 
     .product-item img {
         max-width: 100% !important;
-        height: auto !important;
+        height: 15rem !important;
         border-radius: 8px !important;
         transition: transform 0.3s !important;
     }
