@@ -114,13 +114,7 @@ if ($result) {
           Reports, Product & Setup
         </div>
 
-        <?php if ($row['po_module'] == 1): ?>
-          <li class="nav-item">
-            <a class="nav-link" href="/online_ordering/views/admin/purchase_module.php">
-              <i class="fas fa-fw fa-cart-plus"></i>
-              <span>Purchase Order</span></a>
-          </li>
-        <?php endif; ?>
+
 
         <?php if ($row['reports_module'] == 1): ?>
           <!-- Reports Collapse -->
@@ -145,9 +139,38 @@ if ($result) {
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse2" aria-expanded="true"
               aria-controls="collapse2">
               <i class="fas fa-fw fa-clipboard-list"></i>
-              <span>Product Setup</span>
+              <span>Showcase Setup</span>
             </a>
             <div id="collapse2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+              <div class="bg-white py-2 collapse-inner rounded">
+                <!-- <h6 class="collapse-header">Setup:</h6> -->
+                <a class="collapse-item" href="/online_ordering/views/admin/supplier_module.php">Suppliers</a>
+                <a class="collapse-item" href="/online_ordering/views/admin/category_module.php">Category</a>
+                <a class="collapse-item" href="/online_ordering/views/admin/product_module.php">Products</a>
+              </div>
+
+            </div>
+          </li>
+        <?php endif; ?>
+
+
+        <?php if ($row['po_module'] == 1): ?>
+          <li class="nav-item">
+            <a class="nav-link" href="/online_ordering/views/admin/purchase_module.php">
+              <i class="fas fa-fw fa-cart-plus"></i>
+              <span>Purchase Order</span></a>
+          </li>
+        <?php endif; ?>
+
+        <?php if ($row['inventory_module'] == 1): ?>
+          <!-- Products Setup Collapse -->
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse3" aria-expanded="true"
+              aria-controls="collapse3">
+              <i class="fas fa-fw fa-clipboard-list"></i>
+              <span>Ingredients Setup</span>
+            </a>
+            <div id="collapse3" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
                 <!-- <h6 class="collapse-header">Setup:</h6> -->
                 <a class="collapse-item" href="/online_ordering/views/admin/supplier_module.php">Suppliers</a>

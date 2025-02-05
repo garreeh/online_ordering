@@ -309,23 +309,12 @@ if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === "1") {
                                         <div class="pi-price" style="text-align: center; color: #2E8B57; font-size: 1.5rem;">
                                             ₱<?php echo number_format($row['product_sellingprice'], 2); ?>
                                         </div>
+                                        <hr>
 
-                                        <div class="pi-price" style="text-align: center; color: #2E8B57; font-size: 1.5rem;">
-                                            Stocks: <?php echo $row['product_stocks']; ?>
-                                        </div>
-                                        <div class="quantity-controls"
-                                            style="display: flex; justify-content: center; align-items: center; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; padding: 10px; background-color: #f9f9f9; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-                                            <button class="minus-btn"
-                                                style="background-color: #ff6f61; color: white; border: none; border-radius: 5px; width: 50px; height: 50px; cursor: pointer; transition: background-color 0.3s; font-size: 1.5rem; display: flex; align-items: center; justify-content: center;">
-                                                -
-                                            </button>
-                                            <input type="number" class="cart_quantity" value="1" min="1"
-                                                style="width: 60px; text-align: center; border: none; outline: none; font-size: 1.5rem; margin: 0 10px; border-radius: 5px; height: 50px;">
-                                            <button class="add-btn"
-                                                style="background-color: #4CAF50; color: white; border: none; border-radius: 5px; width: 50px; height: 50px; cursor: pointer; transition: background-color 0.3s; font-size: 1.5rem; display: flex; align-items: center; justify-content: center;">
-                                                +
-                                            </button>
-                                        </div>
+                                        <!-- <div class="pi-price" style="text-align: center; color: #2E8B57; font-size: 1.5rem;">
+                                            Stocks: </?php echo $row['product_stocks']; ?>
+                                        </div> -->
+
                                         <br>
                                         <br>
                                         <a href="javascript:void(0)" class="btn btn-default add-to-cart add2cart"

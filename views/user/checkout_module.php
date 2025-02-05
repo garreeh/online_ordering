@@ -97,7 +97,6 @@ if (!isset($_SESSION['user_id'])) {
                     </tr>
                   </thead>
                   <tbody id="cart-items">
-                    <!-- Cart items will be inserted here by JavaScript -->
                   </tbody>
                 </table>
               </div>
