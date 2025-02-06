@@ -23,7 +23,7 @@ if (isset($_POST['edit_purchase'])) {
             $quantity_diff = $new_quantity - $current_quantity;
 
             // Check if the product stock is sufficient
-            $stock_check_sql = "SELECT product_stocks FROM product WHERE product_id = '$product_id'";
+            $stock_check_sql = "SELECT product_stocks FROM ingredients_product WHERE product_id = '$product_id'";
             $stock_check_result = mysqli_query($conn, $stock_check_sql);
             $stock_row = mysqli_fetch_assoc($stock_check_result);
             $current_stocks = $stock_row['product_stocks'];
@@ -39,19 +39,19 @@ if (isset($_POST['edit_purchase'])) {
             // Update the purchase order with the new quantity
             $update_purchase_sql = "UPDATE purchase_order SET quantity = '$new_quantity' WHERE purchase_order_id = '$purchase_order_id'";
             if (mysqli_query($conn, $update_purchase_sql)) {
-                
+
                 // Debugging - Check the quantity difference and current stocks
                 error_log("Quantity Difference: $quantity_diff");
                 error_log("Current Stocks before update: $current_stocks");
 
                 // Update the product stock
-                $update_stock_sql = "UPDATE product SET product_stocks = product_stocks + '$quantity_diff' WHERE product_id = '$product_id'";
+                $update_stock_sql = "UPDATE ingredients_product SET product_stocks = product_stocks + '$quantity_diff' WHERE product_id = '$product_id'";
                 if (mysqli_query($conn, $update_stock_sql)) {
                     // Commit transaction
                     mysqli_commit($conn);
 
                     // Debugging - Check the new product stocks
-                    $new_stock_check_sql = "SELECT product_stocks FROM product WHERE product_id = '$product_id'";
+                    $new_stock_check_sql = "SELECT product_stocks FROM ingredients_product WHERE product_id = '$product_id'";
                     $new_stock_check_result = mysqli_query($conn, $new_stock_check_sql);
                     $new_stock_row = mysqli_fetch_assoc($new_stock_check_result);
                     error_log("New Stocks after update: " . $new_stock_row['product_stocks']);

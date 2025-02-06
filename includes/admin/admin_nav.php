@@ -33,7 +33,7 @@ $result = mysqli_query($conn, $sql);
 
 if ($result) {
   while ($row = mysqli_fetch_assoc($result)) {
-?>
+    ?>
     <!DOCTYPE html>
     <html lang="en">
 
@@ -111,7 +111,7 @@ if ($result) {
         <hr class="sidebar-divider">
         <!-- Heading -->
         <div class="sidebar-heading">
-          Reports, Product & Setup
+          Reports, Showcase Setup
         </div>
 
 
@@ -153,12 +153,18 @@ if ($result) {
           </li>
         <?php endif; ?>
 
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+          Inventory Setup
+        </div>
 
         <?php if ($row['po_module'] == 1): ?>
           <li class="nav-item">
-            <a class="nav-link" href="/online_ordering/views/admin/purchase_module.php">
+            <a class="nav-link" href="/online_ordering/views/admin/ingredients_purchase_module.php">
               <i class="fas fa-fw fa-cart-plus"></i>
-              <span>Purchase Order</span></a>
+              <span>Ingredients PO</span></a>
           </li>
         <?php endif; ?>
 
@@ -173,9 +179,12 @@ if ($result) {
             <div id="collapse3" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
                 <!-- <h6 class="collapse-header">Setup:</h6> -->
-                <a class="collapse-item" href="/online_ordering/views/admin/supplier_module.php">Suppliers</a>
-                <a class="collapse-item" href="/online_ordering/views/admin/category_module.php">Category</a>
-                <a class="collapse-item" href="/online_ordering/views/admin/product_module.php">Products</a>
+                <a class="collapse-item" href="/online_ordering/views/admin/ingredients_supplier_module.php">Ingredients
+                  Suppliers</a>
+                <a class="collapse-item" href="/online_ordering/views/admin/ingredients_category_module.php">Ingredients
+                  Category</a>
+                <a class="collapse-item" href="/online_ordering/views/admin/ingredients_product_module.php">Ingredients
+                  Products</a>
               </div>
 
             </div>
@@ -232,7 +241,7 @@ if ($result) {
 
     </html>
 
-<?php
+    <?php
   }
 }
 ?>

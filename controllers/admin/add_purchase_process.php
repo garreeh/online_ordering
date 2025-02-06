@@ -19,8 +19,8 @@ if (isset($_POST['add_purchase'])) {
 
         // Execute SQL query
         if (mysqli_query($conn, $sql)) {
-            // Update product quantity
-            $update_sql = "UPDATE `product` SET product_stocks = product_stocks + '$quantity' WHERE product_id = '$product_id'";
+            // Update ingredients_product quantity
+            $update_sql = "UPDATE `ingredients_product` SET product_stocks = product_stocks + '$quantity' WHERE product_id = '$product_id'";
             if (mysqli_query($conn, $update_sql)) {
                 // Commit transaction
                 mysqli_commit($conn);
