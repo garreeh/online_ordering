@@ -46,17 +46,8 @@ $columns = array(
     ),
 
     array(
-        'db' => 'product_stocks',
-        'dt' => 4,
-        'field' => 'product_stocks',
-        'formatter' => function ($lab2, $row) {
-            return $row['product_stocks'];
-        }
-    ),
-
-    array(
         'db' => 'product_id',
-        'dt' => 5,
+        'dt' => 4,
         'field' => 'product_id',
         'formatter' => function ($lab5, $row) {
             return '

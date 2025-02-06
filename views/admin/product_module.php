@@ -25,10 +25,14 @@ if (session_status() == PHP_SESSION_NONE) {
   <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
   <link href="./../../assets/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
   <link href="./../../assets/admin/css/sb-admin-2.min.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css"
+    integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
 
 
 </head>
@@ -61,7 +65,8 @@ if (session_status() == PHP_SESSION_NONE) {
             <h1 class="h3 mb-0 text-gray-800">Product Module</h1>
           </div>
 
-          <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm mb-4" data-toggle="modal" data-target="#addProductModal"> <i class="fas fa-plus"></i> Add Product</a>
+          <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm mb-4" data-toggle="modal"
+            data-target="#addProductModal"> <i class="fas fa-plus"></i> Add Product</a>
           <!-- <a href="./../../excels/supplier_export.php" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm mb-4"><i class="fas fa-file-excel"></i> Export Excel</a> -->
 
           <div class="row">
@@ -80,7 +85,6 @@ if (session_status() == PHP_SESSION_NONE) {
                         <th>SKU</th>
                         <th>Name</th>
                         <th>Image</th>
-                        <th>Stocks</th>
                         <th>Manage</th>
                       </tr>
                     </thead>
@@ -116,11 +120,14 @@ if (session_status() == PHP_SESSION_NONE) {
   <script type="text/javascript" src="./../../assets/datatables/datatables.min.js"></script>
 
   <!-- COPY THESE WHOLE CODE WHEN IMPORT SELECT -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"
+    integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css"
+    integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
 
   <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
       $('select').selectize({
         sortField: 'text'
       });
@@ -135,13 +142,13 @@ if (session_status() == PHP_SESSION_NONE) {
 </html>
 
 <script>
-  $('#sidebarToggle').click(function() {
+  $('#sidebarToggle').click(function () {
     $('#product_table').css('width', '100%');
     // console.log(table) //This is for testing only
   });
 
   //Table for Product
-  $(document).ready(function() {
+  $(document).ready(function () {
     var product_table = $('#product_table').DataTable({
       "pagingType": "numbers",
       "processing": true,
@@ -149,16 +156,16 @@ if (session_status() == PHP_SESSION_NONE) {
       "ajax": "./../../controllers/tables/product_table.php",
     });
 
-    window.reloadDataTable = function() {
+    window.reloadDataTable = function () {
       product_table.ajax.reload();
     };
 
   });
 
   //Column 3
-  $(document).ready(function() {
+  $(document).ready(function () {
     // Function to handle click event on datatable rows
-    $('#product_table').on('click', 'tr td:nth-child(4) .fetchDataProductImage', function() {
+    $('#product_table').on('click', 'tr td:nth-child(4) .fetchDataProductImage', function () {
       var product_id = $(this).closest('tr').find('td').first().text(); // Get the product_id from the clicked row
 
       $.ajax({
@@ -167,12 +174,12 @@ if (session_status() == PHP_SESSION_NONE) {
         data: {
           product_id: product_id
         },
-        success: function(response) {
+        success: function (response) {
           $('#modalContainerProduct').html(response);
           $('#editProductModal').modal('show');
           console.log("#editProductModal" + product_id);
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
           console.error(xhr.responseText);
         }
       });
@@ -180,9 +187,9 @@ if (session_status() == PHP_SESSION_NONE) {
   });
 
   //Column 5
-  $(document).ready(function() {
+  $(document).ready(function () {
     // Function to handle click event on datatable rows
-    $('#product_table').on('click', 'tr td:nth-child(6) .fetchDataProduct', function() {
+    $('#product_table').on('click', 'tr td:nth-child(5) .fetchDataProduct', function () {
       var product_id = $(this).closest('tr').find('td').first().text(); // Get the product_id from the clicked row
 
       $.ajax({
@@ -191,21 +198,21 @@ if (session_status() == PHP_SESSION_NONE) {
         data: {
           product_id: product_id
         },
-        success: function(response) {
+        success: function (response) {
           $('#modalContainerProduct').html(response);
           $('#editProductModal').modal('show');
           console.log("#editProductModal" + product_id);
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
           console.error(xhr.responseText);
         }
       });
     });
   });
 
-  $(document).ready(function() {
+  $(document).ready(function () {
     // Function to handle click event on datatable rows
-    $('#product_table').on('click', 'tr td:nth-child(6) .fetchDataProductDelete', function() {
+    $('#product_table').on('click', 'tr td:nth-child(5) .fetchDataProductDelete', function () {
       var product_id = $(this).closest('tr').find('td').first().text(); // Get the product_id from the clicked row
 
       $.ajax({
@@ -214,12 +221,12 @@ if (session_status() == PHP_SESSION_NONE) {
         data: {
           product_id: product_id
         },
-        success: function(response) {
+        success: function (response) {
           $('#modalContainerProductDelete').html(response);
           $('#deleteProductModal').modal('show');
           console.log("#deleteProductModal" + product_id);
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
           console.error(xhr.responseText);
         }
       });
