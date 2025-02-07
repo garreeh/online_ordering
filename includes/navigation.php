@@ -69,9 +69,7 @@ if (session_status() == PHP_SESSION_NONE) {
   <div class="header">
     <div class="container">
       <a class="site-logo" href="/online_ordering/index.php">
-        <img
-          src="/online_ordering/assets/user/corporate/img/logos/logo.jpeg"
-          alt="LOGO STERLING HERE"
+        <img src="/online_ordering/assets/user/corporate/img/logos/logo.jpeg" alt="LOGO STERLING HERE"
           style="width: 100px; height: 100px;">
       </a>
 
@@ -108,14 +106,14 @@ if (session_status() == PHP_SESSION_NONE) {
 
 </html>
 <script>
-  $(document).ready(function() {
+  $(document).ready(function () {
     // Function to update the cart
-    function updateCart() {
+    function updateCartNavigation() {
       $.ajax({
         url: '/online_ordering/controllers/users/fetch_cart_process.php',
         method: 'GET',
         dataType: 'json',
-        success: function(response) {
+        success: function (response) {
           if (response.success) {
             var cartContent = '';
             var totalItems = response.total_items;
@@ -134,7 +132,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
             } else {
               // Populate the cart with items
-              $.each(response.items, function(index, item) {
+              $.each(response.items, function (index, item) {
                 cartContent += '<li>';
                 cartContent += '<a href="shop-item.html"><img src="' + baseURL + item.product_image + '" alt="' + item.product_name + '" width="37" height="34"></a>';
                 cartContent += '<span class="cart-content-count">x ' + item.cart_quantity + '</span>';
@@ -150,7 +148,7 @@ if (session_status() == PHP_SESSION_NONE) {
             console.error('Failed to fetch cart data:', response.message);
           }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
           console.error('AJAX Error:', error);
         }
       });
@@ -165,7 +163,7 @@ if (session_status() == PHP_SESSION_NONE) {
           product_id: productId
         },
         dataType: 'json',
-        success: function(response) {
+        success: function (response) {
           if (response.success) {
             //   Toastify({
             //       text: "Item removed from cart.",
@@ -173,7 +171,7 @@ if (session_status() == PHP_SESSION_NONE) {
             //       className: "info",
             //       duration: 3000
             //   }).showToast();
-            updateCart(); // Refresh cart immediately
+            updateCartNavigation(); // Refresh cart immediately
           } else {
             //   Toastify({
             //       text: response.message,
@@ -183,124 +181,30 @@ if (session_status() == PHP_SESSION_NONE) {
             //   }).showToast();
           }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
           console.error('AJAX Error:', error);
         }
       });
     }
 
     // Bind click event to delete buttons
-    $(document).on('click', '.del-goods', function() {
+    $(document).on('click', '.del-goods', function () {
       var productId = $(this).data('product-id');
       deleteCartItem(productId);
     });
 
-    $(document).on('click', '.add-to-cart', function() {
+    $(document).on('click', '.add-to-cart', function () {
       var productId = $(this).data('product-id');
-      updateCart(productId);
-    });
-
-
-    // Show/Hide proof of payment based on selected payment method
-    $('input[name="paymentCategory"]').change(function() {
-      var selectedPayment = $('input[name="paymentCategory"]:checked').val();
-      if (selectedPayment === 'GCash') {
-        $('#proof-of-payment-field').show();
-        $('#proofOfPayment').prop('required', true); // Set required attribute
-      } else {
-        $('#proof-of-payment-field').hide();
-        $('#proofOfPayment').prop('required', false); // Remove required attribute
-      }
+      updateCartNavigation(productId);
     });
 
     // Handle checkout form submission
-    $('#submitCheckout').click(function(e) {
-      e.preventDefault(); // Prevent default form submission
-
+    $('input[name="paymentCategory"]').change(function () {
       var selectedPayment = $('input[name="paymentCategory"]:checked').val();
-      var proofOfPayment = $('#proofOfPayment').val();
-
-      // Validate payment method selection
-      if (!selectedPayment) {
-        Toastify({
-          text: "Please select a payment method.",
-          duration: 2000,
-          backgroundColor: "#dc3545" // Red for error
-        }).showToast();
-        return;
-      }
-
-      // If GCash is selected, validate proof of payment
-      if (selectedPayment === 'GCash' && !proofOfPayment) {
-        Toastify({
-          text: "Please upload proof of payment for GCash.",
-          duration: 2000,
-          backgroundColor: "#dc3545" // Red for error
-        }).showToast();
-        return;
-      }
-
-      // Serialize form data
-      var formData = new FormData($('#checkoutForm')[0]);
-
-      // Send the form data via AJAX
-      $.ajax({
-        type: 'POST',
-        url: '/online_ordering/controllers/users/checkout_process.php',
-        data: formData,
-        contentType: false,
-        processData: false,
-        success: function(response) {
-          if (typeof response === 'string') {
-            try {
-              response = JSON.parse(response);
-            } catch (e) {
-              console.error("Response is not valid JSON:", response);
-              Toastify({
-                text: "Invalid response format.",
-                duration: 3000,
-                backgroundColor: "#dc3545" // Red for error
-              }).showToast();
-              return;
-            }
-          }
-
-          if (response.success) {
-            // Toastify({
-            //   text: response.message,
-            //   duration: 2000,
-            //   backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)" // Green for success
-            // }).showToast();
-
-            // Close modal and reset form
-            $('#checkoutModal').modal('hide');
-            $('.modal-backdrop').remove();
-            $('#checkoutForm').trigger('reset');
-            $('#proof-of-payment-field').hide();
-
-            // Refresh the cart
-            updateCart();
-          } else {
-            Toastify({
-              text: response.message,
-              duration: 2000,
-              backgroundColor: "linear-gradient(to right, #ff6a00, #ee0979)" // Red for error
-            }).showToast();
-          }
-        },
-        error: function(xhr, status, error) {
-          console.error('AJAX Error:', status, error);
-          Toastify({
-            text: "An error occurred while processing your request.",
-            duration: 3000,
-            backgroundColor: "#dc3545", // Red for error
-            close: true
-          }).showToast();
-        }
-      });
     });
 
+
     // Initial cart update
-    updateCart();
+    updateCartNavigation();
   });
 </script>

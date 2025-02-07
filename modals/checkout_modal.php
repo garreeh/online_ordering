@@ -1,5 +1,6 @@
 <!-- Checkout Modal -->
-<div class="modal fade" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+<div class="modal fade" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="checkoutModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -37,10 +38,6 @@
               <label><input type="radio" name="paymentCategory" value="GCash"> Gcash</label>
               <label><input type="radio" name="paymentCategory" value="Cash On Delivery"> Cash on Delivery (COD)</label>
             </div>
-          </div>
-          <div class="form-group" id="proof-of-payment-field" style="display: none;">
-            <label for="proofOfPayment">Upload Proof of Payment (GCash):</label>
-            <input type="file" id="proofOfPayment" name="proofOfPayment" class="form-control-file" required>
           </div>
         </form>
       </div>

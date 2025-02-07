@@ -40,7 +40,9 @@ if (!isset($_SESSION['user_id'])) {
   <link rel="shortcut icon" href="favicon.ico">
 
   <!-- Fonts START -->
-  <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|PT+Sans+Narrow|Source+Sans+Pro:200,300,400,600,700,900&amp;subset=all" rel="stylesheet" type="text/css">
+  <link
+    href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|PT+Sans+Narrow|Source+Sans+Pro:200,300,400,600,700,900&amp;subset=all"
+    rel="stylesheet" type="text/css">
   <!-- Fonts END -->
 
   <!-- Global styles START -->
@@ -53,7 +55,8 @@ if (!isset($_SESSION['user_id'])) {
 
   <link href="./../../assets/user/plugins/owl.carousel/assets/owl.carousel.css" rel="stylesheet">
   <link href="./../../assets/user/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css">
-  <link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css"><!-- for slider-range -->
+  <link href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css">
+  <!-- for slider-range -->
   <link href="./../../assets/user/plugins/rateit/src/rateit.css" rel="stylesheet" type="text/css">
   <!-- Page level plugin styles END -->
 
@@ -118,10 +121,12 @@ if (!isset($_SESSION['user_id'])) {
                 </ul>
               </div>
             </div>
-            <a href="/online_ordering/index.php" class="btn btn-default" type="submit">Continue shopping <i class="fa fa-shopping-cart"></i></a>
+            <a href="/online_ordering/index.php" class="btn btn-default" type="submit">Continue shopping <i
+                class="fa fa-shopping-cart"></i></a>
             <?php include './../../modals/checkout_modal.php' ?>
             <!-- Update this button to trigger the modal -->
-            <button class="btn btn-primary" type="submit" data-toggle="modal" data-target="#checkoutModal" id="checkout-button">Checkout <i class="fa fa-check"></i></button>
+            <button class="btn btn-primary" type="submit" data-toggle="modal" data-target="#checkoutModal"
+              id="checkout-button">Checkout <i class="fa fa-check"></i></button>
 
 
           </div>
@@ -141,7 +146,7 @@ if (!isset($_SESSION['user_id'])) {
           while ($row = $productResult->fetch_assoc()) {
             $product_image = basename($row['product_image']);
             $image_url = './../../uploads/' . $product_image;
-        ?>
+            ?>
             <div class="col-xs-12 col-sm-6 col-md-4" style="margin-bottom: 2rem;">
               <div class="product-item"
                 style="display: flex; flex-direction: column; padding-bottom: 1rem; border: 1px solid #ddd; border-radius: 10px; position: relative; box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: transform 0.3s; overflow: hidden;">
@@ -182,7 +187,7 @@ if (!isset($_SESSION['user_id'])) {
                 </a>
               </div>
             </div>
-        <?php
+            <?php
           }
         }
         ?>
@@ -200,8 +205,10 @@ if (!isset($_SESSION['user_id'])) {
   <!-- END CORE PLUGINS -->
 
   <!-- BEGIN PAGE LEVEL JAVASCRIPTS (REQUIRED ONLY FOR CURRENT PAGE) -->
-  <script src="./../../assets/user/plugins/fancybox/source/jquery.fancybox.pack.js" type="text/javascript"></script><!-- pop up -->
-  <script src="./../../assets/user/plugins/bootstrap-touchspin/bootstrap.touchspin.js" type="text/javascript"></script><!-- Quantity -->
+  <script src="./../../assets/user/plugins/fancybox/source/jquery.fancybox.pack.js" type="text/javascript"></script>
+  <!-- pop up -->
+  <script src="./../../assets/user/plugins/bootstrap-touchspin/bootstrap.touchspin.js" type="text/javascript"></script>
+  <!-- Quantity -->
   <script src="./../../assets/user/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
   <script src="./../../assets/user/plugins/rateit/src/jquery.rateit.js" type="text/javascript"></script>
 
@@ -215,7 +222,7 @@ if (!isset($_SESSION['user_id'])) {
 
 
   <script type="text/javascript">
-    jQuery(document).ready(function() {
+    jQuery(document).ready(function () {
       Layout.init();
       Layout.initOWL();
       Layout.initTwitter();
@@ -232,7 +239,9 @@ if (!isset($_SESSION['user_id'])) {
 </html>
 
 <script type="text/javascript">
-  $(document).ready(function() {
+  var cartItems = [];
+
+  $(document).ready(function () {
 
     // Function to update the cart content
     function updateCart() {
@@ -240,10 +249,11 @@ if (!isset($_SESSION['user_id'])) {
         url: '/online_ordering/controllers/users/fetch_cart_process.php',
         method: 'GET',
         dataType: 'json',
-        success: function(response) {
+        success: function (response) {
           console.log('Cart Data:', response);
 
           if (response.success) {
+            cartItems = response.items;  // Store cart items globally
             var cartContent = '';
             var totalPrice = response.total_price;
 
@@ -253,7 +263,7 @@ if (!isset($_SESSION['user_id'])) {
               cartContent = '<tr><td colspan="7" class="text-center">Cart is empty</td></tr>';
             } else {
               // Iterate over cart items and generate HTML content
-              $.each(response.items, function(index, item) {
+              $.each(response.items, function (index, item) {
                 var productPrice = parseFloat(item.product_sellingprice) || 0;
                 var cartQuantity = parseInt(item.cart_quantity, 10) || 0;
                 var baseURL = "./../uploads/";
@@ -287,7 +297,7 @@ if (!isset($_SESSION['user_id'])) {
             console.error('Failed to fetch cart data:', response.message);
           }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
           console.error('AJAX Error:', error);
         }
       });
@@ -302,7 +312,7 @@ if (!isset($_SESSION['user_id'])) {
           product_id: productId
         },
         dataType: 'json',
-        success: function(response) {
+        success: function (response) {
           if (response.success) {
             Toastify({
               text: "Item removed from cart.",
@@ -320,107 +330,176 @@ if (!isset($_SESSION['user_id'])) {
             }).showToast();
           }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
+          console.error('AJAX Error:', error);
+        }
+      });
+    }
+
+
+    function updateCartNavigation() {
+      $.ajax({
+        url: '/online_ordering/controllers/users/fetch_cart_process.php',
+        method: 'GET',
+        dataType: 'json',
+        success: function (response) {
+          if (response.success) {
+            var cartContent = '';
+            var totalItems = response.total_items;
+            var totalPrice = response.total_price;
+            var baseURL = "./../uploads/";
+
+
+            $('.top-cart-info-count').text(totalItems + ' items');
+            $('.top-cart-info-value').text('₱ ' + totalPrice.toFixed(2));
+
+            $('.scroller').empty();
+
+            if (response.items.length === 0) {
+              // If cart is empty, display a message
+              cartContent = '<li style="text-align: center; padding: 20px;">Your cart is empty.</li>';
+
+            } else {
+              // Populate the cart with items
+              $.each(response.items, function (index, item) {
+                cartContent += '<li>';
+                cartContent += '<a href="shop-item.html"><img src="' + baseURL + item.product_image + '" alt="' + item.product_name + '" width="37" height="34"></a>';
+                cartContent += '<span class="cart-content-count">x ' + item.cart_quantity + '</span>';
+                cartContent += '<strong><a href="shop-item.html">' + item.product_name + '</a></strong>';
+                cartContent += '<em>₱' + (item.product_sellingprice * item.cart_quantity).toFixed(2) + '</em>';
+                cartContent += '<a href="#" class="del-goods" data-product-id="' + item.product_id + '">&nbsp;</a>';
+                cartContent += '</li>';
+              });
+            }
+
+            $('.scroller').html(cartContent);
+          } else {
+            console.error('Failed to fetch cart data:', response.message);
+          }
+        },
+        error: function (xhr, status, error) {
           console.error('AJAX Error:', error);
         }
       });
     }
 
     // Bind the delete button click event
-    $(document).on('click', '.del-goods', function() {
+    $(document).on('click', '.del-goods', function () {
       var productId = $(this).data('product-id');
       deleteCartItem(productId);
     });
 
     // Show/Hide proof of payment based on selected payment method
-    $('input[name="paymentCategory"]').change(function() {
+    $('input[name="paymentCategory"]').change(function () {
       var selectedPayment = $('input[name="paymentCategory"]:checked').val();
-      if (selectedPayment === 'GCash') {
-        $('#proof-of-payment-field').show();
-        $('#proofOfPayment').prop('required', true); // Set required attribute
-      } else {
-        $('#proof-of-payment-field').hide();
-        $('#proofOfPayment').prop('required', false); // Remove required attribute
-      }
     });
 
-    // Handle checkout form submission
-    $('#submitCheckout').click(function(e) {
-      e.preventDefault(); // Prevent default form submission
+    $('#submitCheckout').click(function (e) {
+      e.preventDefault();
 
       var selectedPayment = $('input[name="paymentCategory"]:checked').val();
-      var proofOfPayment = $('#proofOfPayment').val();
 
-      // Validate payment method selection
       if (!selectedPayment) {
-
+        Toastify({
+          text: "Please select a payment method.",
+          duration: 3000,
+          backgroundColor: "#dc3545"
+        }).showToast();
         return;
       }
 
-      // If GCash is selected, validate proof of payment
-      if (selectedPayment === 'GCash' && !proofOfPayment) {
+      // Calculate total amount
 
-        return;
-      }
+      var totalAmount = 0;
+      $.each(cartItems, function (index, item) {  // Use cartItems here
+        var productPrice = parseFloat(item.product_sellingprice) || 0;
+        var cartQuantity = parseInt(item.cart_quantity, 10) || 0;
+        totalAmount += productPrice * cartQuantity + 35;  // Add item total to overall total
+      });
 
-      // Serialize form data
-      var formData = new FormData($('#checkoutForm')[0]);
+      console.log("Total Cart Amount: ₱", totalAmount.toFixed(2));
 
-      // Send the form data via AJAX
-      $.ajax({
-        type: 'POST',
-        url: '/online_ordering/controllers/users/checkout_process.php',
-        data: formData,
-        contentType: false,
-        processData: false,
-        success: function(response) {
-          if (typeof response === 'string') {
+      if (selectedPayment === 'GCash') {
+        // Call Xendit to generate GCash payment
+        $.ajax({
+          type: 'POST',
+          url: '/online_ordering/controllers/users/gcash_xendit.php',
+          data: JSON.stringify({
+            paymentCategory: selectedPayment,
+            amount: totalAmount
+          }),
+          contentType: "application/json",
+          success: function (response) {
             try {
               response = JSON.parse(response);
+              if (response.success) {
+                window.location.href = response.payment_url; // Redirect to Xendit payment page
+              } else {
+                Toastify({
+                  text: response.message,
+                  duration: 3000,
+                  backgroundColor: "#dc3545"
+                }).showToast();
+              }
             } catch (e) {
-              console.error("Response is not valid JSON:", response);
-              Toastify({
-                text: "Invalid response format.",
-                duration: 3000,
-                backgroundColor: "#dc3545" // Red for error
-              }).showToast();
-              return;
+              console.error("Invalid response:", response);
             }
-          }
-
-          if (response.success) {
+          },
+          error: function () {
             Toastify({
-              text: response.message,
-              duration: 2000,
-              backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)" // Green for success
-            }).showToast();
-
-            // Close modal and reset form
-            $('#checkoutModal').modal('hide');
-            $('.modal-backdrop').remove();
-            $('#checkoutForm').trigger('reset');
-            $('#proof-of-payment-field').hide();
-
-            // Refresh the cart
-            updateCart();
-          } else {
-            Toastify({
-              text: response.message,
-              duration: 2000,
-              backgroundColor: "linear-gradient(to right, #ff6a00, #ee0979)" // Red for error
+              text: "An error occurred with Xendit payment.",
+              duration: 3000,
+              backgroundColor: "#dc3545"
             }).showToast();
           }
-        },
-        error: function(xhr, status, error) {
-          console.error('AJAX Error:', status, error);
-          Toastify({
-            text: "An error occurred while processing your request.",
-            duration: 3000,
-            backgroundColor: "#dc3545", // Red for error
-            close: true
-          }).showToast();
-        }
-      });
+        });
+      } else {
+        // Process normal checkout for COD
+        var formData = new FormData($('#checkoutForm')[0]);
+        formData.append('amount', totalAmount);
+
+        $.ajax({
+          type: 'POST',
+          url: '/online_ordering/controllers/users/checkout_process.php',
+          data: formData,
+          contentType: false,
+          processData: false,
+          success: function (response) {
+            try {
+              response = JSON.parse(response);
+              if (response.success) {
+                Toastify({
+                  text: response.message,
+                  duration: 2000,
+                  backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)"
+                }).showToast();
+
+                $('#checkoutModal').modal('hide');
+                $('.modal-backdrop').remove();
+                $('#checkoutForm').trigger('reset');
+
+                updateCart();
+                updateCartNavigation()
+              } else {
+                Toastify({
+                  text: response.message,
+                  duration: 2000,
+                  backgroundColor: "linear-gradient(to right, #ff6a00, #ee0979)"
+                }).showToast();
+              }
+            } catch (e) {
+              console.error("Invalid response:", response);
+            }
+          },
+          error: function () {
+            Toastify({
+              text: "An error occurred during checkout.",
+              duration: 3000,
+              backgroundColor: "#dc3545"
+            }).showToast();
+          }
+        });
+      }
     });
 
     // Initial cart update when the page loads
@@ -437,13 +516,13 @@ if (!isset($_SESSION['user_id'])) {
 
 
   // Handle quantity increase and decrease buttons
-  $(document).on('click', '.add-btn', function() {
+  $(document).on('click', '.add-btn', function () {
     var quantityInput = $(this).siblings('.cart_quantity');
     var currentValue = parseInt(quantityInput.val());
     quantityInput.val(currentValue + 1);
   });
 
-  $(document).on('click', '.minus-btn', function() {
+  $(document).on('click', '.minus-btn', function () {
     var quantityInput = $(this).siblings('.cart_quantity');
     var currentValue = parseInt(quantityInput.val());
     if (currentValue > 1) {
@@ -451,8 +530,8 @@ if (!isset($_SESSION['user_id'])) {
     }
   });
 
-  $(document).ready(function() {
-    $('#categorySelect').change(function() {
+  $(document).ready(function () {
+    $('#categorySelect').change(function () {
       var categoryId = $(this).val();
       fetchProducts(categoryId);
       // fetchSpecialProducts(categoryId);
@@ -466,17 +545,17 @@ if (!isset($_SESSION['user_id'])) {
         data: {
           category_id: categoryId
         },
-        success: function(data) {
+        success: function (data) {
           $('#allProducts .row').html(data);
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
           console.error("Error fetching products:", error);
         }
       });
     }
 
     // Add to Cart button click handler
-    $('.add-to-cart').click(function() {
+    $('.add-to-cart').click(function () {
       var productId = $(this).data('product-id');
       var $button = $(this);
       var quantityInput = $button.closest('.product-item').find('.cart_quantity');
@@ -490,7 +569,7 @@ if (!isset($_SESSION['user_id'])) {
           product_id: productId,
           cart_quantity: quantity
         },
-        success: function(response) {
+        success: function (response) {
           try {
             var res = JSON.parse(response);
             if (res.success) {
@@ -534,7 +613,7 @@ if (!isset($_SESSION['user_id'])) {
             }).showToast();
           }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
           console.log('Error: ' + error);
           Toastify({
             text: "An error occurred. Please try again.",
@@ -554,7 +633,7 @@ if (!isset($_SESSION['user_id'])) {
         url: '/online_ordering/controllers/users/fetch_cart_process.php',
         method: 'GET',
         dataType: 'json',
-        success: function(response) {
+        success: function (response) {
           console.log('Cart Data:', response);
 
           if (response.success) {
@@ -567,7 +646,7 @@ if (!isset($_SESSION['user_id'])) {
               cartContent = '<tr><td colspan="7" class="text-center">Cart is empty</td></tr>';
             } else {
               // Iterate over cart items and generate HTML content
-              $.each(response.items, function(index, item) {
+              $.each(response.items, function (index, item) {
                 var productPrice = parseFloat(item.product_sellingprice) || 0;
                 var cartQuantity = parseInt(item.cart_quantity, 10) || 0;
                 var baseURL = "./../uploads/";
@@ -601,24 +680,24 @@ if (!isset($_SESSION['user_id'])) {
             console.error('Failed to fetch cart data:', response.message);
           }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
           console.error('AJAX Error:', error);
         }
       });
     }
 
-    $('#checkoutModal').on('show.bs.modal', function() {
+    $('#checkoutModal').on('show.bs.modal', function () {
       $.ajax({
         type: 'POST',
         url: '/online_ordering/controllers/users/fetch_cart_last_process.php',
         dataType: 'json',
-        success: function(response) {
+        success: function (response) {
           if (response.success) {
             var cartItemsHtml = '';
             var totalPrice = 0;
 
             // Loop through cart items and create table rows
-            response.cartItems.forEach(function(item) {
+            response.cartItems.forEach(function (item) {
               cartItemsHtml += '<tr>';
               cartItemsHtml += '<td>' + item.product_name + '</td>';
               cartItemsHtml += '<td>' + item.cart_quantity + '</td>';
@@ -635,7 +714,7 @@ if (!isset($_SESSION['user_id'])) {
             alert('Error fetching cart items');
           }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
           console.error('Error fetching cart:', error);
           alert('An error occurred while fetching the cart.');
         }
