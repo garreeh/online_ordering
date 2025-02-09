@@ -33,7 +33,7 @@ $result = mysqli_query($conn, $sql);
 
 if ($result) {
   while ($row = mysqli_fetch_assoc($result)) {
-    ?>
+?>
     <!DOCTYPE html>
     <html lang="en">
 
@@ -81,7 +81,12 @@ if ($result) {
           <li class="nav-item">
             <a class="nav-link" href="/online_ordering/views/admin/orders_module.php">
               <i class="fas fa-fw fa-money-bill"></i>
-              <span>Client Orders</span></a>
+              <span>Product Orders</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/online_ordering/views/admin/booking_orders_module.php">
+              <i class="fas fa-fw fa-cart-plus"></i>
+              <span>Booking Orders</span></a>
           </li>
         <?php endif; ?>
 
@@ -92,6 +97,8 @@ if ($result) {
               <span>Deliveries</span></a>
           </li>
         <?php endif; ?>
+
+
 
         <?php if ($row['transaction_module'] == 1): ?>
           <li class="nav-item">
@@ -153,6 +160,14 @@ if ($result) {
           </li>
         <?php endif; ?>
 
+        <?php if ($row['po_module'] == 1): ?>
+          <li class="nav-item">
+            <a class="nav-link" href="/online_ordering/views/admin/booking_module.php">
+              <i class="fas fa-fw fa-cart-plus"></i>
+              <span>Booking Setup</span></a>
+          </li>
+        <?php endif; ?>
+
         <hr class="sidebar-divider">
 
         <!-- Heading -->
@@ -162,7 +177,7 @@ if ($result) {
 
         <?php if ($row['po_module'] == 1): ?>
           <li class="nav-item">
-            <a class="nav-link" href="/online_ordering/views/admin/ingredients_purchase_module.php">
+            <a class="nav-link" href="/online_ordering/views/admin/purchase_module.php">
               <i class="fas fa-fw fa-cart-plus"></i>
               <span>Ingredients PO</span></a>
           </li>
@@ -241,7 +256,7 @@ if ($result) {
 
     </html>
 
-    <?php
+<?php
   }
 }
 ?>

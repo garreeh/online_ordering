@@ -274,6 +274,24 @@ if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === "1") {
                             ?>
                         </ul>
                     </div>
+                    <hr>
+                    <div id="categoryMenu" style="border-radius: 8px; padding: 10px 0; background-color: #f9f9f9;">
+                        <ul style="list-style: none; padding-left: 0; margin: 0;">
+                            <li style="margin: 10px 0; text-align: center;">
+                                <a href="/online_ordering/bookings.php" target="_blank"
+                                    style="text-decoration: none; color: #333; font-weight: bold; font-size: 18px; padding: 10px 15px; display: inline-block; width: 90%; border-radius: 5px; background-color: #fff; transition: background 0.3s;">
+                                    Bookings
+                                </a>
+                            </li>
+                            <!-- </?php
+                            $categoryQuery = "SELECT * FROM category";
+                            $categoryResult = $conn->query($categoryQuery);
+                            while ($categoryRow = $categoryResult->fetch_assoc()) {
+                                echo "<li style='margin: 10px 0; text-align: center;'><a href=\"javascript:void(0)\" onclick=\"filterProducts('" . $categoryRow['category_id'] . "')\" style=\"text-decoration: none; color: #333; font-size: 18px; padding: 10px 15px; display: inline-block; width: 90%; border-radius: 5px; background-color: #fff; transition: background 0.3s;\">" . htmlspecialchars($categoryRow['category_name']) . "</a></li>";
+                            }
+                            ?> -->
+                        </ul>
+                    </div>
                 </div>
 
                 <div class="col-md-9 col-sm-8 col-xs-7 special-product">

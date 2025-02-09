@@ -71,7 +71,7 @@ include '../../connections/ssp_connection.php';
 // Include the SSP class
 require('../../assets/datatables/ssp.class_with_where.php');
 
-$where = "product_id";
+$where = "product_type IS NULL";
 
 // Fetch and encode ONLY WHERE
 echo json_encode(SSP::simple($_GET, $sql_details, $table, $primaryKey, $columns, $where));

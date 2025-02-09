@@ -110,7 +110,7 @@ require('../../assets/datatables/ssp.class.php');
 
 
 // THIS IS A SAMPLE ONLY
-$where = "cart_status = 'Processing'";
+$where = "cart_status = 'Processing' AND cart_type IS NULL";
 
 // Fetch and encode ONLY WHERE
 // echo json_encode(SSP::simple($_GET, $sql_details, $table, $primaryKey, $columns, $where));
