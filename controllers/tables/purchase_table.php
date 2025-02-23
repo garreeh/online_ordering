@@ -24,7 +24,7 @@ $columns = array(
 	),
 
 	array(
-		'db' => 'supplier.supplier_name',
+		'db' => 'ingredients_supplier.supplier_name',
 		'dt' => 2,
 		'field' => 'supplier_name',
 		'formatter' => function ($lab3, $row) {
@@ -33,7 +33,7 @@ $columns = array(
 	),
 
 	array(
-		'db' => 'product.product_name',
+		'db' => 'ingredients_product.product_name',
 		'dt' => 3,
 		'field' => 'product_name',
 		'formatter' => function ($lab4, $row) {
@@ -102,8 +102,8 @@ $where = "purchase_order_id > 0";
 // Fetch and encode ONLY WHERE
 // echo json_encode(SSP::simple($_GET, $sql_details, $table, $primaryKey, $columns, $where));
 
-$joinQuery = "FROM $table LEFT JOIN supplier ON $table.supplier_id = supplier.supplier_id
-													LEFT JOIN product on $table.product_id = product.product_id";
+$joinQuery = "FROM $table LEFT JOIN ingredients_supplier ON $table.supplier_id = ingredients_supplier.supplier_id
+													LEFT JOIN ingredients_product on $table.product_id = ingredients_product.product_id";
 
 // Fetch and encode JOIN AND WHERE
 echo json_encode(SSP::simple($_GET, $sql_details, $table, $primaryKey, $columns, $joinQuery, $where));

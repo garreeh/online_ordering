@@ -31,7 +31,6 @@ try {
 
     $response['success'] = true;
     $response['message'] = 'Checkout successful for all items in the cart';
-
 } catch (Exception $e) {
     mysqli_rollback($conn);
     $response['message'] = $e->getMessage();
@@ -39,4 +38,3 @@ try {
 
 // Output the JSON response
 echo json_encode($response);
-?>

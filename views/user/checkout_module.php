@@ -146,7 +146,7 @@ if (!isset($_SESSION['user_id'])) {
           while ($row = $productResult->fetch_assoc()) {
             $product_image = basename($row['product_image']);
             $image_url = './../../uploads/' . $product_image;
-            ?>
+        ?>
             <div class="col-xs-12 col-sm-6 col-md-4" style="margin-bottom: 2rem;">
               <div class="product-item"
                 style="display: flex; flex-direction: column; padding-bottom: 1rem; border: 1px solid #ddd; border-radius: 10px; position: relative; box-shadow: 0 4px 8px rgba(0,0,0,0.2); transition: transform 0.3s; overflow: hidden;">
@@ -187,7 +187,7 @@ if (!isset($_SESSION['user_id'])) {
                 </a>
               </div>
             </div>
-            <?php
+        <?php
           }
         }
         ?>
@@ -222,7 +222,7 @@ if (!isset($_SESSION['user_id'])) {
 
 
   <script type="text/javascript">
-    jQuery(document).ready(function () {
+    jQuery(document).ready(function() {
       Layout.init();
       Layout.initOWL();
       Layout.initTwitter();
@@ -241,7 +241,7 @@ if (!isset($_SESSION['user_id'])) {
 <script type="text/javascript">
   var cartItems = [];
 
-  $(document).ready(function () {
+  $(document).ready(function() {
 
     // Function to update the cart content
     function updateCart() {
@@ -249,11 +249,11 @@ if (!isset($_SESSION['user_id'])) {
         url: '/online_ordering/controllers/users/fetch_cart_process.php',
         method: 'GET',
         dataType: 'json',
-        success: function (response) {
+        success: function(response) {
           console.log('Cart Data:', response);
 
           if (response.success) {
-            cartItems = response.items;  // Store cart items globally
+            cartItems = response.items; // Store cart items globally
             var cartContent = '';
             var totalPrice = response.total_price;
 
@@ -263,7 +263,7 @@ if (!isset($_SESSION['user_id'])) {
               cartContent = '<tr><td colspan="7" class="text-center">Cart is empty</td></tr>';
             } else {
               // Iterate over cart items and generate HTML content
-              $.each(response.items, function (index, item) {
+              $.each(response.items, function(index, item) {
                 var productPrice = parseFloat(item.product_sellingprice) || 0;
                 var cartQuantity = parseInt(item.cart_quantity, 10) || 0;
                 var baseURL = "./../uploads/";
@@ -285,7 +285,7 @@ if (!isset($_SESSION['user_id'])) {
 
             // Update the subtotal and total price
             $('#cart-subtotal').text('₱ ' + response.total_price.toFixed(2));
-            $('#cart-total').text('₱ ' + (response.total_price + 35).toFixed(2));
+            $('#cart-total').text('₱ ' + (response.total_price + 0).toFixed(2));
 
             // Toggle the checkout button visibility based on cart contents
             if (response.items.length > 0) {
@@ -297,7 +297,7 @@ if (!isset($_SESSION['user_id'])) {
             console.error('Failed to fetch cart data:', response.message);
           }
         },
-        error: function (xhr, status, error) {
+        error: function(xhr, status, error) {
           console.error('AJAX Error:', error);
         }
       });
@@ -312,7 +312,7 @@ if (!isset($_SESSION['user_id'])) {
           product_id: productId
         },
         dataType: 'json',
-        success: function (response) {
+        success: function(response) {
           if (response.success) {
             Toastify({
               text: "Item removed from cart.",
@@ -330,7 +330,7 @@ if (!isset($_SESSION['user_id'])) {
             }).showToast();
           }
         },
-        error: function (xhr, status, error) {
+        error: function(xhr, status, error) {
           console.error('AJAX Error:', error);
         }
       });
@@ -342,7 +342,7 @@ if (!isset($_SESSION['user_id'])) {
         url: '/online_ordering/controllers/users/fetch_cart_process.php',
         method: 'GET',
         dataType: 'json',
-        success: function (response) {
+        success: function(response) {
           if (response.success) {
             var cartContent = '';
             var totalItems = response.total_items;
@@ -361,7 +361,7 @@ if (!isset($_SESSION['user_id'])) {
 
             } else {
               // Populate the cart with items
-              $.each(response.items, function (index, item) {
+              $.each(response.items, function(index, item) {
                 cartContent += '<li>';
                 cartContent += '<a href="shop-item.html"><img src="' + baseURL + item.product_image + '" alt="' + item.product_name + '" width="37" height="34"></a>';
                 cartContent += '<span class="cart-content-count">x ' + item.cart_quantity + '</span>';
@@ -377,24 +377,24 @@ if (!isset($_SESSION['user_id'])) {
             console.error('Failed to fetch cart data:', response.message);
           }
         },
-        error: function (xhr, status, error) {
+        error: function(xhr, status, error) {
           console.error('AJAX Error:', error);
         }
       });
     }
 
     // Bind the delete button click event
-    $(document).on('click', '.del-goods', function () {
+    $(document).on('click', '.del-goods', function() {
       var productId = $(this).data('product-id');
       deleteCartItem(productId);
     });
 
     // Show/Hide proof of payment based on selected payment method
-    $('input[name="paymentCategory"]').change(function () {
+    $('input[name="paymentCategory"]').change(function() {
       var selectedPayment = $('input[name="paymentCategory"]:checked').val();
     });
 
-    $('#submitCheckout').click(function (e) {
+    $('#submitCheckout').click(function(e) {
       e.preventDefault();
 
       var selectedPayment = $('input[name="paymentCategory"]:checked').val();
@@ -411,10 +411,12 @@ if (!isset($_SESSION['user_id'])) {
       // Calculate total amount
 
       var totalAmount = 0;
-      $.each(cartItems, function (index, item) {  // Use cartItems here
+      $.each(cartItems, function(index, item) { // Use cartItems here
+        var cartQuantity = parseInt(item.cart_quantity, 10) || 0;
+
         var productPrice = parseFloat(item.product_sellingprice) || 0;
         var cartQuantity = parseInt(item.cart_quantity, 10) || 0;
-        totalAmount += productPrice * cartQuantity + 35;  // Add item total to overall total
+        totalAmount += productPrice * cartQuantity + 0; // Add item total to overall total
       });
 
       console.log("Total Cart Amount: ₱", totalAmount.toFixed(2));
@@ -429,11 +431,15 @@ if (!isset($_SESSION['user_id'])) {
             amount: totalAmount
           }),
           contentType: "application/json",
-          success: function (response) {
+          success: function(response) {
             try {
               response = JSON.parse(response);
               if (response.success) {
-                window.location.href = response.payment_url; // Redirect to Xendit payment page
+                // Save reference_id for tracking payment status
+                localStorage.setItem("xendit_reference_id", response.reference_id);
+
+                // Redirect to Xendit payment page
+                window.location.href = response.payment_url;
               } else {
                 Toastify({
                   text: response.message,
@@ -445,7 +451,7 @@ if (!isset($_SESSION['user_id'])) {
               console.error("Invalid response:", response);
             }
           },
-          error: function () {
+          error: function() {
             Toastify({
               text: "An error occurred with Xendit payment.",
               duration: 3000,
@@ -453,6 +459,10 @@ if (!isset($_SESSION['user_id'])) {
             }).showToast();
           }
         });
+
+        // Poll for payment status
+
+
       } else {
         // Process normal checkout for COD
         var formData = new FormData($('#checkoutForm')[0]);
@@ -464,7 +474,7 @@ if (!isset($_SESSION['user_id'])) {
           data: formData,
           contentType: false,
           processData: false,
-          success: function (response) {
+          success: function(response) {
             try {
               response = JSON.parse(response);
               if (response.success) {
@@ -491,7 +501,7 @@ if (!isset($_SESSION['user_id'])) {
               console.error("Invalid response:", response);
             }
           },
-          error: function () {
+          error: function() {
             Toastify({
               text: "An error occurred during checkout.",
               duration: 3000,
@@ -516,13 +526,13 @@ if (!isset($_SESSION['user_id'])) {
 
 
   // Handle quantity increase and decrease buttons
-  $(document).on('click', '.add-btn', function () {
+  $(document).on('click', '.add-btn', function() {
     var quantityInput = $(this).siblings('.cart_quantity');
     var currentValue = parseInt(quantityInput.val());
     quantityInput.val(currentValue + 1);
   });
 
-  $(document).on('click', '.minus-btn', function () {
+  $(document).on('click', '.minus-btn', function() {
     var quantityInput = $(this).siblings('.cart_quantity');
     var currentValue = parseInt(quantityInput.val());
     if (currentValue > 1) {
@@ -530,8 +540,8 @@ if (!isset($_SESSION['user_id'])) {
     }
   });
 
-  $(document).ready(function () {
-    $('#categorySelect').change(function () {
+  $(document).ready(function() {
+    $('#categorySelect').change(function() {
       var categoryId = $(this).val();
       fetchProducts(categoryId);
       // fetchSpecialProducts(categoryId);
@@ -545,17 +555,17 @@ if (!isset($_SESSION['user_id'])) {
         data: {
           category_id: categoryId
         },
-        success: function (data) {
+        success: function(data) {
           $('#allProducts .row').html(data);
         },
-        error: function (xhr, status, error) {
+        error: function(xhr, status, error) {
           console.error("Error fetching products:", error);
         }
       });
     }
 
     // Add to Cart button click handler
-    $('.add-to-cart').click(function () {
+    $('.add-to-cart').click(function() {
       var productId = $(this).data('product-id');
       var $button = $(this);
       var quantityInput = $button.closest('.product-item').find('.cart_quantity');
@@ -569,7 +579,7 @@ if (!isset($_SESSION['user_id'])) {
           product_id: productId,
           cart_quantity: quantity
         },
-        success: function (response) {
+        success: function(response) {
           try {
             var res = JSON.parse(response);
             if (res.success) {
@@ -613,7 +623,7 @@ if (!isset($_SESSION['user_id'])) {
             }).showToast();
           }
         },
-        error: function (xhr, status, error) {
+        error: function(xhr, status, error) {
           console.log('Error: ' + error);
           Toastify({
             text: "An error occurred. Please try again.",
@@ -633,7 +643,7 @@ if (!isset($_SESSION['user_id'])) {
         url: '/online_ordering/controllers/users/fetch_cart_process.php',
         method: 'GET',
         dataType: 'json',
-        success: function (response) {
+        success: function(response) {
           console.log('Cart Data:', response);
 
           if (response.success) {
@@ -646,7 +656,7 @@ if (!isset($_SESSION['user_id'])) {
               cartContent = '<tr><td colspan="7" class="text-center">Cart is empty</td></tr>';
             } else {
               // Iterate over cart items and generate HTML content
-              $.each(response.items, function (index, item) {
+              $.each(response.items, function(index, item) {
                 var productPrice = parseFloat(item.product_sellingprice) || 0;
                 var cartQuantity = parseInt(item.cart_quantity, 10) || 0;
                 var baseURL = "./../uploads/";
@@ -680,24 +690,24 @@ if (!isset($_SESSION['user_id'])) {
             console.error('Failed to fetch cart data:', response.message);
           }
         },
-        error: function (xhr, status, error) {
+        error: function(xhr, status, error) {
           console.error('AJAX Error:', error);
         }
       });
     }
 
-    $('#checkoutModal').on('show.bs.modal', function () {
+    $('#checkoutModal').on('show.bs.modal', function() {
       $.ajax({
         type: 'POST',
         url: '/online_ordering/controllers/users/fetch_cart_last_process.php',
         dataType: 'json',
-        success: function (response) {
+        success: function(response) {
           if (response.success) {
             var cartItemsHtml = '';
             var totalPrice = 0;
 
             // Loop through cart items and create table rows
-            response.cartItems.forEach(function (item) {
+            response.cartItems.forEach(function(item) {
               cartItemsHtml += '<tr>';
               cartItemsHtml += '<td>' + item.product_name + '</td>';
               cartItemsHtml += '<td>' + item.cart_quantity + '</td>';
@@ -714,7 +724,7 @@ if (!isset($_SESSION['user_id'])) {
             alert('Error fetching cart items');
           }
         },
-        error: function (xhr, status, error) {
+        error: function(xhr, status, error) {
           console.error('Error fetching cart:', error);
           alert('An error occurred while fetching the cart.');
         }

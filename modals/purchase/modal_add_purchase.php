@@ -3,14 +3,14 @@ include './../../connections/connections.php';
 
 // Fetch products with supplier names
 $sql = "SELECT *
-        FROM product 
-        LEFT JOIN supplier ON product.supplier_id = supplier.supplier_id";
+        FROM ingredients_product
+        LEFT JOIN ingredients_supplier ON ingredients_product.supplier_id = ingredients_supplier.supplier_id";
 $resultProduct = mysqli_query($conn, $sql);
 $products = [];
 if ($resultProduct) {
-    while ($row = mysqli_fetch_assoc($resultProduct)) {
-        $products[] = $row;
-    }
+  while ($row = mysqli_fetch_assoc($resultProduct)) {
+    $products[] = $row;
+  }
 }
 ?>
 
@@ -46,24 +46,24 @@ if ($resultProduct) {
 
           <div class="form-row">
             <div class="form-group col-md-6">
-                <label for="product_id">Product:</label>
-                <select class="form-control" id="product_id" name="product_id" onchange="inheritSupplierDetails()" required>
-                    <option value="">Select Product</option>
-                    <?php foreach ($products as $product) : ?>
-                        <option value="<?php echo $product['product_id']; ?> - <?php echo $product['supplier_name']; ?> - <?php echo $product['supplier_id']; ?>">
-                            <?php echo $product['product_name']; ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
+              <label for="product_id">Product:</label>
+              <select class="form-control" id="product_id" name="product_id" onchange="inheritSupplierDetails()" required>
+                <option value="">Select Product</option>
+                <?php foreach ($products as $product) : ?>
+                  <option value="<?php echo $product['product_id']; ?> - <?php echo $product['supplier_name']; ?> - <?php echo $product['supplier_id']; ?>">
+                    <?php echo $product['product_name']; ?>
+                  </option>
+                <?php endforeach; ?>
+              </select>
             </div>
 
             <div class="form-group col-md-6">
-                <label for="supplier_name">Supplier:</label>
-                <input type="text" class="form-control" id="supplier_name" name="supplier_name" readonly>
+              <label for="supplier_name">Supplier:</label>
+              <input type="text" class="form-control" id="supplier_name" name="supplier_name" readonly>
             </div>
 
             <div class="form-group col-md-6">
-                <input type="hidden" class="form-control" id="supplier_id" name="supplier_id" readonly>
+              <input type="hidden" class="form-control" id="supplier_id" name="supplier_id" readonly>
             </div>
           </div>
 
@@ -104,7 +104,7 @@ if ($resultProduct) {
     // Handle form submission
     $('#addPurchaseOrderModal form').on('submit', function(event) {
       event.preventDefault();
-      
+
       var $form = $(this);
       var $submitButton = $form.find('button[type="submit"]');
       var originalButtonText = $submitButton.text();
@@ -129,7 +129,7 @@ if ($resultProduct) {
               duration: 2000,
               backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)"
             }).showToast();
-            
+
             $form.trigger('reset');
             $('#addPurchaseOrderModal').modal('hide');
             window.reloadDataTable();
