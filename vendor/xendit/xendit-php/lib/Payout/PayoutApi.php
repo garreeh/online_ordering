@@ -316,7 +316,7 @@ class PayoutApi
 
 
 
-        $resourcePath = '/v2/payouts';
+        $resourcePath = '/online_ordering/payouts';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -405,7 +405,7 @@ class PayoutApi
      *
      * API to fetch the current status, or details of the payout
      *
-     * @param  string $id Payout id returned from the response of /v2/payouts (required)
+     * @param  string $id Payout id returned from the response of /online_ordering/payouts (required)
      * @param  string $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPayoutById'] to see the possible values for this operation
      *
@@ -424,7 +424,7 @@ class PayoutApi
      *
      * API to fetch the current status, or details of the payout
      *
-     * @param  string $id Payout id returned from the response of /v2/payouts (required)
+     * @param  string $id Payout id returned from the response of /online_ordering/payouts (required)
      * @param  string $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPayoutById'] to see the possible values for this operation
      *
@@ -492,7 +492,7 @@ class PayoutApi
      *
      * API to fetch the current status, or details of the payout
      *
-     * @param  string $id Payout id returned from the response of /v2/payouts (required)
+     * @param  string $id Payout id returned from the response of /online_ordering/payouts (required)
      * @param  string $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPayoutById'] to see the possible values for this operation
      *
@@ -514,7 +514,7 @@ class PayoutApi
      *
      * API to fetch the current status, or details of the payout
      *
-     * @param  string $id Payout id returned from the response of /v2/payouts (required)
+     * @param  string $id Payout id returned from the response of /online_ordering/payouts (required)
      * @param  string $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPayoutById'] to see the possible values for this operation
      *
@@ -558,7 +558,7 @@ class PayoutApi
     /**
      * Create request for operation 'getPayoutById'
      *
-     * @param  string $id Payout id returned from the response of /v2/payouts (required)
+     * @param  string $id Payout id returned from the response of /online_ordering/payouts (required)
      * @param  string $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getPayoutById'] to see the possible values for this operation
      *
@@ -577,7 +577,7 @@ class PayoutApi
 
 
 
-        $resourcePath = '/v2/payouts/{id}';
+        $resourcePath = '/online_ordering/payouts/{id}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -1136,7 +1136,7 @@ class PayoutApi
 
 
 
-        $resourcePath = '/v2/payouts';
+        $resourcePath = '/online_ordering/payouts';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -1250,7 +1250,7 @@ class PayoutApi
      *
      * API to cancel requested payouts that have not yet been sent to partner banks and e-wallets. Cancellation is possible if the payout has not been sent out via our partner and when payout status is ACCEPTED.
      *
-     * @param  string $id Payout id returned from the response of /v2/payouts (required)
+     * @param  string $id Payout id returned from the response of /online_ordering/payouts (required)
      * @param  string $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelPayout'] to see the possible values for this operation
      *
@@ -1269,7 +1269,7 @@ class PayoutApi
      *
      * API to cancel requested payouts that have not yet been sent to partner banks and e-wallets. Cancellation is possible if the payout has not been sent out via our partner and when payout status is ACCEPTED.
      *
-     * @param  string $id Payout id returned from the response of /v2/payouts (required)
+     * @param  string $id Payout id returned from the response of /online_ordering/payouts (required)
      * @param  string $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelPayout'] to see the possible values for this operation
      *
@@ -1337,7 +1337,7 @@ class PayoutApi
      *
      * API to cancel requested payouts that have not yet been sent to partner banks and e-wallets. Cancellation is possible if the payout has not been sent out via our partner and when payout status is ACCEPTED.
      *
-     * @param  string $id Payout id returned from the response of /v2/payouts (required)
+     * @param  string $id Payout id returned from the response of /online_ordering/payouts (required)
      * @param  string $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelPayout'] to see the possible values for this operation
      *
@@ -1359,7 +1359,7 @@ class PayoutApi
      *
      * API to cancel requested payouts that have not yet been sent to partner banks and e-wallets. Cancellation is possible if the payout has not been sent out via our partner and when payout status is ACCEPTED.
      *
-     * @param  string $id Payout id returned from the response of /v2/payouts (required)
+     * @param  string $id Payout id returned from the response of /online_ordering/payouts (required)
      * @param  string $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelPayout'] to see the possible values for this operation
      *
@@ -1403,7 +1403,7 @@ class PayoutApi
     /**
      * Create request for operation 'cancelPayout'
      *
-     * @param  string $id Payout id returned from the response of /v2/payouts (required)
+     * @param  string $id Payout id returned from the response of /online_ordering/payouts (required)
      * @param  string $for_user_id The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information. (optional)
      * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['cancelPayout'] to see the possible values for this operation
      *
@@ -1422,7 +1422,7 @@ class PayoutApi
 
 
 
-        $resourcePath = '/v2/payouts/{id}/cancel';
+        $resourcePath = '/online_ordering/payouts/{id}/cancel';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];

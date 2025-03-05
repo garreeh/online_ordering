@@ -99,7 +99,7 @@ if (isset($_POST['supplier_id'])) {
       // Send AJAX request
       $.ajax({
         type: 'POST',
-        url: '/v2/controllers/admin/edit_supplier_process.php',
+        url: '/online_ordering/controllers/admin/edit_supplier_process.php',
         data: formData,
         success: function(response) {
           // Handle success response

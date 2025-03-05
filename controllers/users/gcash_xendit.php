@@ -43,8 +43,8 @@ $data = [
   "checkout_method" => "ONE_TIME_PAYMENT",
   "channel_code" => "PH_GCASH",
   "channel_properties" => [
-    "success_redirect_url" => "http://localhost/v2/thankyou_payment.php",
-    "failure_redirect_url" => "http://localhost/v2/sorry.php"
+    "success_redirect_url" => "http://localhost/online_ordering/thankyou_payment.php",
+    "failure_redirect_url" => "http://localhost/online_ordering/sorry.php"
   ]
 ];
 

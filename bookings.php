@@ -6,7 +6,7 @@ if (session_status() == PHP_SESSION_NONE) {
 // Check if the user is logged in and an admin
 if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === "1") {
   // If the user is an admin, redirect them to the admin dashboard
-  header("Location: /v2/views/admin/dashboard.php");
+  header("Location: /online_ordering/views/admin/dashboard.php");
   exit();
 }
 
@@ -376,7 +376,7 @@ if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === "1") {
     // Function to fetch regular products based on selected category
     function fetchProducts(categoryId) {
       $.ajax({
-        url: '/v2/controllers/users/fetch_products_process.php',
+        url: '/online_ordering/controllers/users/fetch_products_process.php',
         type: 'GET',
         data: {
           category_id: categoryId
@@ -398,7 +398,7 @@ if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === "1") {
 
       // Make AJAX call to add_cart_process.php
       $.ajax({
-        url: '/v2/controllers/users/add_cart_process.php',
+        url: '/online_ordering/controllers/users/add_cart_process.php',
         method: 'POST',
         data: {
           product_id: productId,

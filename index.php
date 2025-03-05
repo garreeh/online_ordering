@@ -6,7 +6,7 @@ if (session_status() == PHP_SESSION_NONE) {
 // Check if the user is logged in and an admin
 if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === "1") {
     // If the user is an admin, redirect them to the admin dashboard
-    header("Location: /v2/views/admin/dashboard.php");
+    header("Location: /online_ordering/views/admin/dashboard.php");
     exit();
 }
 
@@ -278,7 +278,7 @@ if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === "1") {
                     <div id="categoryMenu" style="border-radius: 8px; padding: 10px 0; background-color: #f9f9f9;">
                         <ul style="list-style: none; padding-left: 0; margin: 0;">
                             <li style="margin: 10px 0; text-align: center;">
-                                <a href="/v2/bookings.php" target="_blank"
+                                <a href="/online_ordering/bookings.php" target="_blank"
                                     style="text-decoration: none; color: #333; font-weight: bold; font-size: 18px; padding: 10px 15px; display: inline-block; width: 90%; border-radius: 5px; background-color: #fff; transition: background 0.3s;">
                                     Bookings
                                 </a>
@@ -428,7 +428,7 @@ if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === "1") {
         // Function to fetch regular products based on selected category
         function fetchProducts(categoryId) {
             $.ajax({
-                url: '/v2/controllers/users/fetch_products_process.php',
+                url: '/online_ordering/controllers/users/fetch_products_process.php',
                 type: 'GET',
                 data: {
                     category_id: categoryId
@@ -450,7 +450,7 @@ if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === "1") {
 
             // Make AJAX call to add_cart_process.php
             $.ajax({
-                url: '/v2/controllers/users/add_cart_process.php',
+                url: '/online_ordering/controllers/users/add_cart_process.php',
                 method: 'POST',
                 data: {
                     product_id: productId,

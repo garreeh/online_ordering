@@ -79,7 +79,7 @@ if (isset($_POST['category_id'])) {
       // Send AJAX request
       $.ajax({
         type: 'POST',
-        url: '/v2/controllers/admin/edit_ingredient_category_process.php',
+        url: '/online_ordering/controllers/admin/edit_ingredient_category_process.php',
         data: formData,
         success: function(response) {
           // Handle success response

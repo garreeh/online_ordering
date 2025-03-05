@@ -9,8 +9,8 @@ $sql_details = array(
 );
 
 // $sql_details = array(
-//   'user' => 'u759574209_online_order',
-//   'pass' => 'Mybossrocks081677!',
-//   'db' => 'u759574209_online_order',
+//   'user' => 'u618052984_ordering',
+//   'pass' => '090772131944Ga#',
+//   'db' => 'u618052984_ordering',
 //   'host' => 'localhost',
 // );

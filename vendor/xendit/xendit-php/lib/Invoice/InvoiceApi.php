@@ -307,7 +307,7 @@ class InvoiceApi
 
 
 
-        $resourcePath = '/v2/invoices/';
+        $resourcePath = '/online_ordering/invoices/';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -564,7 +564,7 @@ class InvoiceApi
 
 
 
-        $resourcePath = '/v2/invoices/{invoice_id}';
+        $resourcePath = '/online_ordering/invoices/{invoice_id}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -894,7 +894,7 @@ class InvoiceApi
 
 
 
-        $resourcePath = '/v2/invoices';
+        $resourcePath = '/online_ordering/invoices';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];

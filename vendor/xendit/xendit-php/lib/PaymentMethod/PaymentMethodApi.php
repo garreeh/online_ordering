@@ -313,7 +313,7 @@ class PaymentMethodApi
 
 
 
-        $resourcePath = '/v2/payment_methods';
+        $resourcePath = '/online_ordering/payment_methods';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -570,7 +570,7 @@ class PaymentMethodApi
 
 
 
-        $resourcePath = '/v2/payment_methods/{paymentMethodId}';
+        $resourcePath = '/online_ordering/payment_methods/{paymentMethodId}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -900,7 +900,7 @@ class PaymentMethodApi
 
 
 
-        $resourcePath = '/v2/payment_methods/{paymentMethodId}/payments';
+        $resourcePath = '/online_ordering/payment_methods/{paymentMethodId}/payments';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -1272,7 +1272,7 @@ class PaymentMethodApi
 
 
 
-        $resourcePath = '/v2/payment_methods/{paymentMethodId}';
+        $resourcePath = '/online_ordering/payment_methods/{paymentMethodId}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -1582,7 +1582,7 @@ class PaymentMethodApi
         }
 
 
-        $resourcePath = '/v2/payment_methods';
+        $resourcePath = '/online_ordering/payment_methods';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -1919,7 +1919,7 @@ class PaymentMethodApi
 
 
 
-        $resourcePath = '/v2/payment_methods/{paymentMethodId}/expire';
+        $resourcePath = '/online_ordering/payment_methods/{paymentMethodId}/expire';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -2190,7 +2190,7 @@ class PaymentMethodApi
 
 
 
-        $resourcePath = '/v2/payment_methods/{paymentMethodId}/auth';
+        $resourcePath = '/online_ordering/payment_methods/{paymentMethodId}/auth';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -2428,7 +2428,7 @@ class PaymentMethodApi
 
 
 
-        $resourcePath = '/v2/payment_methods/{paymentMethodId}/payments/simulate';
+        $resourcePath = '/online_ordering/payment_methods/{paymentMethodId}/payments/simulate';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];

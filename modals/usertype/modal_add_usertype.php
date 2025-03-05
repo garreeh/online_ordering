@@ -59,7 +59,7 @@
       // Send AJAX request
       $.ajax({
         type: 'POST',
-        url: '/v2/controllers/admin/add_usertype_process.php',
+        url: '/online_ordering/controllers/admin/add_usertype_process.php',
         data: formData,
         success: function(response) {
           console.log(response); // Log the response for debugging

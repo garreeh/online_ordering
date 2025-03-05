@@ -171,7 +171,7 @@ if (isset($_POST['product_id'])) {
       // Send AJAX request
       $.ajax({
         type: 'POST',
-        url: '/v2/controllers/admin/edit_ingredients_product_process.php',
+        url: '/online_ordering/controllers/admin/edit_ingredients_product_process.php',
         data: formData,
         processData: false, // Prevent jQuery from automatically transforming the data into a query string
         contentType: false, // Let the browser set the content type for the FormData

@@ -2516,7 +2516,7 @@
     } else if (video.type === "vimeo") {
       $.ajax({
         type: "GET",
-        url: "http://vimeo.com/api/v2/video/" + video.id + ".json",
+        url: "http://vimeo.com/api/online_ordering/video/" + video.id + ".json",
         jsonp: "callback",
         dataType: "jsonp",
         success: function (data) {

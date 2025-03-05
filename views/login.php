@@ -9,10 +9,10 @@ if (session_status() == PHP_SESSION_NONE) {
 if (isset($_SESSION['user_id'])) {
 	if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == "1") {
 		// If the user is an admin, redirect to the admin dashboard
-		header("Location: /v2/views/admin/dashboard.php");
+		header("Location: /online_ordering/views/admin/dashboard.php");
 	} else {
 		// If the user is not an admin, redirect to the user dashboard
-		header("Location: /v2/index.php");
+		header("Location: /online_ordering/index.php");
 	}
 	exit();
 }
@@ -194,9 +194,9 @@ if (isset($_SESSION['user_id'])) {
 				if (response.success) {
 					// Check if the user is an admin
 					if (response.is_admin === "1") {
-						window.location.href = "/v2/views/admin/dashboard.php"; // Redirect to admin page
+						window.location.href = "/online_ordering/views/admin/dashboard.php"; // Redirect to admin page
 					} else {
-						window.location.href = "/v2/index.php"; // Redirect to user page
+						window.location.href = "/online_ordering/index.php"; // Redirect to user page
 					}
 				} else {
 					showToast(response.message);

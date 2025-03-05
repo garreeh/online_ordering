@@ -6,9 +6,9 @@ $password = "";
 $dbname = "ecommerce";
 
 // $servername = "localhost";
-// $username = "u759574209_online_order";
-// $password = "Mybossrocks081677!";
-// $dbname = "u759574209_online_order";
+// $username = "u618052984_ordering";
+// $password = "09072131944Ga#";
+// $dbname = "u618052984_ordering";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
