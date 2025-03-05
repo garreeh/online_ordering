@@ -5,7 +5,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 if (!isset($_SESSION['user_id'])) {
   // Redirect to the login page if the user is not logged in
-  header("Location: /online_ordering/views/login.php");
+  header("Location: /v2/views/login.php");
   exit();
 }
 
@@ -121,7 +121,7 @@ if (!isset($_SESSION['user_id'])) {
                 </ul>
               </div>
             </div>
-            <a href="/online_ordering/index.php" class="btn btn-default" type="submit">Continue shopping <i
+            <a href="/v2/index.php" class="btn btn-default" type="submit">Continue shopping <i
                 class="fa fa-shopping-cart"></i></a>
             <?php include './../../modals/checkout_modal.php' ?>
             <!-- Update this button to trigger the modal -->
@@ -246,7 +246,7 @@ if (!isset($_SESSION['user_id'])) {
     // Function to update the cart content
     function updateCart() {
       $.ajax({
-        url: '/online_ordering/controllers/users/fetch_cart_process.php',
+        url: '/v2/controllers/users/fetch_cart_process.php',
         method: 'GET',
         dataType: 'json',
         success: function(response) {
@@ -306,7 +306,7 @@ if (!isset($_SESSION['user_id'])) {
     // Delete cart item function
     function deleteCartItem(productId) {
       $.ajax({
-        url: '/online_ordering/controllers/users/delete_cart_process.php',
+        url: '/v2/controllers/users/delete_cart_process.php',
         method: 'POST',
         data: {
           product_id: productId
@@ -339,7 +339,7 @@ if (!isset($_SESSION['user_id'])) {
 
     function updateCartNavigation() {
       $.ajax({
-        url: '/online_ordering/controllers/users/fetch_cart_process.php',
+        url: '/v2/controllers/users/fetch_cart_process.php',
         method: 'GET',
         dataType: 'json',
         success: function(response) {
@@ -425,7 +425,7 @@ if (!isset($_SESSION['user_id'])) {
         // Call Xendit to generate GCash payment
         $.ajax({
           type: 'POST',
-          url: '/online_ordering/controllers/users/gcash_xendit.php',
+          url: '/v2/controllers/users/gcash_xendit.php',
           data: JSON.stringify({
             paymentCategory: selectedPayment,
             amount: totalAmount
@@ -470,7 +470,7 @@ if (!isset($_SESSION['user_id'])) {
 
         $.ajax({
           type: 'POST',
-          url: '/online_ordering/controllers/users/checkout_process.php',
+          url: '/v2/controllers/users/checkout_process.php',
           data: formData,
           contentType: false,
           processData: false,
@@ -550,7 +550,7 @@ if (!isset($_SESSION['user_id'])) {
     // Function to fetch regular products based on selected category
     function fetchProducts(categoryId) {
       $.ajax({
-        url: '/online_ordering/controllers/users/fetch_products_process.php',
+        url: '/v2/controllers/users/fetch_products_process.php',
         type: 'GET',
         data: {
           category_id: categoryId
@@ -573,7 +573,7 @@ if (!isset($_SESSION['user_id'])) {
 
       // Make AJAX call to add_cart_process.php
       $.ajax({
-        url: '/online_ordering/controllers/users/add_cart_process.php',
+        url: '/v2/controllers/users/add_cart_process.php',
         method: 'POST',
         data: {
           product_id: productId,
@@ -640,7 +640,7 @@ if (!isset($_SESSION['user_id'])) {
     // Function to update the cart in real-time
     function updateCart() {
       $.ajax({
-        url: '/online_ordering/controllers/users/fetch_cart_process.php',
+        url: '/v2/controllers/users/fetch_cart_process.php',
         method: 'GET',
         dataType: 'json',
         success: function(response) {
@@ -699,7 +699,7 @@ if (!isset($_SESSION['user_id'])) {
     $('#checkoutModal').on('show.bs.modal', function() {
       $.ajax({
         type: 'POST',
-        url: '/online_ordering/controllers/users/fetch_cart_last_process.php',
+        url: '/v2/controllers/users/fetch_cart_last_process.php',
         dataType: 'json',
         success: function(response) {
           if (response.success) {

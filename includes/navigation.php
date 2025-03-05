@@ -6,10 +6,10 @@ if (session_status() == PHP_SESSION_NONE) {
 // if (isset($_SESSION['user_id'])) {
 //   if (!isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == "1") {
 //       // If the user is an admin, redirect to the admin dashboard
-//       header("Location: /online_ordering/views/admin/dashboard.php.php");
+//       header("Location: /v2/views/admin/dashboard.php.php");
 //   } else {
 //       // If the user is not an admin, redirect to the user dashboard
-//       header("Location: /online_ordering/index.php");
+//       header("Location: /v2/index.php");
 //   }
 //   exit();
 // }
@@ -48,12 +48,12 @@ if (session_status() == PHP_SESSION_NONE) {
         <div class="col-md-6 col-sm-6 additional-nav">
           <ul class="list-unstyled list-inline pull-right">
             <?php if (isset($_SESSION['user_id'])): ?>
-              <?php include $_SERVER['DOCUMENT_ROOT'] . '/online_ordering/modals/customers/modal_edit_customer.php'; ?>
+              <?php include $_SERVER['DOCUMENT_ROOT'] . '/v2/modals/customers/modal_edit_customer.php'; ?>
               <li><a href="#" data-toggle="modal" data-target="#fetchDataUserModal">My Account</a></li>
-              <li><a href="/online_ordering/views/user/checkout_module.php">Checkout</a></li>
-              <li><a href="/online_ordering/views/user/order_module.php">Orders</a></li>
-              <li><a href="/online_ordering/views/user/received_module.php">Received</a></li>
-              <li><a href="/online_ordering/controllers/logout_process.php">Logout</a></li>
+              <li><a href="/v2/views/user/checkout_module.php">Checkout</a></li>
+              <li><a href="/v2/views/user/order_module.php">Orders</a></li>
+              <li><a href="/v2/views/user/received_module.php">Received</a></li>
+              <li><a href="/v2/controllers/logout_process.php">Logout</a></li>
             <?php else: ?>
               <li><a href="views/login.php">Log In</a></li>
             <?php endif; ?>
@@ -68,8 +68,8 @@ if (session_status() == PHP_SESSION_NONE) {
   <!-- BEGIN HEADER -->
   <div class="header">
     <div class="container">
-      <a class="site-logo" href="/online_ordering/index.php">
-        <img src="/online_ordering/assets/user/corporate/img/logos/logo.jpeg" alt="LOGO STERLING HERE"
+      <a class="site-logo" href="/v2/index.php">
+        <img src="/v2/assets/user/corporate/img/logos/logo.jpeg" alt="LOGO STERLING HERE"
           style="width: 100px; height: 100px;">
       </a>
 
@@ -88,8 +88,8 @@ if (session_status() == PHP_SESSION_NONE) {
               <!-- Cart items will be dynamically inserted here -->
             </ul>
             <div class="text-right">
-              <a href="/online_ordering/views/user/checkout_module.php" class="btn btn-default">View Cart</a>
-              <a href="/online_ordering/views/user/checkout_module.php" class="btn btn-primary">Checkout</a>
+              <a href="/v2/views/user/checkout_module.php" class="btn btn-default">View Cart</a>
+              <a href="/v2/views/user/checkout_module.php" class="btn btn-primary">Checkout</a>
             </div>
           </div>
         </div>
@@ -110,7 +110,7 @@ if (session_status() == PHP_SESSION_NONE) {
     // Function to update the cart
     function updateCartNavigation() {
       $.ajax({
-        url: '/online_ordering/controllers/users/fetch_cart_process.php',
+        url: '/v2/controllers/users/fetch_cart_process.php',
         method: 'GET',
         dataType: 'json',
         success: function (response) {
@@ -157,7 +157,7 @@ if (session_status() == PHP_SESSION_NONE) {
     // Function to delete an item from the cart
     function deleteCartItem(productId) {
       $.ajax({
-        url: '/online_ordering/controllers/users/delete_cart_process.php',
+        url: '/v2/controllers/users/delete_cart_process.php',
         method: 'POST',
         data: {
           product_id: productId

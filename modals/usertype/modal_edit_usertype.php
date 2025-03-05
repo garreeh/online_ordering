@@ -135,7 +135,7 @@ if (isset($_POST['user_type_id'])) {
       // Send AJAX request
       $.ajax({
         type: 'POST',
-        url: '/online_ordering/controllers/admin/edit_usertype_process.php',
+        url: '/v2/controllers/admin/edit_usertype_process.php',
         data: formData,
         success: function(response) {
           console.log(response); // Log the response for debugging
