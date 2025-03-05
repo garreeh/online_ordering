@@ -7,16 +7,17 @@ $result = mysqli_query($conn, $sql);
 
 $userTypes = [];
 if ($result) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        $userTypes[] = $row;
-    }
+  while ($row = mysqli_fetch_assoc($result)) {
+    $userTypes[] = $row;
+  }
 }
 ?>
 
 <style>
   /* Custom CSS for label color */
   .modal-body label {
-    color: #333; /* Darker label color */
+    color: #333;
+    /* Darker label color */
     font-weight: bolder;
   }
 </style>
@@ -32,60 +33,60 @@ if ($result) {
       </div>
 
       <div class="modal-body">
-      <form method="post" enctype="multipart/form-data">
-      <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="user_fullname">Fullname:</label>
-            <input type="text" class="form-control" id="user_fullname" name="user_fullname" placeholder="Enter fullname" required>
-        </div>
-        
-        <div class="form-group col-md-6">
-            <label for="username">Username:</label>
-            <input type="text" class="form-control" id="username" name="username" placeholder="Enter Username" required>
-        </div>
+        <form method="post" enctype="multipart/form-data">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="user_fullname">Fullname:</label>
+              <input type="text" class="form-control" id="user_fullname" name="user_fullname" placeholder="Enter fullname" required>
+            </div>
 
-        <div class="form-group col-md-6">
-            <label for="user_address">Address:</label>
-            <input type="text" class="form-control" id="user_address" name="user_address" placeholder="Enter Address" required>
-        </div>
-        
-        <div class="form-group col-md-6">
-            <label for="user_email">Email:</label>
-            <input type="email" class="form-control" id="user_email" name="user_email" placeholder="Enter Email" required>
-        </div>
+            <div class="form-group col-md-6">
+              <label for="username">Username:</label>
+              <input type="text" class="form-control" id="username" name="username" placeholder="Enter Username" required>
+            </div>
 
-        <div class="form-group col-md-6">
-            <label for="user_contact">Contact #:</label>
-            <input type="text" class="form-control" id="user_contact" name="user_contact" placeholder="Enter Contact #" required>
-        </div>
-        
-        <div class="form-group col-md-6">
-            <label for="user_password">Password:</label>
-            <input type="password" class="form-control" id="user_password" name="user_password" placeholder="Enter Password" required>
-        </div>
-    </div>
-    
-    <!-- User Type Dropdown -->
-    <div class="form-row">
-      <div class="form-group col-md-12">
-        <label for="user_type_id">User Type:</label>
-        <select class="form-control" id="user_type_id" name="user_type_id" required>
-          <option value="">Select User Type</option>
-          <?php foreach ($userTypes as $userType) : ?>
-            <option value="<?php echo $userType['user_type_id']; ?>">
-              <?php echo $userType['user_type_name']; ?>
-            </option>
-          <?php endforeach; ?>
-        </select>
-      </div>
-    </div>
+            <div class="form-group col-md-6">
+              <label for="user_address">Address:</label>
+              <input type="text" class="form-control" id="user_address" name="user_address" placeholder="Enter Address" required>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label for="user_email">Email:</label>
+              <input type="email" class="form-control" id="user_email" name="user_email" placeholder="Enter Email" required>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label for="user_contact">Contact #:</label>
+              <input type="text" class="form-control" id="user_contact" name="user_contact" placeholder="Enter Contact #" required>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label for="user_password">Password:</label>
+              <input type="password" class="form-control" id="user_password" name="user_password" placeholder="Enter Password" required>
+            </div>
+          </div>
+
+          <!-- User Type Dropdown -->
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="user_type_id">User Type:</label>
+              <select class="form-control" id="user_type_id" name="user_type_id" required>
+                <option value="">Select User Type</option>
+                <?php foreach ($userTypes as $userType) : ?>
+                  <option value="<?php echo $userType['user_type_id']; ?>">
+                    <?php echo $userType['user_type_name']; ?>
+                  </option>
+                <?php endforeach; ?>
+              </select>
+            </div>
+          </div>
 
 
-    <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Add</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-    </div>
-</form>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Add</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </form>
 
       </div>
     </div>
@@ -114,7 +115,7 @@ if ($result) {
       // Send AJAX request
       $.ajax({
         type: 'POST',
-        url: '/v2/controllers/admin/add_user_process.php',
+        url: '/online_ordering/controllers/admin/add_user_process.php',
         data: formData,
         success: function(response) {
           console.log(response);

@@ -1,6 +1,5 @@
 # PayoutApi
 
-
 You can use the APIs below to interface with Xendit's `PayoutApi`.
 To start using the API, you need to configure the secret key and initiate the client instance.
 
@@ -18,14 +17,13 @@ $apiInstance = new PayoutApi();
 
 All URIs are relative to https://api.xendit.co, except if the operation defines another base path.
 
-| Method | HTTP request | Description |
-| ------------- | ------------- | ------------- |
-| [**createPayout()**](PayoutApi.md#createpayout-function) | **POST** /v2/payouts | API to send money at scale to bank accounts &amp; eWallets |
-| [**getPayoutById()**](PayoutApi.md#getpayoutbyid-function) | **GET** /v2/payouts/{id} | API to fetch the current status, or details of the payout |
-| [**getPayoutChannels()**](PayoutApi.md#getpayoutchannels-function) | **GET** /payouts_channels | API providing the current list of banks and e-wallets we support for payouts for both regions |
-| [**getPayouts()**](PayoutApi.md#getpayouts-function) | **GET** /v2/payouts | API to retrieve all matching payouts with reference ID |
-| [**cancelPayout()**](PayoutApi.md#cancelpayout-function) | **POST** /v2/payouts/{id}/cancel | API to cancel requested payouts that have not yet been sent to partner banks and e-wallets. Cancellation is possible if the payout has not been sent out via our partner and when payout status is ACCEPTED. |
-
+| Method                                                             | HTTP request                                  | Description                                                                                                                                                                                                  |
+| ------------------------------------------------------------------ | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [**createPayout()**](PayoutApi.md#createpayout-function)           | **POST** /online_ordering/payouts             | API to send money at scale to bank accounts &amp; eWallets                                                                                                                                                   |
+| [**getPayoutById()**](PayoutApi.md#getpayoutbyid-function)         | **GET** /online_ordering/payouts/{id}         | API to fetch the current status, or details of the payout                                                                                                                                                    |
+| [**getPayoutChannels()**](PayoutApi.md#getpayoutchannels-function) | **GET** /payouts_channels                     | API providing the current list of banks and e-wallets we support for payouts for both regions                                                                                                                |
+| [**getPayouts()**](PayoutApi.md#getpayouts-function)               | **GET** /online_ordering/payouts              | API to retrieve all matching payouts with reference ID                                                                                                                                                       |
+| [**cancelPayout()**](PayoutApi.md#cancelpayout-function)           | **POST** /online_ordering/payouts/{id}/cancel | API to cancel requested payouts that have not yet been sent to partner banks and e-wallets. Cancellation is possible if the payout has not been sent out via our partner and when payout status is ACCEPTED. |
 
 ## `createPayout()` Function
 
@@ -35,21 +33,22 @@ createPayout($idempotency_key, $for_user_id, $create_payout_request): \Payout\Ge
 
 API to send money at scale to bank accounts & eWallets
 
-| Name          |    Value 	     |
-|--------------------|:-------------:|
-| Function Name | `createPayout` |
-| Request Parameters  |  [CreatePayoutRequestParams](#request-parameters--CreatePayoutRequestParams)	 |
-| Return Type  |  [**\Xendit\Payout\GetPayouts200ResponseDataInner**](Payout/GetPayouts200ResponseDataInner.md) |
+| Name               |                                             Value                                             |
+| ------------------ | :-------------------------------------------------------------------------------------------: |
+| Function Name      |                                        `createPayout`                                         |
+| Request Parameters |          [CreatePayoutRequestParams](#request-parameters--CreatePayoutRequestParams)          |
+| Return Type        | [**\Xendit\Payout\GetPayouts200ResponseDataInner**](Payout/GetPayouts200ResponseDataInner.md) |
 
 ### Request Parameters - CreatePayoutRequestParams
 
-|Name | Type | Required |Default |
-|-------------|:-------------:|:-------------:|-------------| 
-| **idempotency_key** | **string** | ☑️ |  |
-| **for_user_id** | **string** |  |  |
-| **create_payout_request** | [**CreatePayoutRequest**](Payout/CreatePayoutRequest.md) |  |  |
+| Name                      |                           Type                           | Required | Default |
+| ------------------------- | :------------------------------------------------------: | :------: | ------- |
+| **idempotency_key**       |                        **string**                        |    ☑️    |         |
+| **for_user_id**           |                        **string**                        |          |         |
+| **create_payout_request** | [**CreatePayoutRequest**](Payout/CreatePayoutRequest.md) |          |         |
 
 ### Usage Example
+
 #### Bank or EWallet Payout
 
 ```php
@@ -86,7 +85,6 @@ try {
 }
 ```
 
-
 ## `getPayoutById()` Function
 
 ```php
@@ -95,20 +93,21 @@ getPayoutById($id, $for_user_id): \Payout\GetPayouts200ResponseDataInner
 
 API to fetch the current status, or details of the payout
 
-| Name          |    Value 	     |
-|--------------------|:-------------:|
-| Function Name | `getPayoutById` |
-| Request Parameters  |  [GetPayoutByIdRequestParams](#request-parameters--GetPayoutByIdRequestParams)	 |
-| Return Type  |  [**\Xendit\Payout\GetPayouts200ResponseDataInner**](Payout/GetPayouts200ResponseDataInner.md) |
+| Name               |                                             Value                                             |
+| ------------------ | :-------------------------------------------------------------------------------------------: |
+| Function Name      |                                        `getPayoutById`                                        |
+| Request Parameters |         [GetPayoutByIdRequestParams](#request-parameters--GetPayoutByIdRequestParams)         |
+| Return Type        | [**\Xendit\Payout\GetPayouts200ResponseDataInner**](Payout/GetPayouts200ResponseDataInner.md) |
 
 ### Request Parameters - GetPayoutByIdRequestParams
 
-|Name | Type | Required |Default |
-|-------------|:-------------:|:-------------:|-------------| 
-| **id** | **string** | ☑️ |  |
-| **for_user_id** | **string** |  |  |
+| Name            |    Type    | Required | Default |
+| --------------- | :--------: | :------: | ------- |
+| **id**          | **string** |    ☑️    |         |
+| **for_user_id** | **string** |          |         |
 
 ### Usage Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -119,7 +118,7 @@ use Xendit\Payout\PayoutApi;
 Configuration::setXenditKey("YOUR_API_KEY_HERE");
 
 $apiInstance = new PayoutApi();
-$id = "disb-7baa7335-a0b2-4678-bb8c-318c0167f332"; // string | Payout id returned from the response of /v2/payouts
+$id = "disb-7baa7335-a0b2-4678-bb8c-318c0167f332"; // string | Payout id returned from the response of /online_ordering/payouts
 $for_user_id = "5f9a3fbd571a1c4068aa40ce"; // string | The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information.
 
 try {
@@ -131,7 +130,6 @@ try {
 }
 ```
 
-
 ## `getPayoutChannels()` Function
 
 ```php
@@ -140,22 +138,23 @@ getPayoutChannels($currency, $channel_category, $channel_code, $for_user_id): \P
 
 API providing the current list of banks and e-wallets we support for payouts for both regions
 
-| Name          |    Value 	     |
-|--------------------|:-------------:|
-| Function Name | `getPayoutChannels` |
-| Request Parameters  |  [GetPayoutChannelsRequestParams](#request-parameters--GetPayoutChannelsRequestParams)	 |
-| Return Type  |  [**\Xendit\Payout\Channel[]**](Payout/Channel.md) |
+| Name               |                                         Value                                         |
+| ------------------ | :-----------------------------------------------------------------------------------: |
+| Function Name      |                                  `getPayoutChannels`                                  |
+| Request Parameters | [GetPayoutChannelsRequestParams](#request-parameters--GetPayoutChannelsRequestParams) |
+| Return Type        |                   [**\Xendit\Payout\Channel[]**](Payout/Channel.md)                   |
 
 ### Request Parameters - GetPayoutChannelsRequestParams
 
-|Name | Type | Required |Default |
-|-------------|:-------------:|:-------------:|-------------| 
-| **currency** | **string** |  |  |
-| **channel_category** | [**ChannelCategory**](Payout/ChannelCategory.md) |  |  |
-| **channel_code** | **string** |  |  |
-| **for_user_id** | **string** |  |  |
+| Name                 |                       Type                       | Required | Default |
+| -------------------- | :----------------------------------------------: | :------: | ------- |
+| **currency**         |                    **string**                    |          |         |
+| **channel_category** | [**ChannelCategory**](Payout/ChannelCategory.md) |          |         |
+| **channel_code**     |                    **string**                    |          |         |
+| **for_user_id**      |                    **string**                    |          |         |
 
 ### Usage Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -180,7 +179,6 @@ try {
 }
 ```
 
-
 ## `getPayouts()` Function
 
 ```php
@@ -189,23 +187,24 @@ getPayouts($reference_id, $limit, $after_id, $before_id, $for_user_id): \Payout\
 
 API to retrieve all matching payouts with reference ID
 
-| Name          |    Value 	     |
-|--------------------|:-------------:|
-| Function Name | `getPayouts` |
-| Request Parameters  |  [GetPayoutsRequestParams](#request-parameters--GetPayoutsRequestParams)	 |
-| Return Type  |  [**\Xendit\Payout\GetPayouts200Response**](Payout/GetPayouts200Response.md) |
+| Name               |                                    Value                                    |
+| ------------------ | :-------------------------------------------------------------------------: |
+| Function Name      |                                `getPayouts`                                 |
+| Request Parameters |   [GetPayoutsRequestParams](#request-parameters--GetPayoutsRequestParams)   |
+| Return Type        | [**\Xendit\Payout\GetPayouts200Response**](Payout/GetPayouts200Response.md) |
 
 ### Request Parameters - GetPayoutsRequestParams
 
-|Name | Type | Required |Default |
-|-------------|:-------------:|:-------------:|-------------| 
-| **reference_id** | **string** | ☑️ |  |
-| **limit** | **float** |  |  |
-| **after_id** | **string** |  |  |
-| **before_id** | **string** |  |  |
-| **for_user_id** | **string** |  |  |
+| Name             |    Type    | Required | Default |
+| ---------------- | :--------: | :------: | ------- |
+| **reference_id** | **string** |    ☑️    |         |
+| **limit**        | **float**  |          |         |
+| **after_id**     | **string** |          |         |
+| **before_id**    | **string** |          |         |
+| **for_user_id**  | **string** |          |         |
 
 ### Usage Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -231,7 +230,6 @@ try {
 }
 ```
 
-
 ## `cancelPayout()` Function
 
 ```php
@@ -240,20 +238,21 @@ cancelPayout($id, $for_user_id): \Payout\GetPayouts200ResponseDataInner
 
 API to cancel requested payouts that have not yet been sent to partner banks and e-wallets. Cancellation is possible if the payout has not been sent out via our partner and when payout status is ACCEPTED.
 
-| Name          |    Value 	     |
-|--------------------|:-------------:|
-| Function Name | `cancelPayout` |
-| Request Parameters  |  [CancelPayoutRequestParams](#request-parameters--CancelPayoutRequestParams)	 |
-| Return Type  |  [**\Xendit\Payout\GetPayouts200ResponseDataInner**](Payout/GetPayouts200ResponseDataInner.md) |
+| Name               |                                             Value                                             |
+| ------------------ | :-------------------------------------------------------------------------------------------: |
+| Function Name      |                                        `cancelPayout`                                         |
+| Request Parameters |          [CancelPayoutRequestParams](#request-parameters--CancelPayoutRequestParams)          |
+| Return Type        | [**\Xendit\Payout\GetPayouts200ResponseDataInner**](Payout/GetPayouts200ResponseDataInner.md) |
 
 ### Request Parameters - CancelPayoutRequestParams
 
-|Name | Type | Required |Default |
-|-------------|:-------------:|:-------------:|-------------| 
-| **id** | **string** | ☑️ |  |
-| **for_user_id** | **string** |  |  |
+| Name            |    Type    | Required | Default |
+| --------------- | :--------: | :------: | ------- |
+| **id**          | **string** |    ☑️    |         |
+| **for_user_id** | **string** |          |         |
 
 ### Usage Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -264,7 +263,7 @@ use Xendit\Payout\PayoutApi;
 Configuration::setXenditKey("YOUR_API_KEY_HERE");
 
 $apiInstance = new PayoutApi();
-$id = "disb-7baa7335-a0b2-4678-bb8c-318c0167f332"; // string | Payout id returned from the response of /v2/payouts
+$id = "disb-7baa7335-a0b2-4678-bb8c-318c0167f332"; // string | Payout id returned from the response of /online_ordering/payouts
 $for_user_id = "5f9a3fbd571a1c4068aa40ce"; // string | The sub-account user-id that you want to make this transaction for. This header is only used if you have access to xenPlatform. See xenPlatform for more information.
 
 try {
@@ -275,7 +274,5 @@ try {
     echo 'Full Error: ', json_encode($e->getFullError()), PHP_EOL;
 }
 ```
-
-
 
 [[Back to README]](../README.md)

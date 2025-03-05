@@ -1,7 +1,8 @@
 <style>
   /* Custom CSS for label color */
   .modal-body label {
-    color: #333; /* Darker label color */
+    color: #333;
+    /* Darker label color */
     font-weight: bolder;
   }
 </style>
@@ -17,19 +18,19 @@
       </div>
 
       <div class="modal-body">
-      <form method="post" enctype="multipart/form-data">
-      <div class="form-row">
-        <div class="form-group col-md-12">
-            <label for="user_fullname">Usertype:</label>
-            <input type="text" class="form-control" id="user_type_name" name="user_type_name" placeholder="Enter Usertype" required>
-        </div>
-    </div>
+        <form method="post" enctype="multipart/form-data">
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="user_fullname">Usertype:</label>
+              <input type="text" class="form-control" id="user_type_name" name="user_type_name" placeholder="Enter Usertype" required>
+            </div>
+          </div>
 
-    <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Add</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-    </div>
-</form>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Add</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </form>
 
       </div>
     </div>
@@ -45,7 +46,7 @@
   $(document).ready(function() {
     $('#addUserModal form').submit(function(event) {
       event.preventDefault(); // Prevent default form submission
-      
+
       var $form = $(this);
       var $button = $form.find('button[type="submit"]'); // Reference to the submit button
 
@@ -58,7 +59,7 @@
       // Send AJAX request
       $.ajax({
         type: 'POST',
-        url: '/v2/controllers/admin/add_usertype_process.php',
+        url: '/online_ordering/controllers/admin/add_usertype_process.php',
         data: formData,
         success: function(response) {
           console.log(response); // Log the response for debugging
@@ -72,7 +73,7 @@
 
             // Optionally, reset the form
             $form.trigger('reset');
-            
+
             // Optionally, close the modal
             $('#addUserModal').modal('hide');
             window.reloadDataTable();

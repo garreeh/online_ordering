@@ -55,7 +55,7 @@ if (isset($_POST['product_id'])) {
     while ($row = mysqli_fetch_assoc($result)) {
       $product_image = basename($row['product_image']);
       $image_url = '../../uploads/' . $product_image; // Construct the image URL
-      ?>
+?>
       <div class="modal fade" id="editProductModal" tabindex="-1" role="dialog" aria-labelledby="requestModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
@@ -139,7 +139,7 @@ if (isset($_POST['product_id'])) {
         integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
 
       <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
           $('select').selectize({
             sortField: 'text'
           });
@@ -147,15 +147,15 @@ if (isset($_POST['product_id'])) {
       </script>
       <!-- END OF SELECT -->
 
-      <?php
+<?php
     }
   }
 }
 ?>
 
 <script>
-  $(document).ready(function () {
-    $('#editProductModal form').submit(function (event) {
+  $(document).ready(function() {
+    $('#editProductModal form').submit(function(event) {
       event.preventDefault(); // Prevent default form submission
 
       var $form = $(this);
@@ -171,11 +171,11 @@ if (isset($_POST['product_id'])) {
       // Send AJAX request
       $.ajax({
         type: 'POST',
-        url: '/v2/controllers/admin/edit_ingredients_product_process.php',
+        url: '/online_ordering/controllers/admin/edit_ingredients_product_process.php',
         data: formData,
         processData: false, // Prevent jQuery from automatically transforming the data into a query string
         contentType: false, // Let the browser set the content type for the FormData
-        success: function (response) {
+        success: function(response) {
           console.log(response); // Log the response for debugging
           response = JSON.parse(response);
           if (response.success) {
@@ -196,7 +196,7 @@ if (isset($_POST['product_id'])) {
             }).showToast();
           }
         },
-        error: function (xhr, status, error) {
+        error: function(xhr, status, error) {
           console.error(xhr.responseText);
           Toastify({
             text: "Error occurred while editing product. Please try again later.",
@@ -204,7 +204,7 @@ if (isset($_POST['product_id'])) {
             backgroundColor: "linear-gradient(to right, #ff6a00, #ee0979)"
           }).showToast();
         },
-        complete: function () {
+        complete: function() {
           // Reset button text and re-enable it
           $saveButton.text('Save');
           $saveButton.prop('disabled', false);

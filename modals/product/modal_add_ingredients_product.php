@@ -102,8 +102,8 @@ if ($result) {
 <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
 <script>
-  $(document).ready(function () {
-    $('#addProductModal form').submit(function (event) {
+  $(document).ready(function() {
+    $('#addProductModal form').submit(function(event) {
       event.preventDefault(); // Prevent default form submission
 
       // Store a reference to $(this)
@@ -120,11 +120,11 @@ if ($result) {
       // Send AJAX request
       $.ajax({
         type: 'POST',
-        url: '/v2/controllers/admin/add_ingredient_product_process.php',
+        url: '/online_ordering/controllers/admin/add_ingredient_product_process.php',
         data: formData,
         contentType: false,
         processData: false,
-        success: function (response) {
+        success: function(response) {
           // Handle success response
           console.log(response); // Log the response for debugging
           response = JSON.parse(response);
@@ -152,7 +152,7 @@ if ($result) {
             }).showToast();
           }
         },
-        error: function (xhr, status, error) {
+        error: function(xhr, status, error) {
           // Handle error response
           console.error(xhr.responseText);
           Toastify({
@@ -161,7 +161,7 @@ if ($result) {
             backgroundColor: "linear-gradient(to right, #ff6a00, #ee0979)"
           }).showToast();
         },
-        complete: function () {
+        complete: function() {
           // Reset button text and re-enable it
           $addButton.text('Add');
           $addButton.prop('disabled', false);
@@ -169,7 +169,7 @@ if ($result) {
       });
     });
 
-    $('#addProductModal').on('hidden.bs.modal', function () {
+    $('#addProductModal').on('hidden.bs.modal', function() {
 
       // Reset the dropdowns to their default states
       $('#category_id')[0].selectize.clear();

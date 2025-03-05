@@ -7,16 +7,17 @@ $result = mysqli_query($conn, $sql);
 
 $user_names = [];
 if ($result) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        $user_names[] = $row;
-    }
+  while ($row = mysqli_fetch_assoc($result)) {
+    $user_names[] = $row;
+  }
 }
 
 ?>
 <style>
   /* Custom CSS for label color */
   .modal-body label {
-    color: #333; /* Darker label color */
+    color: #333;
+    /* Darker label color */
     font-weight: bolder;
   }
 </style>
@@ -57,10 +58,10 @@ if ($result) {
   $(document).ready(function() {
     $('#addDeliveredModal form').submit(function(event) {
       event.preventDefault(); // Prevent default form submission
-      
+
       // Store a reference to $(this)
       var $form = $(this);
-      
+
       // Serialize form data
       var formData = $form.serialize();
 
@@ -72,7 +73,7 @@ if ($result) {
       // Send AJAX request
       $.ajax({
         type: 'POST',
-        url: '/v2/controllers/admin/tas_as_delivered_process.php',
+        url: '/online_ordering/controllers/admin/tas_as_delivered_process.php',
         data: formData,
         success: function(response) {
           // Handle success response
@@ -84,14 +85,14 @@ if ($result) {
               duration: 2000,
               backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)"
             }).showToast();
-            
+
             // Optionally, reset the form
             $form.trigger('reset');
-            
+
             // Optionally, close the modal
             $('#addDeliveredModal').modal('hide');
             window.reloadDataTable();
-            
+
           } else {
             Toastify({
               text: response.message,

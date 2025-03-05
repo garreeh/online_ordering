@@ -17,7 +17,7 @@ if (isset($_POST['category_id'])) {
 
   if ($result) {
     while ($row = mysqli_fetch_assoc($result)) {
-      ?>
+?>
       <div class="modal fade" id="editCategoryModal" tabindex="-1" role="dialog" aria-labelledby="requestModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-l" role="document">
@@ -54,7 +54,7 @@ if (isset($_POST['category_id'])) {
         </div>
       </div>
 
-      <?php
+<?php
     }
   }
 }
@@ -62,8 +62,8 @@ if (isset($_POST['category_id'])) {
 
 <script>
   // Save Button in Edit Category
-  $(document).ready(function () {
-    $('#editCategoryModal form').submit(function (event) {
+  $(document).ready(function() {
+    $('#editCategoryModal form').submit(function(event) {
       event.preventDefault(); // Prevent default form submission
       // Store a reference to $(this)
       var $form = $(this);
@@ -79,9 +79,9 @@ if (isset($_POST['category_id'])) {
       // Send AJAX request
       $.ajax({
         type: 'POST',
-        url: '/v2/controllers/admin/edit_ingredient_category_process.php',
+        url: '/online_ordering/controllers/admin/edit_ingredient_category_process.php',
         data: formData,
-        success: function (response) {
+        success: function(response) {
           // Handle success response
           console.log(response); // Log the response for debugging
           response = JSON.parse(response);
@@ -104,7 +104,7 @@ if (isset($_POST['category_id'])) {
             }).showToast();
           }
         },
-        error: function (xhr, status, error) {
+        error: function(xhr, status, error) {
           // Handle error response
           console.error(xhr.responseText);
           Toastify({
@@ -113,7 +113,7 @@ if (isset($_POST['category_id'])) {
             backgroundColor: "linear-gradient(to right, #ff6a00, #ee0979)"
           }).showToast();
         },
-        complete: function () {
+        complete: function() {
           // Reset button text and re-enable it
           $saveButton.text('Save');
           $saveButton.prop('disabled', false);

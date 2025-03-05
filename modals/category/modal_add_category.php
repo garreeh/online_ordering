@@ -1,7 +1,8 @@
 <style>
   /* Custom CSS for label color */
   .modal-body label {
-    color: #333; /* Darker label color */
+    color: #333;
+    /* Darker label color */
     font-weight: bolder;
   }
 </style>
@@ -47,10 +48,10 @@
   $(document).ready(function() {
     $('#addCategoryModal form').submit(function(event) {
       event.preventDefault(); // Prevent default form submission
-      
+
       // Store a reference to $(this)
       var $form = $(this);
-      
+
       // Serialize form data
       var formData = $form.serialize();
 
@@ -62,7 +63,7 @@
       // Send AJAX request
       $.ajax({
         type: 'POST',
-        url: '/v2/controllers/admin/add_category_process.php',
+        url: '/online_ordering/controllers/admin/add_category_process.php',
         data: formData,
         success: function(response) {
           // Handle success response
@@ -74,14 +75,14 @@
               duration: 2000,
               backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)"
             }).showToast();
-            
+
             // Optionally, reset the form
             $form.trigger('reset');
-            
+
             // Optionally, close the modal
             $('#addCategoryModal').modal('hide');
             window.reloadDataTable();
-            
+
           } else {
             Toastify({
               text: response.message,

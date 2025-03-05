@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PaymentMethodApi
  * PHP version 7.4
@@ -89,7 +90,7 @@ class PaymentMethodApi
         ],
     ];
 
-/**
+    /**
      * @param ClientInterface $client
      * @param Configuration   $config
      * @param HeaderSelector  $selector
@@ -192,7 +193,7 @@ class PaymentMethodApi
                 (string) $e->getCode(),
                 $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "createPaymentMethodRequest")
             );
-        }  catch (GuzzleException $e) {
+        } catch (GuzzleException $e) {
             throw new XenditSdkException(
                 null,
                 (string) $e->getCode(),
@@ -312,7 +313,7 @@ class PaymentMethodApi
 
 
 
-        $resourcePath = '/v2/payment_methods';
+        $resourcePath = '/online_ordering/payment_methods';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -327,7 +328,7 @@ class PaymentMethodApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            ['application/json', ],
+            ['application/json',],
             $contentType,
             $multipart
         );
@@ -354,7 +355,6 @@ class PaymentMethodApi
                 }
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
-
             } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
                 # if Content-Type contains "application/json", json_encode the form parameters
                 $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
@@ -368,7 +368,7 @@ class PaymentMethodApi
         $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getApiKey() . ":");
 
         $defaultHeaders = [];
-        
+
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
         $defaultHeaders['xendit-lib-ver'] = '6.1.0';
@@ -444,7 +444,7 @@ class PaymentMethodApi
                 (string) $e->getCode(),
                 $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getPaymentMethodByIDRequest")
             );
-        }  catch (GuzzleException $e) {
+        } catch (GuzzleException $e) {
             throw new XenditSdkException(
                 null,
                 (string) $e->getCode(),
@@ -570,7 +570,7 @@ class PaymentMethodApi
 
 
 
-        $resourcePath = '/v2/payment_methods/{paymentMethodId}';
+        $resourcePath = '/online_ordering/payment_methods/{paymentMethodId}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -593,7 +593,7 @@ class PaymentMethodApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            ['application/json', ],
+            ['application/json',],
             $contentType,
             $multipart
         );
@@ -613,7 +613,6 @@ class PaymentMethodApi
                 }
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
-
             } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
                 # if Content-Type contains "application/json", json_encode the form parameters
                 $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
@@ -627,7 +626,7 @@ class PaymentMethodApi
         $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getApiKey() . ":");
 
         $defaultHeaders = [];
-        
+
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
         $defaultHeaders['xendit-lib-ver'] = '6.1.0';
@@ -727,7 +726,7 @@ class PaymentMethodApi
                 (string) $e->getCode(),
                 $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getPaymentsByPaymentMethodIdRequest")
             );
-        }  catch (GuzzleException $e) {
+        } catch (GuzzleException $e) {
             throw new XenditSdkException(
                 null,
                 (string) $e->getCode(),
@@ -901,7 +900,7 @@ class PaymentMethodApi
 
 
 
-        $resourcePath = '/v2/payment_methods/{paymentMethodId}/payments';
+        $resourcePath = '/online_ordering/payment_methods/{paymentMethodId}/payments';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -1032,7 +1031,7 @@ class PaymentMethodApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            ['application/json', ],
+            ['application/json',],
             $contentType,
             $multipart
         );
@@ -1052,7 +1051,6 @@ class PaymentMethodApi
                 }
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
-
             } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
                 # if Content-Type contains "application/json", json_encode the form parameters
                 $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
@@ -1066,7 +1064,7 @@ class PaymentMethodApi
         $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getApiKey() . ":");
 
         $defaultHeaders = [];
-        
+
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
         $defaultHeaders['xendit-lib-ver'] = '6.1.0';
@@ -1144,7 +1142,7 @@ class PaymentMethodApi
                 (string) $e->getCode(),
                 $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "patchPaymentMethodRequest")
             );
-        }  catch (GuzzleException $e) {
+        } catch (GuzzleException $e) {
             throw new XenditSdkException(
                 null,
                 (string) $e->getCode(),
@@ -1274,7 +1272,7 @@ class PaymentMethodApi
 
 
 
-        $resourcePath = '/v2/payment_methods/{paymentMethodId}';
+        $resourcePath = '/online_ordering/payment_methods/{paymentMethodId}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -1297,7 +1295,7 @@ class PaymentMethodApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            ['application/json', ],
+            ['application/json',],
             $contentType,
             $multipart
         );
@@ -1324,7 +1322,6 @@ class PaymentMethodApi
                 }
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
-
             } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
                 # if Content-Type contains "application/json", json_encode the form parameters
                 $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
@@ -1338,7 +1335,7 @@ class PaymentMethodApi
         $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getApiKey() . ":");
 
         $defaultHeaders = [];
-        
+
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
         $defaultHeaders['xendit-lib-ver'] = '6.1.0';
@@ -1430,7 +1427,7 @@ class PaymentMethodApi
                 (string) $e->getCode(),
                 $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getAllPaymentMethodsRequest")
             );
-        }  catch (GuzzleException $e) {
+        } catch (GuzzleException $e) {
             throw new XenditSdkException(
                 null,
                 (string) $e->getCode(),
@@ -1583,9 +1580,9 @@ class PaymentMethodApi
         if ($limit !== null && $limit < 1) {
             throw new \InvalidArgumentException('invalid value for "$limit" when calling PaymentMethodApi.getAllPaymentMethods, must be bigger than or equal to 1.');
         }
-        
 
-        $resourcePath = '/v2/payment_methods';
+
+        $resourcePath = '/online_ordering/payment_methods';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -1681,7 +1678,7 @@ class PaymentMethodApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            ['application/json', ],
+            ['application/json',],
             $contentType,
             $multipart
         );
@@ -1701,7 +1698,6 @@ class PaymentMethodApi
                 }
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
-
             } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
                 # if Content-Type contains "application/json", json_encode the form parameters
                 $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
@@ -1715,7 +1711,7 @@ class PaymentMethodApi
         $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getApiKey() . ":");
 
         $defaultHeaders = [];
-        
+
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
         $defaultHeaders['xendit-lib-ver'] = '6.1.0';
@@ -1793,7 +1789,7 @@ class PaymentMethodApi
                 (string) $e->getCode(),
                 $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "expirePaymentMethodRequest")
             );
-        }  catch (GuzzleException $e) {
+        } catch (GuzzleException $e) {
             throw new XenditSdkException(
                 null,
                 (string) $e->getCode(),
@@ -1923,7 +1919,7 @@ class PaymentMethodApi
 
 
 
-        $resourcePath = '/v2/payment_methods/{paymentMethodId}/expire';
+        $resourcePath = '/online_ordering/payment_methods/{paymentMethodId}/expire';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -1946,7 +1942,7 @@ class PaymentMethodApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            ['application/json', ],
+            ['application/json',],
             $contentType,
             $multipart
         );
@@ -1973,7 +1969,6 @@ class PaymentMethodApi
                 }
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
-
             } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
                 # if Content-Type contains "application/json", json_encode the form parameters
                 $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
@@ -1987,7 +1982,7 @@ class PaymentMethodApi
         $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getApiKey() . ":");
 
         $defaultHeaders = [];
-        
+
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
         $defaultHeaders['xendit-lib-ver'] = '6.1.0';
@@ -2065,7 +2060,7 @@ class PaymentMethodApi
                 (string) $e->getCode(),
                 $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "authPaymentMethodRequest")
             );
-        }  catch (GuzzleException $e) {
+        } catch (GuzzleException $e) {
             throw new XenditSdkException(
                 null,
                 (string) $e->getCode(),
@@ -2195,7 +2190,7 @@ class PaymentMethodApi
 
 
 
-        $resourcePath = '/v2/payment_methods/{paymentMethodId}/auth';
+        $resourcePath = '/online_ordering/payment_methods/{paymentMethodId}/auth';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -2218,7 +2213,7 @@ class PaymentMethodApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            ['application/json', ],
+            ['application/json',],
             $contentType,
             $multipart
         );
@@ -2245,7 +2240,6 @@ class PaymentMethodApi
                 }
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
-
             } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
                 # if Content-Type contains "application/json", json_encode the form parameters
                 $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
@@ -2259,7 +2253,7 @@ class PaymentMethodApi
         $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getApiKey() . ":");
 
         $defaultHeaders = [];
-        
+
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
         $defaultHeaders['xendit-lib-ver'] = '6.1.0';
@@ -2334,7 +2328,7 @@ class PaymentMethodApi
                 (string) $e->getCode(),
                 $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "simulatePaymentRequest")
             );
-        }  catch (GuzzleException $e) {
+        } catch (GuzzleException $e) {
             throw new XenditSdkException(
                 null,
                 (string) $e->getCode(),
@@ -2434,7 +2428,7 @@ class PaymentMethodApi
 
 
 
-        $resourcePath = '/v2/payment_methods/{paymentMethodId}/payments/simulate';
+        $resourcePath = '/online_ordering/payment_methods/{paymentMethodId}/payments/simulate';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -2453,7 +2447,7 @@ class PaymentMethodApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            ['application/json', ],
+            ['application/json',],
             $contentType,
             $multipart
         );
@@ -2480,7 +2474,6 @@ class PaymentMethodApi
                 }
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
-
             } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
                 # if Content-Type contains "application/json", json_encode the form parameters
                 $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
@@ -2494,7 +2487,7 @@ class PaymentMethodApi
         $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getApiKey() . ":");
 
         $defaultHeaders = [];
-        
+
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
         $defaultHeaders['xendit-lib-ver'] = '6.1.0';

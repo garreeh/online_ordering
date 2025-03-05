@@ -1,6 +1,5 @@
 # PaymentMethodApi
 
-
 You can use the APIs below to interface with Xendit's `PaymentMethodApi`.
 To start using the API, you need to configure the secret key and initiate the client instance.
 
@@ -18,17 +17,16 @@ $apiInstance = new PaymentMethodApi();
 
 All URIs are relative to https://api.xendit.co, except if the operation defines another base path.
 
-| Method | HTTP request | Description |
-| ------------- | ------------- | ------------- |
-| [**createPaymentMethod()**](PaymentMethodApi.md#createpaymentmethod-function) | **POST** /v2/payment_methods | Creates payment method |
-| [**getPaymentMethodByID()**](PaymentMethodApi.md#getpaymentmethodbyid-function) | **GET** /v2/payment_methods/{paymentMethodId} | Get payment method by ID |
-| [**getPaymentsByPaymentMethodId()**](PaymentMethodApi.md#getpaymentsbypaymentmethodid-function) | **GET** /v2/payment_methods/{paymentMethodId}/payments | Returns payments with matching PaymentMethodID. |
-| [**patchPaymentMethod()**](PaymentMethodApi.md#patchpaymentmethod-function) | **PATCH** /v2/payment_methods/{paymentMethodId} | Patch payment methods |
-| [**getAllPaymentMethods()**](PaymentMethodApi.md#getallpaymentmethods-function) | **GET** /v2/payment_methods | Get all payment methods by filters |
-| [**expirePaymentMethod()**](PaymentMethodApi.md#expirepaymentmethod-function) | **POST** /v2/payment_methods/{paymentMethodId}/expire | Expires a payment method |
-| [**authPaymentMethod()**](PaymentMethodApi.md#authpaymentmethod-function) | **POST** /v2/payment_methods/{paymentMethodId}/auth | Validate a payment method&#39;s linking OTP |
-| [**simulatePayment()**](PaymentMethodApi.md#simulatepayment-function) | **POST** /v2/payment_methods/{paymentMethodId}/payments/simulate | Makes payment with matching PaymentMethodID. |
-
+| Method                                                                                          | HTTP request                                                                  | Description                                     |
+| ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------- |
+| [**createPaymentMethod()**](PaymentMethodApi.md#createpaymentmethod-function)                   | **POST** /online_ordering/payment_methods                                     | Creates payment method                          |
+| [**getPaymentMethodByID()**](PaymentMethodApi.md#getpaymentmethodbyid-function)                 | **GET** /online_ordering/payment_methods/{paymentMethodId}                    | Get payment method by ID                        |
+| [**getPaymentsByPaymentMethodId()**](PaymentMethodApi.md#getpaymentsbypaymentmethodid-function) | **GET** /online_ordering/payment_methods/{paymentMethodId}/payments           | Returns payments with matching PaymentMethodID. |
+| [**patchPaymentMethod()**](PaymentMethodApi.md#patchpaymentmethod-function)                     | **PATCH** /online_ordering/payment_methods/{paymentMethodId}                  | Patch payment methods                           |
+| [**getAllPaymentMethods()**](PaymentMethodApi.md#getallpaymentmethods-function)                 | **GET** /online_ordering/payment_methods                                      | Get all payment methods by filters              |
+| [**expirePaymentMethod()**](PaymentMethodApi.md#expirepaymentmethod-function)                   | **POST** /online_ordering/payment_methods/{paymentMethodId}/expire            | Expires a payment method                        |
+| [**authPaymentMethod()**](PaymentMethodApi.md#authpaymentmethod-function)                       | **POST** /online_ordering/payment_methods/{paymentMethodId}/auth              | Validate a payment method&#39;s linking OTP     |
+| [**simulatePayment()**](PaymentMethodApi.md#simulatepayment-function)                           | **POST** /online_ordering/payment_methods/{paymentMethodId}/payments/simulate | Makes payment with matching PaymentMethodID.    |
 
 ## `createPaymentMethod()` Function
 
@@ -37,22 +35,23 @@ createPaymentMethod($for_user_id, $payment_method_parameters): \PaymentMethod\Pa
 ```
 
 Creates payment method
-    This endpoint initiates creation of payment method
+This endpoint initiates creation of payment method
 
-| Name          |    Value 	     |
-|--------------------|:-------------:|
-| Function Name | `createPaymentMethod` |
-| Request Parameters  |  [CreatePaymentMethodRequestParams](#request-parameters--CreatePaymentMethodRequestParams)	 |
-| Return Type  |  [**\Xendit\PaymentMethod\PaymentMethod**](PaymentMethod/PaymentMethod.md) |
+| Name               |                                           Value                                           |
+| ------------------ | :---------------------------------------------------------------------------------------: |
+| Function Name      |                                   `createPaymentMethod`                                   |
+| Request Parameters | [CreatePaymentMethodRequestParams](#request-parameters--CreatePaymentMethodRequestParams) |
+| Return Type        |         [**\Xendit\PaymentMethod\PaymentMethod**](PaymentMethod/PaymentMethod.md)         |
 
 ### Request Parameters - CreatePaymentMethodRequestParams
 
-|Name | Type | Required |Default |
-|-------------|:-------------:|:-------------:|-------------| 
-| **for_user_id** | **string** |  |  |
-| **payment_method_parameters** | [**PaymentMethodParameters**](PaymentMethod/PaymentMethodParameters.md) |  |  |
+| Name                          |                                  Type                                   | Required | Default |
+| ----------------------------- | :---------------------------------------------------------------------: | :------: | ------- |
+| **for_user_id**               |                               **string**                                |          |         |
+| **payment_method_parameters** | [**PaymentMethodParameters**](PaymentMethod/PaymentMethodParameters.md) |          |         |
 
 ### Usage Example
+
 #### Account linking for E-Wallet
 
 ```php
@@ -98,6 +97,7 @@ try {
     echo 'Full Error: ', json_encode($e->getFullError()), PHP_EOL;
 }
 ```
+
 #### Account linking for PH Direct Debit
 
 ```php
@@ -142,7 +142,6 @@ try {
 }
 ```
 
-
 ## `getPaymentMethodByID()` Function
 
 ```php
@@ -150,22 +149,23 @@ getPaymentMethodByID($payment_method_id, $for_user_id): \PaymentMethod\PaymentMe
 ```
 
 Get payment method by ID
-    Get payment method by ID
+Get payment method by ID
 
-| Name          |    Value 	     |
-|--------------------|:-------------:|
-| Function Name | `getPaymentMethodByID` |
-| Request Parameters  |  [GetPaymentMethodByIDRequestParams](#request-parameters--GetPaymentMethodByIDRequestParams)	 |
-| Return Type  |  [**\Xendit\PaymentMethod\PaymentMethod**](PaymentMethod/PaymentMethod.md) |
+| Name               |                                            Value                                            |
+| ------------------ | :-----------------------------------------------------------------------------------------: |
+| Function Name      |                                   `getPaymentMethodByID`                                    |
+| Request Parameters | [GetPaymentMethodByIDRequestParams](#request-parameters--GetPaymentMethodByIDRequestParams) |
+| Return Type        |          [**\Xendit\PaymentMethod\PaymentMethod**](PaymentMethod/PaymentMethod.md)          |
 
 ### Request Parameters - GetPaymentMethodByIDRequestParams
 
-|Name | Type | Required |Default |
-|-------------|:-------------:|:-------------:|-------------| 
-| **payment_method_id** | **string** | ☑️ |  |
-| **for_user_id** | **string** |  |  |
+| Name                  |    Type    | Required | Default |
+| --------------------- | :--------: | :------: | ------- |
+| **payment_method_id** | **string** |    ☑️    |         |
+| **for_user_id**       | **string** |          |         |
 
 ### Usage Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -188,7 +188,6 @@ try {
 }
 ```
 
-
 ## `getPaymentsByPaymentMethodId()` Function
 
 ```php
@@ -196,34 +195,35 @@ getPaymentsByPaymentMethodId($payment_method_id, $for_user_id, $payment_request_
 ```
 
 Returns payments with matching PaymentMethodID.
-    Returns payments with matching PaymentMethodID.
+Returns payments with matching PaymentMethodID.
 
-| Name          |    Value 	     |
-|--------------------|:-------------:|
-| Function Name | `getPaymentsByPaymentMethodId` |
-| Request Parameters  |  [GetPaymentsByPaymentMethodIdRequestParams](#request-parameters--GetPaymentsByPaymentMethodIdRequestParams)	 |
-| Return Type  |  **object** |
+| Name               |                                                    Value                                                    |
+| ------------------ | :---------------------------------------------------------------------------------------------------------: |
+| Function Name      |                                       `getPaymentsByPaymentMethodId`                                        |
+| Request Parameters | [GetPaymentsByPaymentMethodIdRequestParams](#request-parameters--GetPaymentsByPaymentMethodIdRequestParams) |
+| Return Type        |                                                 **object**                                                  |
 
 ### Request Parameters - GetPaymentsByPaymentMethodIdRequestParams
 
-|Name | Type | Required |Default |
-|-------------|:-------------:|:-------------:|-------------| 
-| **payment_method_id** | **string** | ☑️ |  |
-| **for_user_id** | **string** |  |  |
-| **payment_request_id** | **string[]** |  |  |
-| **payment_method_id2** | **string[]** |  |  |
-| **reference_id** | **string[]** |  |  |
-| **payment_method_type** | [**PaymentMethodType**](PaymentMethod/PaymentMethodType.md) |  |  |
-| **channel_code** | **string[]** |  |  |
-| **status** | **string[]** |  |  |
-| **currency** | **string[]** |  |  |
-| **created_gte** | **\DateTime** |  |  |
-| **created_lte** | **\DateTime** |  |  |
-| **updated_gte** | **\DateTime** |  |  |
-| **updated_lte** | **\DateTime** |  |  |
-| **limit** | **int** |  |  |
+| Name                    |                            Type                             | Required | Default |
+| ----------------------- | :---------------------------------------------------------: | :------: | ------- |
+| **payment_method_id**   |                         **string**                          |    ☑️    |         |
+| **for_user_id**         |                         **string**                          |          |         |
+| **payment_request_id**  |                        **string[]**                         |          |         |
+| **payment_method_id2**  |                        **string[]**                         |          |         |
+| **reference_id**        |                        **string[]**                         |          |         |
+| **payment_method_type** | [**PaymentMethodType**](PaymentMethod/PaymentMethodType.md) |          |         |
+| **channel_code**        |                        **string[]**                         |          |         |
+| **status**              |                        **string[]**                         |          |         |
+| **currency**            |                        **string[]**                         |          |         |
+| **created_gte**         |                        **\DateTime**                        |          |         |
+| **created_lte**         |                        **\DateTime**                        |          |         |
+| **updated_gte**         |                        **\DateTime**                        |          |         |
+| **updated_lte**         |                        **\DateTime**                        |          |         |
+| **limit**               |                           **int**                           |          |         |
 
 ### Usage Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -258,7 +258,6 @@ try {
 }
 ```
 
-
 ## `patchPaymentMethod()` Function
 
 ```php
@@ -266,23 +265,24 @@ patchPaymentMethod($payment_method_id, $for_user_id, $payment_method_update_para
 ```
 
 Patch payment methods
-    This endpoint is used to toggle the ```status``` of an e-Wallet or a Direct Debit payment method to ```ACTIVE``` or ```INACTIVE```. This is also used to update the details of an Over-the-Counter or a Virtual Account payment method.
+This endpoint is used to toggle the `status` of an e-Wallet or a Direct Debit payment method to `ACTIVE` or `INACTIVE`. This is also used to update the details of an Over-the-Counter or a Virtual Account payment method.
 
-| Name          |    Value 	     |
-|--------------------|:-------------:|
-| Function Name | `patchPaymentMethod` |
-| Request Parameters  |  [PatchPaymentMethodRequestParams](#request-parameters--PatchPaymentMethodRequestParams)	 |
-| Return Type  |  [**\Xendit\PaymentMethod\PaymentMethod**](PaymentMethod/PaymentMethod.md) |
+| Name               |                                          Value                                          |
+| ------------------ | :-------------------------------------------------------------------------------------: |
+| Function Name      |                                  `patchPaymentMethod`                                   |
+| Request Parameters | [PatchPaymentMethodRequestParams](#request-parameters--PatchPaymentMethodRequestParams) |
+| Return Type        |        [**\Xendit\PaymentMethod\PaymentMethod**](PaymentMethod/PaymentMethod.md)        |
 
 ### Request Parameters - PatchPaymentMethodRequestParams
 
-|Name | Type | Required |Default |
-|-------------|:-------------:|:-------------:|-------------| 
-| **payment_method_id** | **string** | ☑️ |  |
-| **for_user_id** | **string** |  |  |
-| **payment_method_update_parameters** | [**PaymentMethodUpdateParameters**](PaymentMethod/PaymentMethodUpdateParameters.md) |  |  |
+| Name                                 |                                        Type                                         | Required | Default |
+| ------------------------------------ | :---------------------------------------------------------------------------------: | :------: | ------- |
+| **payment_method_id**                |                                     **string**                                      |    ☑️    |         |
+| **for_user_id**                      |                                     **string**                                      |          |         |
+| **payment_method_update_parameters** | [**PaymentMethodUpdateParameters**](PaymentMethod/PaymentMethodUpdateParameters.md) |          |         |
 
 ### Usage Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -306,7 +306,6 @@ try {
 }
 ```
 
-
 ## `getAllPaymentMethods()` Function
 
 ```php
@@ -314,30 +313,31 @@ getAllPaymentMethods($for_user_id, $id, $type, $status, $reusability, $customer_
 ```
 
 Get all payment methods by filters
-    Get all payment methods by filters
+Get all payment methods by filters
 
-| Name          |    Value 	     |
-|--------------------|:-------------:|
-| Function Name | `getAllPaymentMethods` |
-| Request Parameters  |  [GetAllPaymentMethodsRequestParams](#request-parameters--GetAllPaymentMethodsRequestParams)	 |
-| Return Type  |  [**\Xendit\PaymentMethod\PaymentMethodList**](PaymentMethod/PaymentMethodList.md) |
+| Name               |                                            Value                                            |
+| ------------------ | :-----------------------------------------------------------------------------------------: |
+| Function Name      |                                   `getAllPaymentMethods`                                    |
+| Request Parameters | [GetAllPaymentMethodsRequestParams](#request-parameters--GetAllPaymentMethodsRequestParams) |
+| Return Type        |      [**\Xendit\PaymentMethod\PaymentMethodList**](PaymentMethod/PaymentMethodList.md)      |
 
 ### Request Parameters - GetAllPaymentMethodsRequestParams
 
-|Name | Type | Required |Default |
-|-------------|:-------------:|:-------------:|-------------| 
-| **for_user_id** | **string** |  |  |
-| **id** | **string[]** |  |  |
-| **type** | **string[]** |  |  |
-| **status** | [**PaymentMethodStatus**](PaymentMethod/PaymentMethodStatus.md) |  |  |
-| **reusability** | [**PaymentMethodReusability**](PaymentMethod/PaymentMethodReusability.md) |  |  |
-| **customer_id** | **string** |  |  |
-| **reference_id** | **string** |  |  |
-| **after_id** | **string** |  |  |
-| **before_id** | **string** |  |  |
-| **limit** | **int** |  |  |
+| Name             |                                   Type                                    | Required | Default |
+| ---------------- | :-----------------------------------------------------------------------: | :------: | ------- |
+| **for_user_id**  |                                **string**                                 |          |         |
+| **id**           |                               **string[]**                                |          |         |
+| **type**         |                               **string[]**                                |          |         |
+| **status**       |      [**PaymentMethodStatus**](PaymentMethod/PaymentMethodStatus.md)      |          |         |
+| **reusability**  | [**PaymentMethodReusability**](PaymentMethod/PaymentMethodReusability.md) |          |         |
+| **customer_id**  |                                **string**                                 |          |         |
+| **reference_id** |                                **string**                                 |          |         |
+| **after_id**     |                                **string**                                 |          |         |
+| **before_id**    |                                **string**                                 |          |         |
+| **limit**        |                                  **int**                                  |          |         |
 
 ### Usage Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -368,7 +368,6 @@ try {
 }
 ```
 
-
 ## `expirePaymentMethod()` Function
 
 ```php
@@ -376,23 +375,24 @@ expirePaymentMethod($payment_method_id, $for_user_id, $payment_method_expire_par
 ```
 
 Expires a payment method
-    This endpoint expires a payment method and performs unlinking if necessary
+This endpoint expires a payment method and performs unlinking if necessary
 
-| Name          |    Value 	     |
-|--------------------|:-------------:|
-| Function Name | `expirePaymentMethod` |
-| Request Parameters  |  [ExpirePaymentMethodRequestParams](#request-parameters--ExpirePaymentMethodRequestParams)	 |
-| Return Type  |  [**\Xendit\PaymentMethod\PaymentMethod**](PaymentMethod/PaymentMethod.md) |
+| Name               |                                           Value                                           |
+| ------------------ | :---------------------------------------------------------------------------------------: |
+| Function Name      |                                   `expirePaymentMethod`                                   |
+| Request Parameters | [ExpirePaymentMethodRequestParams](#request-parameters--ExpirePaymentMethodRequestParams) |
+| Return Type        |         [**\Xendit\PaymentMethod\PaymentMethod**](PaymentMethod/PaymentMethod.md)         |
 
 ### Request Parameters - ExpirePaymentMethodRequestParams
 
-|Name | Type | Required |Default |
-|-------------|:-------------:|:-------------:|-------------| 
-| **payment_method_id** | **string** | ☑️ |  |
-| **for_user_id** | **string** |  |  |
-| **payment_method_expire_parameters** | [**PaymentMethodExpireParameters**](PaymentMethod/PaymentMethodExpireParameters.md) |  |  |
+| Name                                 |                                        Type                                         | Required | Default |
+| ------------------------------------ | :---------------------------------------------------------------------------------: | :------: | ------- |
+| **payment_method_id**                |                                     **string**                                      |    ☑️    |         |
+| **for_user_id**                      |                                     **string**                                      |          |         |
+| **payment_method_expire_parameters** | [**PaymentMethodExpireParameters**](PaymentMethod/PaymentMethodExpireParameters.md) |          |         |
 
 ### Usage Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -416,7 +416,6 @@ try {
 }
 ```
 
-
 ## `authPaymentMethod()` Function
 
 ```php
@@ -424,23 +423,24 @@ authPaymentMethod($payment_method_id, $for_user_id, $payment_method_auth_paramet
 ```
 
 Validate a payment method's linking OTP
-    This endpoint validates a payment method linking OTP
+This endpoint validates a payment method linking OTP
 
-| Name          |    Value 	     |
-|--------------------|:-------------:|
-| Function Name | `authPaymentMethod` |
-| Request Parameters  |  [AuthPaymentMethodRequestParams](#request-parameters--AuthPaymentMethodRequestParams)	 |
-| Return Type  |  [**\Xendit\PaymentMethod\PaymentMethod**](PaymentMethod/PaymentMethod.md) |
+| Name               |                                         Value                                         |
+| ------------------ | :-----------------------------------------------------------------------------------: |
+| Function Name      |                                  `authPaymentMethod`                                  |
+| Request Parameters | [AuthPaymentMethodRequestParams](#request-parameters--AuthPaymentMethodRequestParams) |
+| Return Type        |       [**\Xendit\PaymentMethod\PaymentMethod**](PaymentMethod/PaymentMethod.md)       |
 
 ### Request Parameters - AuthPaymentMethodRequestParams
 
-|Name | Type | Required |Default |
-|-------------|:-------------:|:-------------:|-------------| 
-| **payment_method_id** | **string** | ☑️ |  |
-| **for_user_id** | **string** |  |  |
-| **payment_method_auth_parameters** | [**PaymentMethodAuthParameters**](PaymentMethod/PaymentMethodAuthParameters.md) |  |  |
+| Name                               |                                      Type                                       | Required | Default |
+| ---------------------------------- | :-----------------------------------------------------------------------------: | :------: | ------- |
+| **payment_method_id**              |                                   **string**                                    |    ☑️    |         |
+| **for_user_id**                    |                                   **string**                                    |          |         |
+| **payment_method_auth_parameters** | [**PaymentMethodAuthParameters**](PaymentMethod/PaymentMethodAuthParameters.md) |          |         |
 
 ### Usage Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -464,7 +464,6 @@ try {
 }
 ```
 
-
 ## `simulatePayment()` Function
 
 ```php
@@ -472,22 +471,23 @@ simulatePayment($payment_method_id, $simulate_payment_request)
 ```
 
 Makes payment with matching PaymentMethodID.
-    Makes payment with matching PaymentMethodID.
+Makes payment with matching PaymentMethodID.
 
-| Name          |    Value 	     |
-|--------------------|:-------------:|
-| Function Name | `simulatePayment` |
-| Request Parameters  |  [SimulatePaymentRequestParams](#request-parameters--SimulatePaymentRequestParams)	 |
-| Return Type  |  void (empty response body) |
+| Name               |                                       Value                                       |
+| ------------------ | :-------------------------------------------------------------------------------: |
+| Function Name      |                                 `simulatePayment`                                 |
+| Request Parameters | [SimulatePaymentRequestParams](#request-parameters--SimulatePaymentRequestParams) |
+| Return Type        |                            void (empty response body)                             |
 
 ### Request Parameters - SimulatePaymentRequestParams
 
-|Name | Type | Required |Default |
-|-------------|:-------------:|:-------------:|-------------| 
-| **payment_method_id** | **string** | ☑️ |  |
-| **simulate_payment_request** | [**SimulatePaymentRequest**](PaymentMethod/SimulatePaymentRequest.md) |  |  |
+| Name                         |                                 Type                                  | Required | Default |
+| ---------------------------- | :-------------------------------------------------------------------: | :------: | ------- |
+| **payment_method_id**        |                              **string**                               |    ☑️    |         |
+| **simulate_payment_request** | [**SimulatePaymentRequest**](PaymentMethod/SimulatePaymentRequest.md) |          |         |
 
 ### Usage Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -509,15 +509,20 @@ try {
 }
 ```
 
-
 ## Callback Objects
+
 Use the following callback objects provided by Xendit to receive callbacks (also known as webhooks) that Xendit sends you on events, such as successful payments. Note that the example is meant to illustrate the contents of the callback object -- you will not need to instantiate these objects in practice
+
 ### PaymentMethodCallback Object
->Callback for active or expired E-Wallet or Direct Debit account linking, Virtual Accounts or QR strings
+
+> Callback for active or expired E-Wallet or Direct Debit account linking, Virtual Accounts or QR strings
 
 Model Documentation: [PaymentMethodCallback](PaymentMethod/PaymentMethodCallback.md)
+
 #### Usage Example
+
 Note that the example is meant to illustrate the contents of the callback object -- you will not need to instantiate these objects in practice
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -566,6 +571,7 @@ $payment_method_callback = new PaymentMethodCallback([
 ```
 
 You may then use the callback object in your webhook or callback handler like so,
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');

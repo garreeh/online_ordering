@@ -1,6 +1,5 @@
 # InvoiceApi
 
-
 You can use the APIs below to interface with Xendit's `InvoiceApi`.
 To start using the API, you need to configure the secret key and initiate the client instance.
 
@@ -18,13 +17,12 @@ $apiInstance = new InvoiceApi();
 
 All URIs are relative to https://api.xendit.co, except if the operation defines another base path.
 
-| Method | HTTP request | Description |
-| ------------- | ------------- | ------------- |
-| [**createInvoice()**](InvoiceApi.md#createinvoice-function) | **POST** /v2/invoices/ | Create an invoice |
-| [**getInvoiceById()**](InvoiceApi.md#getinvoicebyid-function) | **GET** /v2/invoices/{invoice_id} | Get invoice by invoice id |
-| [**getInvoices()**](InvoiceApi.md#getinvoices-function) | **GET** /v2/invoices | Get all Invoices |
-| [**expireInvoice()**](InvoiceApi.md#expireinvoice-function) | **POST** /invoices/{invoice_id}/expire! | Manually expire an invoice |
-
+| Method                                                        | HTTP request                                   | Description                |
+| ------------------------------------------------------------- | ---------------------------------------------- | -------------------------- |
+| [**createInvoice()**](InvoiceApi.md#createinvoice-function)   | **POST** /online_ordering/invoices/            | Create an invoice          |
+| [**getInvoiceById()**](InvoiceApi.md#getinvoicebyid-function) | **GET** /online_ordering/invoices/{invoice_id} | Get invoice by invoice id  |
+| [**getInvoices()**](InvoiceApi.md#getinvoices-function)       | **GET** /online_ordering/invoices              | Get all Invoices           |
+| [**expireInvoice()**](InvoiceApi.md#expireinvoice-function)   | **POST** /invoices/{invoice_id}/expire!        | Manually expire an invoice |
 
 ## `createInvoice()` Function
 
@@ -34,20 +32,21 @@ createInvoice($create_invoice_request, $for_user_id): \Invoice\Invoice
 
 Create an invoice
 
-| Name          |    Value 	     |
-|--------------------|:-------------:|
-| Function Name | `createInvoice` |
-| Request Parameters  |  [CreateInvoiceRequestParams](#request-parameters--CreateInvoiceRequestParams)	 |
-| Return Type  |  [**\Xendit\Invoice\Invoice**](Invoice/Invoice.md) |
+| Name               |                                     Value                                     |
+| ------------------ | :---------------------------------------------------------------------------: |
+| Function Name      |                                `createInvoice`                                |
+| Request Parameters | [CreateInvoiceRequestParams](#request-parameters--CreateInvoiceRequestParams) |
+| Return Type        |               [**\Xendit\Invoice\Invoice**](Invoice/Invoice.md)               |
 
 ### Request Parameters - CreateInvoiceRequestParams
 
-|Name | Type | Required |Default |
-|-------------|:-------------:|:-------------:|-------------| 
-| **create_invoice_request** | [**CreateInvoiceRequest**](Invoice/CreateInvoiceRequest.md) | ☑️ |  |
-| **for_user_id** | **string** |  |  |
+| Name                       |                            Type                             | Required | Default |
+| -------------------------- | :---------------------------------------------------------: | :------: | ------- |
+| **create_invoice_request** | [**CreateInvoiceRequest**](Invoice/CreateInvoiceRequest.md) |    ☑️    |         |
+| **for_user_id**            |                         **string**                          |          |         |
 
 ### Usage Example
+
 #### Create Invoice Request
 
 ```php
@@ -79,7 +78,6 @@ try {
 }
 ```
 
-
 ## `getInvoiceById()` Function
 
 ```php
@@ -88,20 +86,21 @@ getInvoiceById($invoice_id, $for_user_id): \Invoice\Invoice
 
 Get invoice by invoice id
 
-| Name          |    Value 	     |
-|--------------------|:-------------:|
-| Function Name | `getInvoiceById` |
-| Request Parameters  |  [GetInvoiceByIdRequestParams](#request-parameters--GetInvoiceByIdRequestParams)	 |
-| Return Type  |  [**\Xendit\Invoice\Invoice**](Invoice/Invoice.md) |
+| Name               |                                      Value                                      |
+| ------------------ | :-----------------------------------------------------------------------------: |
+| Function Name      |                                `getInvoiceById`                                 |
+| Request Parameters | [GetInvoiceByIdRequestParams](#request-parameters--GetInvoiceByIdRequestParams) |
+| Return Type        |                [**\Xendit\Invoice\Invoice**](Invoice/Invoice.md)                |
 
 ### Request Parameters - GetInvoiceByIdRequestParams
 
-|Name | Type | Required |Default |
-|-------------|:-------------:|:-------------:|-------------| 
-| **invoice_id** | **string** | ☑️ |  |
-| **for_user_id** | **string** |  |  |
+| Name            |    Type    | Required | Default |
+| --------------- | :--------: | :------: | ------- |
+| **invoice_id**  | **string** |    ☑️    |         |
+| **for_user_id** | **string** |          |         |
 
 ### Usage Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -124,7 +123,6 @@ try {
 }
 ```
 
-
 ## `getInvoices()` Function
 
 ```php
@@ -133,33 +131,34 @@ getInvoices($for_user_id, $external_id, $statuses, $limit, $created_after, $crea
 
 Get all Invoices
 
-| Name          |    Value 	     |
-|--------------------|:-------------:|
-| Function Name | `getInvoices` |
-| Request Parameters  |  [GetInvoicesRequestParams](#request-parameters--GetInvoicesRequestParams)	 |
-| Return Type  |  [**\Xendit\Invoice\Invoice[]**](Invoice/Invoice.md) |
+| Name               |                                   Value                                   |
+| ------------------ | :-----------------------------------------------------------------------: |
+| Function Name      |                               `getInvoices`                               |
+| Request Parameters | [GetInvoicesRequestParams](#request-parameters--GetInvoicesRequestParams) |
+| Return Type        |            [**\Xendit\Invoice\Invoice[]**](Invoice/Invoice.md)            |
 
 ### Request Parameters - GetInvoicesRequestParams
 
-|Name | Type | Required |Default |
-|-------------|:-------------:|:-------------:|-------------| 
-| **for_user_id** | **string** |  |  |
-| **external_id** | **string** |  |  |
-| **statuses** | [**InvoiceStatus**](Invoice/InvoiceStatus.md) |  |  |
-| **limit** | **float** |  |  |
-| **created_after** | **\DateTime** |  |  |
-| **created_before** | **\DateTime** |  |  |
-| **paid_after** | **\DateTime** |  |  |
-| **paid_before** | **\DateTime** |  |  |
-| **expired_after** | **\DateTime** |  |  |
-| **expired_before** | **\DateTime** |  |  |
-| **last_invoice** | **string** |  |  |
-| **client_types** | [**InvoiceClientType**](Invoice/InvoiceClientType.md) |  |  |
-| **payment_channels** | **string[]** |  |  |
-| **on_demand_link** | **string** |  |  |
-| **recurring_payment_id** | **string** |  |  |
+| Name                     |                         Type                          | Required | Default |
+| ------------------------ | :---------------------------------------------------: | :------: | ------- |
+| **for_user_id**          |                      **string**                       |          |         |
+| **external_id**          |                      **string**                       |          |         |
+| **statuses**             |     [**InvoiceStatus**](Invoice/InvoiceStatus.md)     |          |         |
+| **limit**                |                       **float**                       |          |         |
+| **created_after**        |                     **\DateTime**                     |          |         |
+| **created_before**       |                     **\DateTime**                     |          |         |
+| **paid_after**           |                     **\DateTime**                     |          |         |
+| **paid_before**          |                     **\DateTime**                     |          |         |
+| **expired_after**        |                     **\DateTime**                     |          |         |
+| **expired_before**       |                     **\DateTime**                     |          |         |
+| **last_invoice**         |                      **string**                       |          |         |
+| **client_types**         | [**InvoiceClientType**](Invoice/InvoiceClientType.md) |          |         |
+| **payment_channels**     |                     **string[]**                      |          |         |
+| **on_demand_link**       |                      **string**                       |          |         |
+| **recurring_payment_id** |                      **string**                       |          |         |
 
 ### Usage Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -195,7 +194,6 @@ try {
 }
 ```
 
-
 ## `expireInvoice()` Function
 
 ```php
@@ -204,20 +202,21 @@ expireInvoice($invoice_id, $for_user_id): \Invoice\Invoice
 
 Manually expire an invoice
 
-| Name          |    Value 	     |
-|--------------------|:-------------:|
-| Function Name | `expireInvoice` |
-| Request Parameters  |  [ExpireInvoiceRequestParams](#request-parameters--ExpireInvoiceRequestParams)	 |
-| Return Type  |  [**\Xendit\Invoice\Invoice**](Invoice/Invoice.md) |
+| Name               |                                     Value                                     |
+| ------------------ | :---------------------------------------------------------------------------: |
+| Function Name      |                                `expireInvoice`                                |
+| Request Parameters | [ExpireInvoiceRequestParams](#request-parameters--ExpireInvoiceRequestParams) |
+| Return Type        |               [**\Xendit\Invoice\Invoice**](Invoice/Invoice.md)               |
 
 ### Request Parameters - ExpireInvoiceRequestParams
 
-|Name | Type | Required |Default |
-|-------------|:-------------:|:-------------:|-------------| 
-| **invoice_id** | **string** | ☑️ |  |
-| **for_user_id** | **string** |  |  |
+| Name            |    Type    | Required | Default |
+| --------------- | :--------: | :------: | ------- |
+| **invoice_id**  | **string** |    ☑️    |         |
+| **for_user_id** | **string** |          |         |
 
 ### Usage Example
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -240,15 +239,20 @@ try {
 }
 ```
 
-
 ## Callback Objects
+
 Use the following callback objects provided by Xendit to receive callbacks (also known as webhooks) that Xendit sends you on events, such as successful payments. Note that the example is meant to illustrate the contents of the callback object -- you will not need to instantiate these objects in practice
+
 ### InvoiceCallback Object
->Invoice Callback Object
+
+> Invoice Callback Object
 
 Model Documentation: [InvoiceCallback](Invoice/InvoiceCallback.md)
+
 #### Usage Example
+
 Note that the example is meant to illustrate the contents of the callback object -- you will not need to instantiate these objects in practice
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
@@ -276,6 +280,7 @@ $invoice_callback = new InvoiceCallback([
 ```
 
 You may then use the callback object in your webhook or callback handler like so,
+
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');

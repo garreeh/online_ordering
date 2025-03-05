@@ -47,8 +47,8 @@
 <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
 <script>
-  $(document).ready(function () {
-    $('#addCategoryModal form').submit(function (event) {
+  $(document).ready(function() {
+    $('#addCategoryModal form').submit(function(event) {
       event.preventDefault(); // Prevent default form submission
 
       // Store a reference to $(this)
@@ -65,9 +65,9 @@
       // Send AJAX request
       $.ajax({
         type: 'POST',
-        url: '/v2/controllers/admin/add_ingredient_category_process.php',
+        url: '/online_ordering/controllers/admin/add_ingredient_category_process.php',
         data: formData,
-        success: function (response) {
+        success: function(response) {
           // Handle success response
           console.log(response); // Log the response for debugging
           response = JSON.parse(response);
@@ -93,7 +93,7 @@
             }).showToast();
           }
         },
-        error: function (xhr, status, error) {
+        error: function(xhr, status, error) {
           // Handle error response
           console.error(xhr.responseText);
           Toastify({
@@ -102,7 +102,7 @@
             backgroundColor: "linear-gradient(to right, #ff6a00, #ee0979)"
           }).showToast();
         },
-        complete: function () {
+        complete: function() {
           // Reset button text and re-enable it
           $addButton.text('Add');
           $addButton.prop('disabled', false);

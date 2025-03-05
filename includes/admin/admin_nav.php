@@ -6,14 +6,14 @@ if (session_status() == PHP_SESSION_NONE) {
 
 if (!isset($_SESSION['user_id'])) {
   // Redirect to the login page if the user is not logged in
-  header("Location: /v2/views/login.php");
+  header("Location: /online_ordering/views/login.php");
   exit();
 }
 
 // Check if the user is an admin
 if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== "1") {
   // If the user is not an admin (is_admin is not set or not "1"), redirect to the user dashboard
-  header("Location: /v2/index.php"); // Adjust the redirect location as needed
+  header("Location: /online_ordering/index.php"); // Adjust the redirect location as needed
   exit();
 }
 
@@ -52,7 +52,7 @@ if ($result) {
 
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center"
-          href="/v2/views/admin/dashboard.php">
+          href="/online_ordering/views/admin/dashboard.php">
           <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
           </div>
@@ -64,7 +64,7 @@ if ($result) {
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item">
-          <a class="nav-link" href="/v2/views/admin/dashboard.php">
+          <a class="nav-link" href="/online_ordering/views/admin/dashboard.php">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
         </li>
@@ -79,12 +79,12 @@ if ($result) {
 
         <?php if ($row['orders_module'] == 1): ?>
           <li class="nav-item">
-            <a class="nav-link" href="/v2/views/admin/orders_module.php">
+            <a class="nav-link" href="/online_ordering/views/admin/orders_module.php">
               <i class="fas fa-fw fa-money-bill"></i>
               <span>Product Orders</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/v2/views/admin/booking_orders_module.php">
+            <a class="nav-link" href="/online_ordering/views/admin/booking_orders_module.php">
               <i class="fas fa-fw fa-cart-plus"></i>
               <span>Booking Orders</span></a>
           </li>
@@ -92,7 +92,7 @@ if ($result) {
 
         <?php if ($row['deliveries_module'] == 1): ?>
           <li class="nav-item">
-            <a class="nav-link" href="/v2/views/admin/deliveries_module.php">
+            <a class="nav-link" href="/online_ordering/views/admin/deliveries_module.php">
               <i class="fas fa-fw fa-money-bill"></i>
               <span>Deliveries</span></a>
           </li>
@@ -102,14 +102,14 @@ if ($result) {
 
         <?php if ($row['transaction_module'] == 1): ?>
           <li class="nav-item">
-            <a class="nav-link" href="/v2/views/admin/transaction_module.php">
+            <a class="nav-link" href="/online_ordering/views/admin/transaction_module.php">
               <i class="fas fa-fw fa-money-bill"></i>
               <span>Transactions</span></a>
           </li>
         <?php endif; ?>
 
         <!-- <li class="nav-item">
-      <a class="nav-link" href="/v2/views/admin/billing_module.php">
+      <a class="nav-link" href="/online_ordering/views/admin/billing_module.php">
         <i class="fas fa-fw fa-clipboard-list"></i>
         <span>Voucher</span></a>
     </li> -->
@@ -134,7 +134,7 @@ if ($result) {
             <div id="collapse1" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
                 <!-- <h6 class="collapse-header">Setup:</h6> -->
-                <a class="collapse-item" href="/v2/views/admin/sales_report_module.php">Sales Report</a>
+                <a class="collapse-item" href="/online_ordering/views/admin/sales_report_module.php">Sales Report</a>
               </div>
             </div>
           </li>
@@ -151,9 +151,9 @@ if ($result) {
             <div id="collapse2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
                 <!-- <h6 class="collapse-header">Setup:</h6> -->
-                <a class="collapse-item" href="/v2/views/admin/supplier_module.php">Suppliers</a>
-                <a class="collapse-item" href="/v2/views/admin/category_module.php">Category</a>
-                <a class="collapse-item" href="/v2/views/admin/product_module.php">Products</a>
+                <a class="collapse-item" href="/online_ordering/views/admin/supplier_module.php">Suppliers</a>
+                <a class="collapse-item" href="/online_ordering/views/admin/category_module.php">Category</a>
+                <a class="collapse-item" href="/online_ordering/views/admin/product_module.php">Products</a>
               </div>
 
             </div>
@@ -162,7 +162,7 @@ if ($result) {
 
         <?php if ($row['po_module'] == 1): ?>
           <li class="nav-item">
-            <a class="nav-link" href="/v2/views/admin/booking_module.php">
+            <a class="nav-link" href="/online_ordering/views/admin/booking_module.php">
               <i class="fas fa-fw fa-cart-plus"></i>
               <span>Booking Setup</span></a>
           </li>
@@ -177,7 +177,7 @@ if ($result) {
 
         <?php if ($row['po_module'] == 1): ?>
           <li class="nav-item">
-            <a class="nav-link" href="/v2/views/admin/purchase_module.php">
+            <a class="nav-link" href="/online_ordering/views/admin/purchase_module.php">
               <i class="fas fa-fw fa-cart-plus"></i>
               <span>Ingredients PO</span></a>
           </li>
@@ -194,11 +194,11 @@ if ($result) {
             <div id="collapse3" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
                 <!-- <h6 class="collapse-header">Setup:</h6> -->
-                <a class="collapse-item" href="/v2/views/admin/ingredients_supplier_module.php">Ingredients
+                <a class="collapse-item" href="/online_ordering/views/admin/ingredients_supplier_module.php">Ingredients
                   Suppliers</a>
-                <a class="collapse-item" href="/v2/views/admin/ingredients_category_module.php">Ingredients
+                <a class="collapse-item" href="/online_ordering/views/admin/ingredients_category_module.php">Ingredients
                   Category</a>
-                <a class="collapse-item" href="/v2/views/admin/ingredients_product_module.php">Ingredients
+                <a class="collapse-item" href="/online_ordering/views/admin/ingredients_product_module.php">Ingredients
                   Products</a>
               </div>
 
@@ -223,16 +223,16 @@ if ($result) {
             <div id="collapse4" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
                 <!-- <h6 class="collapse-header">Setup:</h6> -->
-                <a class="collapse-item" href="/v2/views/admin/user_type_module.php">Add User Type</a>
-                <a class="collapse-item" href="/v2/views/admin/user_module.php">Add User</a>
-                <a class="collapse-item" href="/v2/views/admin/customer_module.php">Customers</a>
+                <a class="collapse-item" href="/online_ordering/views/admin/user_type_module.php">Add User Type</a>
+                <a class="collapse-item" href="/online_ordering/views/admin/user_module.php">Add User</a>
+                <a class="collapse-item" href="/online_ordering/views/admin/customer_module.php">Customers</a>
               </div>
             </div>
           </li>
         <?php endif; ?>
 
         <!-- <li class="nav-item">
-          <a class="nav-link" href="/v2/views/admin/billing_module.php">
+          <a class="nav-link" href="/online_ordering/views/admin/billing_module.php">
             <i class="fas fa-fw fa-cog"></i>
             <span>Account Setting</span></a>
         </li> -->
@@ -241,7 +241,7 @@ if ($result) {
         <hr class="sidebar-divider d-none d-md-block">
 
         <li class="nav-item">
-          <a class="nav-link" href="/v2/controllers/logout_process.php">
+          <a class="nav-link" href="/online_ordering/controllers/logout_process.php">
             <i class="fas fa-fw fa-sign-out-alt"></i>
             <span>Sign Out</span></a>
         </li>

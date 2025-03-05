@@ -227,7 +227,7 @@ if (isset($_POST['product_id'])) {
       // Send the image_id to the backend via AJAX for deletion
       $.ajax({
         type: 'POST',
-        url: '/v2/controllers/admin/remove_product_image_process.php',
+        url: '/online_ordering/controllers/admin/remove_product_image_process.php',
 
         data: {
           remove_image_id: [product_image_id]
@@ -305,7 +305,7 @@ if (isset($_POST['product_id'])) {
       // Send AJAX request for product form submission
       $.ajax({
         type: 'POST',
-        url: '/v2/controllers/admin/edit_product_booking_process.php',
+        url: '/online_ordering/controllers/admin/edit_product_booking_process.php',
         data: formData,
         processData: false, // Prevent jQuery from automatically transforming the data into a query string
         contentType: false, // Let the browser set the content type for the FormData

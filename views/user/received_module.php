@@ -144,7 +144,7 @@
   $(document).ready(function() {
     function updateCart() {
       $.ajax({
-        url: '/v2/controllers/users/fetch_received_orders_process.php',
+        url: '/online_ordering/controllers/users/fetch_received_orders_process.php',
         method: 'GET',
         dataType: 'json',
         success: function(response) {
@@ -202,7 +202,7 @@
 
     function cancelOrder(productId, cartQuantity, orderId) {
       $.ajax({
-        url: '/v2/controllers/users/cancel_order_process.php',
+        url: '/online_ordering/controllers/users/cancel_order_process.php',
         method: 'POST',
         data: {
           product_id: productId,

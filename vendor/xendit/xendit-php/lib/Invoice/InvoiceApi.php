@@ -1,4 +1,5 @@
 <?php
+
 /**
  * InvoiceApi
  * PHP version 7.4
@@ -77,7 +78,7 @@ class InvoiceApi
         ],
     ];
 
-/**
+    /**
      * @param ClientInterface $client
      * @param Configuration   $config
      * @param HeaderSelector  $selector
@@ -180,7 +181,7 @@ class InvoiceApi
                 (string) $e->getCode(),
                 $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "createInvoiceRequest")
             );
-        }  catch (GuzzleException $e) {
+        } catch (GuzzleException $e) {
             throw new XenditSdkException(
                 null,
                 (string) $e->getCode(),
@@ -306,7 +307,7 @@ class InvoiceApi
 
 
 
-        $resourcePath = '/v2/invoices/';
+        $resourcePath = '/online_ordering/invoices/';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -321,7 +322,7 @@ class InvoiceApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            ['application/json', ],
+            ['application/json',],
             $contentType,
             $multipart
         );
@@ -348,7 +349,6 @@ class InvoiceApi
                 }
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
-
             } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
                 # if Content-Type contains "application/json", json_encode the form parameters
                 $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
@@ -362,7 +362,7 @@ class InvoiceApi
         $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getApiKey() . ":");
 
         $defaultHeaders = [];
-        
+
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
         $defaultHeaders['xendit-lib-ver'] = '6.1.0';
@@ -438,7 +438,7 @@ class InvoiceApi
                 (string) $e->getCode(),
                 $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getInvoiceByIdRequest")
             );
-        }  catch (GuzzleException $e) {
+        } catch (GuzzleException $e) {
             throw new XenditSdkException(
                 null,
                 (string) $e->getCode(),
@@ -564,7 +564,7 @@ class InvoiceApi
 
 
 
-        $resourcePath = '/v2/invoices/{invoice_id}';
+        $resourcePath = '/online_ordering/invoices/{invoice_id}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -587,7 +587,7 @@ class InvoiceApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            ['application/json', ],
+            ['application/json',],
             $contentType,
             $multipart
         );
@@ -607,7 +607,6 @@ class InvoiceApi
                 }
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
-
             } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
                 # if Content-Type contains "application/json", json_encode the form parameters
                 $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
@@ -621,7 +620,7 @@ class InvoiceApi
         $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getApiKey() . ":");
 
         $defaultHeaders = [];
-        
+
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
         $defaultHeaders['xendit-lib-ver'] = '6.1.0';
@@ -723,7 +722,7 @@ class InvoiceApi
                 (string) $e->getCode(),
                 $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "getInvoicesRequest")
             );
-        }  catch (GuzzleException $e) {
+        } catch (GuzzleException $e) {
             throw new XenditSdkException(
                 null,
                 (string) $e->getCode(),
@@ -895,7 +894,7 @@ class InvoiceApi
 
 
 
-        $resourcePath = '/v2/invoices';
+        $resourcePath = '/online_ordering/invoices';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -1036,7 +1035,7 @@ class InvoiceApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            ['application/json', ],
+            ['application/json',],
             $contentType,
             $multipart
         );
@@ -1056,7 +1055,6 @@ class InvoiceApi
                 }
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
-
             } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
                 # if Content-Type contains "application/json", json_encode the form parameters
                 $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
@@ -1070,7 +1068,7 @@ class InvoiceApi
         $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getApiKey() . ":");
 
         $defaultHeaders = [];
-        
+
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
         $defaultHeaders['xendit-lib-ver'] = '6.1.0';
@@ -1146,7 +1144,7 @@ class InvoiceApi
                 (string) $e->getCode(),
                 $e->getMessage() ? $e->getMessage() : sprintf('Error connecting to the API (%s)', "expireInvoiceRequest")
             );
-        }  catch (GuzzleException $e) {
+        } catch (GuzzleException $e) {
             throw new XenditSdkException(
                 null,
                 (string) $e->getCode(),
@@ -1295,7 +1293,7 @@ class InvoiceApi
 
 
         $headers = $this->headerSelector->selectHeaders(
-            ['application/json', ],
+            ['application/json',],
             $contentType,
             $multipart
         );
@@ -1315,7 +1313,6 @@ class InvoiceApi
                 }
                 // for HTTP post (form)
                 $httpBody = new MultipartStream($multipartContents);
-
             } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
                 # if Content-Type contains "application/json", json_encode the form parameters
                 $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
@@ -1329,7 +1326,7 @@ class InvoiceApi
         $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getApiKey() . ":");
 
         $defaultHeaders = [];
-        
+
         // Xendit's custom headers
         $defaultHeaders['xendit-lib'] = 'php';
         $defaultHeaders['xendit-lib-ver'] = '6.1.0';
