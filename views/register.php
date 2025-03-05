@@ -9,10 +9,10 @@ if (session_status() == PHP_SESSION_NONE) {
 if (isset($_SESSION['user_id'])) {
 	if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] == "1") {
 		// If the user is an admin, redirect to the admin dashboard
-		header("Location: /online_ordering/views/admin/dashboard.php");
+		header("Location: /v2/views/admin/dashboard.php");
 	} else {
 		// If the user is not an admin, redirect to the user dashboard
-		header("Location: /online_ordering/views/user/product_showcase.php");
+		header("Location: /v2/views/user/product_showcase.php");
 	}
 	exit();
 }
@@ -30,7 +30,7 @@ if (isset($_SESSION['user_id'])) {
 	<meta name="description" content="">
 	<meta name="author" content="">
 
-	<title>Sterling | Register</title>
+	<title>J & J | Register</title>
 
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 	<!-- Custom fonts for this template-->

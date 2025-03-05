@@ -73,7 +73,7 @@ if ($result) {
       // Send AJAX request
       $.ajax({
         type: 'POST',
-        url: '/online_ordering/controllers/admin/tas_as_delivered_process.php',
+        url: '/v2/controllers/admin/tas_as_delivered_process.php',
         data: formData,
         success: function(response) {
           // Handle success response

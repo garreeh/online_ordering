@@ -29,7 +29,7 @@
     <div class="row">
       <!-- BEGIN COPYRIGHT -->
       <div class="col-md-4 col-sm-4 padding-top-10">
-        2024 © Sterling. All Rights Reserved.
+        2024 © J & J. All Rights Reserved.
       </div>
       <!-- END COPYRIGHT -->
     </div>

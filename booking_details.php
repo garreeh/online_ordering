@@ -38,7 +38,7 @@ if (isset($_GET['product_id'])) {
 
     <head>
       <meta charset="utf-8">
-      <title>Sterling | Bookings</title>
+      <title>J & J | Bookings</title>
 
       <meta content="width=device-width, initial-scale=1.0" name="viewport">
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">

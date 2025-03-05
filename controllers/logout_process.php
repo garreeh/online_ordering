@@ -7,10 +7,10 @@ session_start();
 if (isset($_SESSION['user_id'])) {
 	$_SESSION = array();
 	session_destroy();
-	header("Location: /online_ordering/index.php");
+	header("Location: /v2/index.php");
 	exit();
 }
 
 
-header("Location: /online_ordering/index.php");
+header("Location: /v2/index.php");
 exit();

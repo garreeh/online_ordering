@@ -17,16 +17,16 @@ $apiInstance = new PaymentMethodApi();
 
 All URIs are relative to https://api.xendit.co, except if the operation defines another base path.
 
-| Method                                                                                          | HTTP request                                                                  | Description                                     |
-| ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------- |
-| [**createPaymentMethod()**](PaymentMethodApi.md#createpaymentmethod-function)                   | **POST** /online_ordering/payment_methods                                     | Creates payment method                          |
-| [**getPaymentMethodByID()**](PaymentMethodApi.md#getpaymentmethodbyid-function)                 | **GET** /online_ordering/payment_methods/{paymentMethodId}                    | Get payment method by ID                        |
-| [**getPaymentsByPaymentMethodId()**](PaymentMethodApi.md#getpaymentsbypaymentmethodid-function) | **GET** /online_ordering/payment_methods/{paymentMethodId}/payments           | Returns payments with matching PaymentMethodID. |
-| [**patchPaymentMethod()**](PaymentMethodApi.md#patchpaymentmethod-function)                     | **PATCH** /online_ordering/payment_methods/{paymentMethodId}                  | Patch payment methods                           |
-| [**getAllPaymentMethods()**](PaymentMethodApi.md#getallpaymentmethods-function)                 | **GET** /online_ordering/payment_methods                                      | Get all payment methods by filters              |
-| [**expirePaymentMethod()**](PaymentMethodApi.md#expirepaymentmethod-function)                   | **POST** /online_ordering/payment_methods/{paymentMethodId}/expire            | Expires a payment method                        |
-| [**authPaymentMethod()**](PaymentMethodApi.md#authpaymentmethod-function)                       | **POST** /online_ordering/payment_methods/{paymentMethodId}/auth              | Validate a payment method&#39;s linking OTP     |
-| [**simulatePayment()**](PaymentMethodApi.md#simulatepayment-function)                           | **POST** /online_ordering/payment_methods/{paymentMethodId}/payments/simulate | Makes payment with matching PaymentMethodID.    |
+| Method                                                                                          | HTTP request                                                     | Description                                     |
+| ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- | ----------------------------------------------- |
+| [**createPaymentMethod()**](PaymentMethodApi.md#createpaymentmethod-function)                   | **POST** /v2/payment_methods                                     | Creates payment method                          |
+| [**getPaymentMethodByID()**](PaymentMethodApi.md#getpaymentmethodbyid-function)                 | **GET** /v2/payment_methods/{paymentMethodId}                    | Get payment method by ID                        |
+| [**getPaymentsByPaymentMethodId()**](PaymentMethodApi.md#getpaymentsbypaymentmethodid-function) | **GET** /v2/payment_methods/{paymentMethodId}/payments           | Returns payments with matching PaymentMethodID. |
+| [**patchPaymentMethod()**](PaymentMethodApi.md#patchpaymentmethod-function)                     | **PATCH** /v2/payment_methods/{paymentMethodId}                  | Patch payment methods                           |
+| [**getAllPaymentMethods()**](PaymentMethodApi.md#getallpaymentmethods-function)                 | **GET** /v2/payment_methods                                      | Get all payment methods by filters              |
+| [**expirePaymentMethod()**](PaymentMethodApi.md#expirepaymentmethod-function)                   | **POST** /v2/payment_methods/{paymentMethodId}/expire            | Expires a payment method                        |
+| [**authPaymentMethod()**](PaymentMethodApi.md#authpaymentmethod-function)                       | **POST** /v2/payment_methods/{paymentMethodId}/auth              | Validate a payment method&#39;s linking OTP     |
+| [**simulatePayment()**](PaymentMethodApi.md#simulatepayment-function)                           | **POST** /v2/payment_methods/{paymentMethodId}/payments/simulate | Makes payment with matching PaymentMethodID.    |
 
 ## `createPaymentMethod()` Function
 

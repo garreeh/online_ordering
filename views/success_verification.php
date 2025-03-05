@@ -20,7 +20,7 @@ unset($_SESSION['email_verified']);
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Sterling | Verification Successful</title>
+    <title>J & J | Verification Successful</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <!-- Custom fonts for this template -->

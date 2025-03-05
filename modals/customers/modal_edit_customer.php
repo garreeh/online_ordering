@@ -8,7 +8,7 @@
 </style>
 
 <?php
-include $_SERVER['DOCUMENT_ROOT'] . '/online_ordering/connections/connections.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/v2/connections/connections.php';
 
 // Fetch user types from the database
 $sql = "SELECT * FROM usertype";
@@ -113,7 +113,7 @@ if (isset($_SESSION['user_id'])) {
       // Send AJAX request
       $.ajax({
         type: 'POST',
-        url: '/online_ordering/controllers/users/edit_customers_process.php',
+        url: '/v2/controllers/users/edit_customers_process.php',
         data: formData,
         success: function(response) {
           console.log(response); // Log the response for debugging

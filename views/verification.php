@@ -5,8 +5,8 @@ session_start();
 
 // Check if the email verification flag is set
 if (!isset($_SESSION['email_verified']) || $_SESSION['email_verified'] !== true) {
-    header("Location: ../views/login.php");
-    exit();
+	header("Location: ../views/login.php");
+	exit();
 }
 
 // Unset the session flag to prevent re-access
@@ -23,7 +23,7 @@ unset($_SESSION['email_verified']);
 	<meta name="description" content="">
 	<meta name="author" content="">
 
-	<title>Sterling | Registration Successful</title>
+	<title>J & J | Registration Successful</title>
 
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 	<!-- Custom fonts for this template-->

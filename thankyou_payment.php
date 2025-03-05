@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Sterling | Gcash Successful</title>
+  <title>J & J | Gcash Successful</title>
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
   <link href="assets/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -54,7 +54,7 @@
       if (referenceId) {
         $.ajax({
           type: "POST",
-          url: "/online_ordering/controllers/users/xendit_check_status.php",
+          url: "/v2/controllers/users/xendit_check_status.php",
           data: JSON.stringify({
             reference_id: referenceId
           }),
@@ -65,7 +65,7 @@
             if (response.success) {
               console.log("Cart updated successfully.");
               localStorage.removeItem("xendit_reference_id"); // Remove after processing
-              window.location.href = "/online_ordering/thankyou_payment.php"; // Redirect to thank you page
+              window.location.href = "/v2/thankyou_payment.php"; // Redirect to thank you page
             } else {
               console.error("Failed to process payment:", response.message);
             }

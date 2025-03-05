@@ -17,12 +17,12 @@ $apiInstance = new InvoiceApi();
 
 All URIs are relative to https://api.xendit.co, except if the operation defines another base path.
 
-| Method                                                        | HTTP request                                   | Description                |
-| ------------------------------------------------------------- | ---------------------------------------------- | -------------------------- |
-| [**createInvoice()**](InvoiceApi.md#createinvoice-function)   | **POST** /online_ordering/invoices/            | Create an invoice          |
-| [**getInvoiceById()**](InvoiceApi.md#getinvoicebyid-function) | **GET** /online_ordering/invoices/{invoice_id} | Get invoice by invoice id  |
-| [**getInvoices()**](InvoiceApi.md#getinvoices-function)       | **GET** /online_ordering/invoices              | Get all Invoices           |
-| [**expireInvoice()**](InvoiceApi.md#expireinvoice-function)   | **POST** /invoices/{invoice_id}/expire!        | Manually expire an invoice |
+| Method                                                        | HTTP request                            | Description                |
+| ------------------------------------------------------------- | --------------------------------------- | -------------------------- |
+| [**createInvoice()**](InvoiceApi.md#createinvoice-function)   | **POST** /v2/invoices/                  | Create an invoice          |
+| [**getInvoiceById()**](InvoiceApi.md#getinvoicebyid-function) | **GET** /v2/invoices/{invoice_id}       | Get invoice by invoice id  |
+| [**getInvoices()**](InvoiceApi.md#getinvoices-function)       | **GET** /v2/invoices                    | Get all Invoices           |
+| [**expireInvoice()**](InvoiceApi.md#expireinvoice-function)   | **POST** /invoices/{invoice_id}/expire! | Manually expire an invoice |
 
 ## `createInvoice()` Function
 

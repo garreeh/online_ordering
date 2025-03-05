@@ -12,7 +12,7 @@
         You need to log in to add items to the cart.
       </div>
       <div class="modal-footer">
-        <a href="/online_ordering/views/login.php" class="btn btn-primary">Login</a>
+        <a href="/v2/views/login.php" class="btn btn-primary">Login</a>
         <a href="javascript:void(0)" class="btn btn-secondary" data-dismiss="modal">Cancel</a>
       </div>
     </div>

@@ -75,7 +75,7 @@ if (isset($_POST['supplier_id'])) {
       // Send AJAX request
       $.ajax({
         type: 'POST',
-        url: '/online_ordering/controllers/admin/delete_supplier_process.php',
+        url: '/v2/controllers/admin/delete_supplier_process.php',
         data: formData,
         success: function(response) {
           // Handle success response
