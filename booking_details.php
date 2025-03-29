@@ -79,6 +79,12 @@ if (isset($_GET['product_id'])) {
       <link href="assets/user/corporate/css/style-responsive.css" rel="stylesheet">
       <link href="assets/user/corporate/css/themes/red.css" rel="stylesheet" id="style-color">
       <link href="assets/user/corporate/css/custom.css" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+      <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+      <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
       <!-- Theme styles END -->
     </head>
     <!-- Head END -->
@@ -429,6 +435,25 @@ if (isset($_GET['product_id'])) {
                       <textarea readonly rows="5" style="font-weight: bold; width: 100%; height: 100%; border: none; resize: none;"><?php echo htmlspecialchars($row['product_description']); ?></textarea>
 
                       <form id="sizeForm">
+                        <div class="col-md-12">
+                          <h4 style="margin-bottom: 10px;">Select Time:</h4>
+                          <div class="time-selection" style="display: flex; gap: 20px; align-items: center;">
+                            <label>
+                              <input type="radio" name="selected_time" value="08:00 AM"> 8:00 AM
+                            </label>
+                            <label>
+                              <input type="radio" name="selected_time" value="12:00 PM"> 12:00 PM
+                            </label>
+                          </div>
+
+
+                          <h4 style="margin-top: 20px; margin-bottom: 10px;">Select Date:</h4>
+                          <input type="text" id="calendar" class="form-control" placeholder="Select a date" readonly style="cursor: pointer; text-align: center; font-weight: bold; border: 2px solid #ddd; padding: 10px; border-radius: 5px;">
+
+                          <input type="hidden" id="selected_date" name="selected_date">
+                          <input type="hidden" id="selected_time" name="selected_time">
+                        </div>
+
 
                         <input
                           type="hidden"
@@ -527,6 +552,75 @@ if (isset($_GET['product_id'])) {
       });
     </script>
     <!-- END PAGE LEVEL JAVASCRIPTS -->
+    <script>
+      // Initialize flatpickr for the calendar
+      flatpickr("#calendar", {
+        dateFormat: "Y-m-d",
+        minDate: "today", // Disable past dates
+        onChange: function(selectedDates, dateStr) {
+          document.getElementById("selected_date").value = dateStr;
+        }
+      });
+
+      // Handle time selection
+      $('input[name="selected_time"]').on('change', function() {
+        document.getElementById("selected_time").value = $(this).val();
+      });
+
+      $(document).ready(function() {
+        function fetchBookedDates() {
+          $.ajax({
+            url: "/online_ordering/controllers/users/get_booked_dates.php",
+            method: "GET",
+            dataType: "json",
+            success: function(response) {
+              if (response.success) {
+                let bookedDates = response.bookedDates;
+                let fullyBookedDates = [];
+
+                // Check if any date has two booked time slots
+                for (let date in bookedDates) {
+                  if (bookedDates[date].length >= 2) { // If there are two or more bookings, disable the date
+                    fullyBookedDates.push(date);
+                  }
+                }
+
+                // Initialize Flatpickr with fully booked dates disabled
+                flatpickr("#calendar", {
+                  dateFormat: "Y-m-d",
+                  minDate: "today",
+                  disable: fullyBookedDates,
+                  onChange: function(selectedDates, dateStr) {
+                    document.getElementById("selected_date").value = dateStr;
+
+                    // Enable all times first
+                    $('input[name="selected_time"]').prop("disabled", false);
+
+                    // Disable specific booked times for the selected date
+                    if (bookedDates[dateStr]) {
+                      bookedDates[dateStr].forEach(function(time) {
+                        $('input[name="selected_time"][value="' + time + '"]').prop("disabled", true);
+                      });
+                    }
+                  }
+                });
+              }
+            },
+            error: function(xhr, status, error) {
+              console.log("Error fetching booked dates: ", error);
+            }
+          });
+        }
+
+        // Fetch booked dates when page loads
+        fetchBookedDates();
+
+        // Handle time selection
+        $('input[name="selected_time"]').on("change", function() {
+          document.getElementById("selected_time").value = $(this).val();
+        });
+      });
+    </script>
 
     <script type="text/javascript">
       // Handle quantity increase and decrease buttons
@@ -545,26 +639,55 @@ if (isset($_GET['product_id'])) {
       });
 
       $(document).ready(function() {
-
         $('.add-to-cart').click(function() {
           var productId = $(this).data('product-id');
           var $button = $(this);
           var quantityInput = $button.closest('.product-item').find('.cart_quantity');
           var quantity = parseInt(quantityInput.val()) || 1; // Default to 1 if no valid quantity
 
-          // Make AJAX call to add_cart_process.php
+          // Get selected date and time
+          var selectedDate = $('#selected_date').val();
+          var selectedTime = $('input[name="selected_time"]:checked').val();
+
+          // Validate if date and time are selected
+          if (!selectedDate) {
+            Toastify({
+              text: "Please select a date before adding to cart.",
+              duration: 3000,
+              close: true,
+              gravity: "top",
+              position: "right",
+              backgroundColor: "#FF0000", // Red background for error
+            }).showToast();
+            return;
+          }
+
+          if (!selectedTime) {
+            Toastify({
+              text: "Please select a time before adding to cart.",
+              duration: 3000,
+              close: true,
+              gravity: "top",
+              position: "right",
+              backgroundColor: "#FF0000", // Red background for error
+            }).showToast();
+            return;
+          }
+
+          // Proceed with AJAX call to add_cart_process.php
           $.ajax({
             url: '/online_ordering/controllers/users/add_cart_booking_process.php',
             method: 'POST',
             data: {
               product_id: productId,
-              cart_quantity: quantity
+              cart_quantity: quantity,
+              selected_date: selectedDate,
+              selected_time: selectedTime
             },
             success: function(response) {
               try {
                 var res = JSON.parse(response);
                 if (res.success) {
-                  // Show success message using Toastify
                   Toastify({
                     text: res.message,
                     duration: 3000,
@@ -573,12 +696,23 @@ if (isset($_GET['product_id'])) {
                     position: "right",
                     backgroundColor: "#4CAF50", // Green background for success
                   }).showToast();
+
+
+                  $('input[name="selected_time"]').prop('checked', false);
+                  $('#calendar').val(''); // Clear the input field
+                  $('#selected_date').val(''); // Clear hidden input field
+                  let calendarInstance = document.querySelector("#calendar")._flatpickr;
+                  if (calendarInstance) {
+                    calendarInstance.setDate(null); // Clears the selected date without resetting Flatpickr
+                  }
+
+                  // fetchBookedDates();
+
+
                 } else {
                   if (res.message === 'You are not logged in.') {
-                    // Show the modal instead of Toast
                     $('#loginModal').modal('show');
                   } else {
-                    // Show error message using Toastify
                     Toastify({
                       text: res.message,
                       duration: 3000,
@@ -615,6 +749,7 @@ if (isset($_GET['product_id'])) {
           });
         });
       });
+
 
       function changeMainImage(imagePath) {
         document.getElementById('mainProductImage').src = imagePath;

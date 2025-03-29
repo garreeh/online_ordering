@@ -11,7 +11,7 @@
  Target Server Version : 100432 (10.4.32-MariaDB)
  File Encoding         : 65001
 
- Date: 09/02/2025 15:51:06
+ Date: 29/03/2025 10:40:40
 */
 
 SET NAMES utf8mb4;
@@ -61,13 +61,19 @@ CREATE TABLE `cart`  (
   `updated_at` timestamp NULL DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
   `delivery_rider_id` int NULL DEFAULT NULL,
   `cart_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `date` date NULL DEFAULT NULL,
+  `time` time NULL DEFAULT NULL,
   PRIMARY KEY (`cart_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 143 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 184 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of cart
 -- ----------------------------
-INSERT INTO `cart` VALUES (142, 40, 26, 1, 'Out For Delivery', NULL, 1.00, 'Cash On Delivery', NULL, '5145A7', '2025-02-09 15:41:57', '2025-02-09 15:47:57', 39, 'Booking');
+INSERT INTO `cart` VALUES (174, 40, 26, 1, 'Processing', NULL, 1.00, NULL, NULL, NULL, '2025-03-15 12:43:59', '2025-03-15 12:45:00', NULL, 'Booking', '2025-03-15', '08:00:00');
+INSERT INTO `cart` VALUES (175, 40, 26, 1, 'Processing', NULL, 1.00, NULL, NULL, NULL, '2025-03-15 12:44:21', '2025-03-15 12:45:00', NULL, 'Booking', '2025-03-15', '12:00:00');
+INSERT INTO `cart` VALUES (181, 40, 26, 1, 'Cart', NULL, 1.00, NULL, NULL, NULL, '2025-03-15 12:47:58', '2025-03-15 12:47:58', NULL, 'Booking', '2025-03-16', '08:00:00');
+INSERT INTO `cart` VALUES (182, 40, 26, 1, 'Cart', NULL, 1.00, NULL, NULL, NULL, '2025-03-15 12:49:51', '2025-03-15 12:49:51', NULL, 'Booking', '2025-03-17', '08:00:00');
+INSERT INTO `cart` VALUES (183, 40, 26, 1, 'Cart', NULL, 1.00, NULL, NULL, NULL, '2025-03-15 12:49:56', '2025-03-15 12:49:56', NULL, 'Booking', '2025-03-17', '12:00:00');
 
 -- ----------------------------
 -- Table structure for category
@@ -133,7 +139,7 @@ CREATE TABLE `ingredients_product`  (
 -- ----------------------------
 -- Records of ingredients_product
 -- ----------------------------
-INSERT INTO `ingredients_product` VALUES (17, 26, 1, 'Dinuguan', 'Dinuguan', '../../uploads/Dinuguan.jpg', 'Dinuguan', 0, 100.00, 109.00, '2024-09-05 14:39:33', '2025-02-06 13:56:13');
+INSERT INTO `ingredients_product` VALUES (17, 26, 1, 'Onion', 'Dinuguan', '../../uploads/Dinuguan.jpg', 'Onion', 1, 100.00, 109.00, '2024-09-05 14:39:33', '2025-02-23 17:36:39');
 INSERT INTO `ingredients_product` VALUES (18, 27, 2, 'Tapa with Rice', 'Tapa with Rice', '../../uploads/Idontknow.jpg', 'Tapa with Rice', 111, 99.00, 109.00, '2024-09-05 14:40:14', '2025-02-06 13:44:49');
 INSERT INTO `ingredients_product` VALUES (22, 26, 5, 'Palabok BILAO', 'Palabok BILAO', '../../uploads/main6.jpg', 'Palabok BILAO', 0, 177.00, 188.00, '2024-11-08 22:11:48', '2024-11-08 22:11:48');
 INSERT INTO `ingredients_product` VALUES (26, 26, 2, 'qqqq', NULL, NULL, 'q', 0, NULL, NULL, '2025-02-06 12:20:33', '2025-02-06 12:20:33');
@@ -246,10 +252,10 @@ CREATE TABLE `product`  (
 -- ----------------------------
 -- Records of product
 -- ----------------------------
-INSERT INTO `product` VALUES (17, 28, 2, 'Dinuguan', 'Q', '../../uploads/Dinuguan.jpg', 'Dinuguan', 9, 0.00, 0.00, '2024-09-05 14:39:33', '2025-02-09 13:22:58', NULL);
-INSERT INTO `product` VALUES (18, 27, 2, 'Tapa with Rice', 'Tapa with Rice', '../../uploads/Idontknow.jpg', 'Tapa with Rice', 111, 99.00, 109.00, '2024-09-05 14:40:14', '2025-02-06 13:44:42', NULL);
-INSERT INTO `product` VALUES (22, 26, 2, 'Palabok BILAO', 'Palabok BILAO', '../../uploads/main6.jpg', 'Palabok BILAO', 0, 177.00, 188.00, '2024-11-08 22:11:48', '2025-02-09 13:23:07', NULL);
-INSERT INTO `product` VALUES (24, NULL, NULL, '123', '1', '', 'qwe', NULL, 11.00, 11.00, '2025-02-06 12:10:16', '2025-02-09 13:45:49', 'Booking');
+INSERT INTO `product` VALUES (17, 28, 2, 'Dinuguan', 'Q', '../../uploads/Dinuguan.jpg', 'Dinuguan', 12, 1.00, 0.00, '2024-09-05 14:39:33', '2025-02-23 17:27:56', NULL);
+INSERT INTO `product` VALUES (18, 27, 2, 'Tapa with Rice', 'Tapa with Rice', '../../uploads/Idontknow.jpg', 'Tapa with Rice', 114, 99.00, 109.00, '2024-09-05 14:40:14', '2025-02-23 17:18:37', NULL);
+INSERT INTO `product` VALUES (22, 26, 2, 'Palabok BILAO', 'Palabok BILAO', '../../uploads/main6.jpg', 'Palabok BILAO', 3, 177.00, 188.00, '2024-11-08 22:11:48', '2025-02-23 17:18:38', NULL);
+INSERT INTO `product` VALUES (24, NULL, NULL, '123', 'Gusto ko to\r\n-1\r\n-2\r\n-3\r\n-4\r\n-5\r\n', '', 'qwe', NULL, 11.00, 11.00, '2025-02-06 12:10:16', '2025-03-05 12:03:58', 'Booking');
 INSERT INTO `product` VALUES (26, NULL, NULL, 'TestBooking', '1', '../../uploads/z.jpg', 'TestBooking', 11, NULL, 1.00, '2025-02-09 13:39:54', '2025-02-09 15:41:05', 'Booking');
 
 -- ----------------------------
@@ -263,7 +269,7 @@ CREATE TABLE `product_image`  (
   `created_at` timestamp NULL DEFAULT current_timestamp,
   `updated_at` timestamp NULL DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`product_image_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 33 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of product_image
@@ -272,6 +278,7 @@ INSERT INTO `product_image` VALUES (29, 27, '../../uploads/b.jpg', '2025-02-09 1
 INSERT INTO `product_image` VALUES (30, 27, '../../uploads/v.jpg', '2025-02-09 13:54:10', '2025-02-09 13:54:10');
 INSERT INTO `product_image` VALUES (31, 24, '../../uploads/c.jpg', '2025-02-09 13:54:19', '2025-02-09 13:54:19');
 INSERT INTO `product_image` VALUES (32, 26, '../../uploads/x.jpg', '2025-02-09 13:54:25', '2025-02-09 13:54:25');
+INSERT INTO `product_image` VALUES (33, 26, '../../uploads/c.jpg', '2025-02-16 19:10:39', '2025-02-16 19:10:39');
 
 -- ----------------------------
 -- Table structure for purchase_order
@@ -286,7 +293,7 @@ CREATE TABLE `purchase_order`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp,
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`purchase_order_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of purchase_order
@@ -302,6 +309,7 @@ INSERT INTO `purchase_order` VALUES (15, 12314, 26, 17, 10, '2024-09-18 17:41:02
 INSERT INTO `purchase_order` VALUES (16, 23, 26, 19, 23, '2024-10-12 11:10:32', '2024-10-12 11:10:32');
 INSERT INTO `purchase_order` VALUES (17, 123123, 26, 17, 20, '2024-11-08 22:43:23', '2024-11-08 22:43:23');
 INSERT INTO `purchase_order` VALUES (18, 1212, 28, 17, 0, '2025-02-06 13:50:02', '2025-02-06 13:52:21');
+INSERT INTO `purchase_order` VALUES (19, 123123, 26, 17, 10, '2025-02-23 17:34:30', '2025-02-23 17:34:30');
 
 -- ----------------------------
 -- Table structure for supplier
@@ -356,7 +364,7 @@ CREATE TABLE `users`  (
 INSERT INTO `users` VALUES (1, 'Garry Gajultos', 'garry', '123123@gmail.com', 123123123, '$2y$10$WGi/uM4qKM.wH5BmtrqVHu23pmWYbfIIsRH0SDYSq42hYJWIhTyXS', '123123', '', '2024-04-07 16:08:00', '2024-11-01 11:10:14', 1, '1', 'Active', '1');
 INSERT INTO `users` VALUES (2, 'Test Account', 'Ron', '123123@gmail.comm', NULL, '$2y$10$Wtj4pYEWKXHYe4DUwLPTveZdPJUNrXwfkfeZRWXO4bnmbNd9NOA9y', 'test1005', NULL, '2024-05-13 18:18:17', '2024-11-08 22:57:38', 1, '1', 'Active', 'qweqwe');
 INSERT INTO `users` VALUES (39, 'Garrrrrr', 'test', 'gajultos.garrydev@gmail.com', 1, '$2y$10$XX19Ar6P.ig1stK9lZ0N2eP89FY5FughUlK0xhgDfLj1P60tMMPva', '1', NULL, '2024-09-13 23:58:14', '2025-02-09 15:47:49', 4, '1', 'Active', '123123123');
-INSERT INTO `users` VALUES (40, 'LCC WQE', 'testacc', 'Test@gmail.com', 123123, '$2y$10$9KeTSQ5PmtdiiqdqmsiUSuQs7OujRChozbhCai948a1DGo8Xq.mSe', 'test1005', NULL, '2024-09-13 23:58:14', '2024-11-08 22:55:25', 0, '0', 'Active', '123123123');
+INSERT INTO `users` VALUES (40, 'LCC WQE', 'testacc', 'Test@gmail.com', 123123, '$2y$10$WGi/uM4qKM.wH5BmtrqVHu23pmWYbfIIsRH0SDYSq42hYJWIhTyXS', '123123', NULL, '2024-09-13 23:58:14', '2025-03-15 11:17:26', 0, '0', 'Active', '123123123');
 
 -- ----------------------------
 -- Table structure for usertype
