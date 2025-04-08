@@ -78,7 +78,7 @@ if (session_status() == PHP_SESSION_NONE) {
                         <th>Payment Method</th>
                         <th>Proof of Payment</th>
 
-                        <th>Date Created</th>
+                        <th>Time & Date</th>
                         <th>Manage</th>
 
                       </tr>

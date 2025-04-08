@@ -75,8 +75,10 @@ if (session_status() == PHP_SESSION_NONE) {
                         <th>Email</th>
                         <th>Password</th>
                         <th>Account Status</th>
-                        <th>Date Created</th>
-                        <th>Date Updated</th>
+
+                        <th>Address</th>
+                        <th>Contact #</th>
+
                       </tr>
                     </thead>
                   </table>

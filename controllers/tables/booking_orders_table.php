@@ -74,13 +74,28 @@ $columns = array(
   ),
 
   array(
-    'db' => 'cart.updated_at',
+    'db' => 'time',
     'dt' => 7,
-    'field' => 'updated_at',
-    'formatter' => function ($lab5, $row) {
-      return $row['updated_at'];
+    'field' => 'time',
+    'formatter' => function ($d, $row) {
+      $time = DateTime::createFromFormat('H:i:s', $row['time']);
+      $date = DateTime::createFromFormat('Y-m-d', $row['date']);
+
+      $formattedDate = $date ? $date->format('M j, Y') : $row['date'];
+
+      if ($row['time'] === '08:00:00') {
+        return '8:00am - 12:00pm' . ' | ' . $formattedDate;
+      } elseif ($row['time'] === '12:00:00') {
+        return '12:00pm - 5:00pm' . ' | ' . $formattedDate;
+      } else {
+        $formattedTime = $time ? $time->format('g:iA') : $row['time'];
+        return $formattedTime . ' - ' . $formattedDate;
+      }
     }
   ),
+
+
+
 
   array(
     'db' => 'cart_id',
@@ -97,6 +112,16 @@ $columns = array(
 
           </div>
       </div>';
+    }
+  ),
+
+  array(
+    'db' => 'date',
+    'dt' => 9,
+    'field' => 'date',
+    'formatter' => function ($d, $row) {
+      $date = DateTime::createFromFormat('Y-m-d', $row['date']);
+      return $date ? $date->format('F j, Y') : $row['date'];
     }
   ),
 );

@@ -439,10 +439,11 @@ if (isset($_GET['product_id'])) {
                           <h4 style="margin-bottom: 10px;">Select Time:</h4>
                           <div class="time-selection" style="display: flex; gap: 20px; align-items: center;">
                             <label>
-                              <input type="radio" name="selected_time" value="08:00 AM"> 8:00 AM
+                              <input type="radio" name="selected_time" value="08:00 AM"> 8:00 AM - 12:00 PM
                             </label>
+                            |
                             <label>
-                              <input type="radio" name="selected_time" value="12:00 PM"> 12:00 PM
+                              <input type="radio" name="selected_time" value="12:00 PM"> 12:00 PM - 5:00 PM
                             </label>
                           </div>
 

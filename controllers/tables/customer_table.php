@@ -69,22 +69,20 @@ $columns = array(
         }
     ),
     array(
-        'db' => 'created_at',
+        'db' => 'user_address',
         'dt' => 6,
-        'field' => 'created_at',
-        'formatter' => function ($lab6, $row) {
-            // Format date to 'Y-m-d' (e.g., 2024-09-03)
-            return date('Y-m-d', strtotime($row['created_at']));
+        'field' => 'user_address',
+        'formatter' => function ($lab5, $row) {
+            return $row['user_address'];
         }
     ),
 
     array(
-        'db' => 'updated_at',
+        'db' => 'user_contact',
         'dt' => 7,
-        'field' => 'updated_at',
-        'formatter' => function ($lab7, $row) {
-            // Format date to 'Y-m-d' (e.g., 2024-09-03)
-            return date('Y-m-d', strtotime($row['updated_at']));
+        'field' => 'user_contact',
+        'formatter' => function ($lab5, $row) {
+            return $row['user_contact'];
         }
     ),
 
