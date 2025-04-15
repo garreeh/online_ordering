@@ -15,11 +15,11 @@ $columns = array(
 	),
 
 	array(
-		'db' => 'reference_no',
+		'db' => 'product_name',
 		'dt' => 1,
-		'field' => 'reference_no',
+		'field' => 'product_name',
 		'formatter' => function ($lab1, $row) {
-			return $row['reference_no'];
+			return $row['product_name'];
 		}
 	),
 
@@ -110,12 +110,12 @@ require('../../assets/datatables/ssp.class.php');
 
 
 // THIS IS A SAMPLE ONLY
-$where = "cart_status = 'Processing' AND cart_type IS NULL";
+$where = "cart_status = 'Processing' AND (cart_type IS NULL OR cart_type = '')";
 
-// Fetch and encode ONLY WHERE
 // echo json_encode(SSP::simple($_GET, $sql_details, $table, $primaryKey, $columns, $where));
 
-$joinQuery = "FROM $table LEFT JOIN users ON $table.user_id = users.user_id";
+$joinQuery = "FROM $table LEFT JOIN users ON $table.user_id = users.user_id
+              LEFT JOIN product ON $table.product_id = product.product_id";
 
 // Fetch and encode JOIN AND WHERE
 echo json_encode(SSP::simple($_GET, $sql_details, $table, $primaryKey, $columns, $joinQuery, $where));

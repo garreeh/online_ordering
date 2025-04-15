@@ -71,7 +71,7 @@ if (session_status() == PHP_SESSION_NONE) {
                     <thead>
                       <tr>
                         <th>ID</th>
-                        <th>Ref No.</th>
+                        <th>Product Name</th>
                         <th>Customer Name</th>
                         <th>Status</th>
                         <th>Total Payment</th>
