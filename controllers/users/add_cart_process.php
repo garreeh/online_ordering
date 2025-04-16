@@ -1,5 +1,6 @@
 <?php
 session_start();
+date_default_timezone_set('Asia/Manila');
 
 if (!isset($_SESSION['user_id'])) {
     // User not logged in
@@ -49,7 +50,8 @@ if (isset($_POST['product_id']) && isset($_POST['cart_quantity'])) {
     } else {
         // Product is not in the cart, add it
         $total_price = $cart_quantity * $product_price;
-        $insert_query = "INSERT INTO cart (user_id, product_id, cart_quantity, total_price, cart_status) VALUES ('$user_id', '$product_id', $cart_quantity, '$total_price', 'Cart')";
+        $now = date('Y-m-d H:i:s');
+        $insert_query = "INSERT INTO cart (user_id, product_id, cart_quantity, total_price, cart_status, created_at) VALUES ('$user_id', '$product_id', $cart_quantity, '$total_price', 'Cart', '$now')";
 
         if ($conn->query($insert_query)) {
             $response = array('success' => true, 'message' => 'Product added to cart successfully!');

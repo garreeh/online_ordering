@@ -60,16 +60,11 @@ $columns = array(
   ),
 
   array(
-    'db' => 'proof_of_payment',
+    'db' => 'cart_type',
     'dt' => 6,
-    'field' => 'proof_of_payment',
+    'field' => 'cart_type',
     'formatter' => function ($lab4, $row) {
-      // Check if the value is null or empty
-      if (empty($lab4)) {
-        return 'COD';
-      } else {
-        return '<a class="ProofData" href="#"> View Image</a>';
-      }
+      return !empty($row['cart_type']) ? $row['cart_type'] : 'Single Order';
     }
   ),
 

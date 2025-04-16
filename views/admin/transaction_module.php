@@ -76,7 +76,7 @@ if (session_status() == PHP_SESSION_NONE) {
                         <th>Status</th>
                         <th>Total Payment</th>
                         <th>Payment Method</th>
-                        <th>Proof of Payment</th>
+                        <th>Order Type</th>
                         <th>Date Created</th>
                       </tr>
                     </thead>

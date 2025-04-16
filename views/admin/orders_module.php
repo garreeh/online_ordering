@@ -76,7 +76,6 @@ if (session_status() == PHP_SESSION_NONE) {
                         <th>Status</th>
                         <th>Total Payment</th>
                         <th>Payment Method</th>
-                        <th>Proof of Payment</th>
 
                         <th>Date Created</th>
                         <th>Manage</th>
@@ -178,7 +177,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
   $(document).ready(function() {
     // Function to handle click event on datatable rows
-    $('#order_table').on('click', 'tr td:nth-child(9) .fetchDataDelivery', function() {
+    $('#order_table').on('click', 'tr td:nth-child(8) .fetchDataDelivery', function() {
       var cart_id = $(this).closest('tr').find('td').first().text(); // Get the cart_id from the clicked row
 
       $.ajax({

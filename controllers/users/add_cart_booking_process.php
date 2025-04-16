@@ -41,10 +41,11 @@ if (isset($_POST['product_id']) && isset($_POST['cart_quantity'])) {
     exit();
   }
 
+  $now = date('Y-m-d H:i:s');
   // Insert new cart entry
   $total_price = $cart_quantity * $product_price;
-  $insert_query = "INSERT INTO cart (user_id, product_id, cart_quantity, total_price, cart_status, cart_type, `time`, `date`) 
-                   VALUES ('$user_id', '$product_id', $cart_quantity, '$total_price', 'Cart', 'Booking', '$selected_time', '$selected_date')";
+  $insert_query = "INSERT INTO cart (user_id, product_id, cart_quantity, total_price, cart_status, cart_type, `time`, `date`, created_at) 
+                   VALUES ('$user_id', '$product_id', $cart_quantity, '$total_price', 'Cart', 'Booking', '$selected_time', '$selected_date', '$now')";
 
   if ($conn->query($insert_query)) {
     $response = array('success' => true, 'message' => 'Product added to cart successfully!');

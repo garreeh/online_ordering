@@ -60,22 +60,8 @@ $columns = array(
 	),
 
 	array(
-		'db' => 'proof_of_payment',
-		'dt' => 6,
-		'field' => 'proof_of_payment',
-		'formatter' => function ($lab4, $row) {
-			// Check if the value is null or empty
-			if (empty($lab4)) {
-				return 'COD';
-			} else {
-				return '<a class="ProofData" href="#"> View Image</a>';
-			}
-		}
-	),
-
-	array(
 		'db' => 'cart.updated_at',
-		'dt' => 7,
+		'dt' => 6,
 		'field' => 'updated_at',
 		'formatter' => function ($lab5, $row) {
 			return $row['updated_at'];
@@ -84,7 +70,7 @@ $columns = array(
 
 	array(
 		'db' => 'cart_id',
-		'dt' => 8,
+		'dt' => 7,
 		'field' => 'cart_id',
 		'formatter' => function ($lab5, $row) {
 			return '

@@ -74,11 +74,11 @@ $columns = array(
 	),
 
 	array(
-		'db' => 'cart.updated_at',
+		'db' => 'cart.created_at',
 		'dt' => 7,
-		'field' => 'updated_at',
+		'field' => 'created_at',
 		'formatter' => function ($lab5, $row) {
-			return $row['updated_at'];
+			return $row['created_at'];
 		}
 	),
 
