@@ -1,4 +1,6 @@
 <?php
+include '../../connections/connections.php';
+
 // Handle preflight request
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
   header("Access-Control-Allow-Origin: *");
@@ -35,6 +37,24 @@ $amount = $input['amount'];
 $user_id = $_SESSION['user_id'];
 $paymentMethod = "GCash";
 $referenceNo = strtoupper(bin2hex(random_bytes(3)));
+
+if ($user_id) {
+  // ✅ Update the cart with the reference number, payment method, and updated total price
+  $sql = "UPDATE cart 
+          SET reference_no = '$referenceId', 
+              payment_method = 'GCash', 
+              payment_status = 'Unpaid'
+          WHERE user_id = '$user_id' AND cart_status = 'Cart'";
+
+  if (!mysqli_query($conn, $sql)) {
+    echo json_encode(['success' => false, 'message' => 'Failed to update cart: ' . mysqli_error($conn)]);
+    exit;
+  }
+} else {
+  echo json_encode(['success' => false, 'message' => 'User not authenticated.']);
+  exit;
+}
+
 
 $data = [
   "reference_id" => $referenceId,

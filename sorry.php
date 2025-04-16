@@ -28,8 +28,8 @@
               <div class="col-lg-12">
                 <div class="p-5">
                   <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">GCash Payment Successful!</h1>
-                    <p class="mb-4">Thank you for payment.</p>
+                    <h1 class="h4 text-gray-900 mb-4">GCash Payment Failed!</h1>
+                    <p class="mb-4">Please Try Again Later.</p>
                   </div>
                   <a href="./index.php" class="btn btn-primary btn-user btn-block">
                     Back to Home Page
@@ -49,36 +49,6 @@
   <script src="assets/admin/js/sb-admin-2.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
-  <!-- <script>
-    $(document).ready(function() {
-      let referenceId = localStorage.getItem("xendit_reference_id");
-
-      if (referenceId) {
-        $.ajax({
-          type: "POST",
-          url: "/online_ordering/controllers/users/xendit_check_status.php",
-          data: JSON.stringify({
-            reference_id: referenceId
-          }),
-          contentType: "application/json",
-          success: function(response) {
-            response = JSON.parse(response);
-
-            if (response.success) {
-              console.log("Cart updated successfully.");
-              localStorage.removeItem("xendit_reference_id"); // Remove after processing
-              window.location.href = "/online_ordering/thankyou_payment.php"; // Redirect to thank you page
-            } else {
-              console.error("Failed to process payment:", response.message);
-            }
-          },
-          error: function(xhr, status, error) {
-            console.error("Error:", error);
-          }
-        });
-      }
-    });
-  </script> -->
 </body>
 
 </html>
