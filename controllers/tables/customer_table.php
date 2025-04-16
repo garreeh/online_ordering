@@ -40,24 +40,24 @@ $columns = array(
         }
     ),
 
-    array(
-        'db' => 'user_confirm_password',
-        'dt' => 4,
-        'field' => 'user_confirm_password',
-        'formatter' => function ($lab4, $row) {
-            // $password = $row['user_confirm_password'];
-            // $color = '#FFCCCB'; // Light Red
-            // $width = '70px'; // Adjust the value as needed
-            // $height = '30px'; // Adjust the value as needed
-            // $border_radius = '10px'; // Adjust the value as needed
-            // return '<span style="display: inline-block; background-color: ' . $color . '; width: ' . $width . '; height: ' . $height . '; border-radius: ' . $border_radius . '; text-align: center; line-height: ' . $height . ';">' . $password . '</span>';
+    // array(
+    //     'db' => 'user_confirm_password',
+    //     'dt' => 4,
+    //     'field' => 'user_confirm_password',
+    //     'formatter' => function ($lab4, $row) {
+    //         // $password = $row['user_confirm_password'];
+    //         // $color = '#FFCCCB'; // Light Red
+    //         // $width = '70px'; // Adjust the value as needed
+    //         // $height = '30px'; // Adjust the value as needed
+    //         // $border_radius = '10px'; // Adjust the value as needed
+    //         // return '<span style="display: inline-block; background-color: ' . $color . '; width: ' . $width . '; height: ' . $height . '; border-radius: ' . $border_radius . '; text-align: center; line-height: ' . $height . ';">' . $password . '</span>';
 
-            return '<a class="fetchDataPassword" href="#"> Click to View</a> ';
-        }
-    ),
+    //         return '<a class="fetchDataPassword" href="#"> Click to View</a> ';
+    //     }
+    // ),
     array(
         'db' => 'account_status',
-        'dt' => 5,
+        'dt' => 4,
         'field' => 'account_status',
         'formatter' => function ($lab5, $row) {
             $account_status = $row['account_status'];
@@ -70,7 +70,7 @@ $columns = array(
     ),
     array(
         'db' => 'user_address',
-        'dt' => 6,
+        'dt' => 5,
         'field' => 'user_address',
         'formatter' => function ($lab5, $row) {
             return $row['user_address'];
@@ -79,7 +79,7 @@ $columns = array(
 
     array(
         'db' => 'user_contact',
-        'dt' => 7,
+        'dt' => 6,
         'field' => 'user_contact',
         'formatter' => function ($lab5, $row) {
             return $row['user_contact'];

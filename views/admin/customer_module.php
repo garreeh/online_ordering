@@ -73,7 +73,7 @@ if (session_status() == PHP_SESSION_NONE) {
                         <th>Fullname</th>
                         <th>Username</th>
                         <th>Email</th>
-                        <th>Password</th>
+                        <!-- <th>Password</th> -->
                         <th>Account Status</th>
 
                         <th>Address</th>

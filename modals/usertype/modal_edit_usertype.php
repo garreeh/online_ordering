@@ -39,6 +39,16 @@ if (isset($_POST['user_type_id'])) {
                 </div>
 
                 <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <label for="dashboard_module">Dashboard Module:</label>
+                    <select class="form-control" id="dashboard_module" name="dashboard_module">
+                      <option value="1" <?php echo $row['dashboard_module'] == 1 ? 'selected' : ''; ?>>Yes</option>
+                      <option value="0" <?php echo $row['dashboard_module'] == 0 ? 'selected' : ''; ?>>No</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-row">
                   <div class="form-group col-md-6">
                     <label for="orders_module">Orders Module:</label>
                     <select class="form-control" id="orders_module" name="orders_module">

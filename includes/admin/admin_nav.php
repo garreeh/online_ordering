@@ -63,11 +63,14 @@ if ($result) {
         <hr class="sidebar-divider my-0">
 
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item">
-          <a class="nav-link" href="/online_ordering/views/admin/dashboard.php">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span></a>
-        </li>
+        <?php if ($row['dashboard_module'] == 1): ?>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/online_ordering/views/admin/dashboard.php">
+              <i class="fas fa-fw fa-tachometer-alt"></i>
+              <span>Dashboard</span></a>
+          </li>
+        <?php endif; ?>
 
         <!-- Divider -->
         <hr class="sidebar-divider">

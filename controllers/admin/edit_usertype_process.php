@@ -14,6 +14,8 @@ if (isset($_POST['edit_user_type'])) {
   $transaction_module = $conn->real_escape_string($_POST['transaction_module']);
   $orders_module = $conn->real_escape_string($_POST['orders_module']);
   $deliveries_module = $conn->real_escape_string($_POST['deliveries_module']);
+  $dashboard_module = $conn->real_escape_string($_POST['dashboard_module']);
+
 
   // Construct SQL query for UPDATE
   $sql = "UPDATE `usertype` 
@@ -23,10 +25,11 @@ if (isset($_POST['edit_user_type'])) {
             user_module = '$user_module',
             reports_module = '$reports_module',
             po_module = '$po_module',
-
             transaction_module = '$transaction_module',
             orders_module = '$orders_module',
-            deliveries_module = '$deliveries_module'
+            deliveries_module = '$deliveries_module',
+            dashboard_module = '$dashboard_module'
+
           WHERE user_type_id = '$user_type_id'";
 
   // Execute SQL query

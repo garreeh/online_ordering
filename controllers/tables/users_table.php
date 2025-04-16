@@ -29,22 +29,22 @@ $columns = array(
             return $row['user_email'];
         }
     ),
-    array(
-        'db' => 'user_confirm_password',
-        'dt' => 3,
-        'field' => 'user_confirm_password',
-        'formatter' => function ($lab4, $row) {
-            $password = $row['user_confirm_password'];
-            $color = '#FFCCCB'; // Light Red
-            $width = '70px'; // Adjust the value as needed
-            $height = '30px'; // Adjust the value as needed
-            $border_radius = '10px'; // Adjust the value as needed
-            return '<span style="display: inline-block; background-color: ' . $color . '; width: ' . $width . '; height: ' . $height . '; border-radius: ' . $border_radius . '; text-align: center; line-height: ' . $height . ';">' . $password . '</span>';
-        }
-    ),
+    // array(
+    //     'db' => 'user_confirm_password',
+    //     'dt' => 3,
+    //     'field' => 'user_confirm_password',
+    //     'formatter' => function ($lab4, $row) {
+    //         $password = $row['user_confirm_password'];
+    //         $color = '#FFCCCB'; // Light Red
+    //         $width = '70px'; // Adjust the value as needed
+    //         $height = '30px'; // Adjust the value as needed
+    //         $border_radius = '10px'; // Adjust the value as needed
+    //         return '<span style="display: inline-block; background-color: ' . $color . '; width: ' . $width . '; height: ' . $height . '; border-radius: ' . $border_radius . '; text-align: center; line-height: ' . $height . ';">' . $password . '</span>';
+    //     }
+    // ),
     array(
         'db' => 'account_status',
-        'dt' => 4,
+        'dt' => 3,
         'field' => 'account_status',
         'formatter' => function ($lab5, $row) {
             $account_status = $row['account_status'];
@@ -55,29 +55,29 @@ $columns = array(
             return '<span style="display: inline-block; background-color: ' . $color . '; width: ' . $width . '; height: ' . $height . '; border-radius: ' . $border_radius . '; text-align: center; line-height: ' . $height . ';">' . $account_status . '</span>';
         }
     ),
-    array(
-        'db' => 'created_at',
-        'dt' => 5,
-        'field' => 'created_at',
-        'formatter' => function ($lab5, $row) {
-            // Format date to 'Y-m-d' (e.g., 2024-09-03)
-            return date('Y-m-d', strtotime($row['created_at']));
-        }
-    ),
+    // array(
+    //     'db' => 'created_at',
+    //     'dt' => 4,
+    //     'field' => 'created_at',
+    //     'formatter' => function ($lab5, $row) {
+    //         // Format date to 'Y-m-d' (e.g., 2024-09-03)
+    //         return date('Y-m-d', strtotime($row['created_at']));
+    //     }
+    // ),
 
-    array(
-        'db' => 'updated_at',
-        'dt' => 6,
-        'field' => 'updated_at',
-        'formatter' => function ($lab5, $row) {
-            // Format date to 'Y-m-d' (e.g., 2024-09-03)
-            return date('Y-m-d', strtotime($row['updated_at']));
-        }
-    ),
+    // array(
+    //     'db' => 'updated_at',
+    //     'dt' => 5,
+    //     'field' => 'updated_at',
+    //     'formatter' => function ($lab5, $row) {
+    //         // Format date to 'Y-m-d' (e.g., 2024-09-03)
+    //         return date('Y-m-d', strtotime($row['updated_at']));
+    //     }
+    // ),
 
     array(
         'db' => 'user_id',
-        'dt' => 7,
+        'dt' => 4,
         'field' => 'user_id',
         'formatter' => function ($lab6, $row) {
             return '

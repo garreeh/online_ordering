@@ -3,12 +3,21 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-// Check if the user is logged in and an admin
-if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === "1") {
-    // If the user is an admin, redirect them to the admin dashboard
+if (
+    isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === "1" &&
+    isset($_SESSION['user_type_id']) && $_SESSION['user_type_id'] == 1
+) {
+    // Admin and user_type_id 1 → Go to admin dashboard
     header("Location: /online_ordering/views/admin/dashboard.php");
     exit();
+} elseif (
+    isset($_SESSION['user_type_id']) && $_SESSION['user_type_id'] == 4
+) {
+    // user_type_id 4 → Go to deliveries module
+    header("Location: /online_ordering/views/admin/deliveries_module.php");
+    exit();
 }
+
 
 
 ?>

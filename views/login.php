@@ -193,8 +193,10 @@ if (isset($_SESSION['user_id'])) {
 				console.log(response);
 				if (response.success) {
 					// Check if the user is an admin
-					if (response.is_admin === "1") {
+					if (response.is_admin === "1" && response.user_type_id == 1) {
 						window.location.href = "/online_ordering/views/admin/dashboard.php"; // Redirect to admin page
+					} else if (response.user_type_id == 4) {
+						window.location.href = "/online_ordering/views/admin/deliveries_module.php"; // Redirect to deliveries module page
 					} else {
 						window.location.href = "/online_ordering/index.php"; // Redirect to user page
 					}
