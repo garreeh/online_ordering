@@ -127,7 +127,7 @@ if (session_status() == PHP_SESSION_NONE) {
     integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
 
   <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
       $('select').selectize({
         sortField: 'text'
       });
@@ -142,13 +142,13 @@ if (session_status() == PHP_SESSION_NONE) {
 </html>
 
 <script>
-  $('#sidebarToggle').click(function () {
+  $('#sidebarToggle').click(function() {
     $('#product_table').css('width', '100%');
     // console.log(table) //This is for testing only
   });
 
   //Table for Product
-  $(document).ready(function () {
+  $(document).ready(function() {
     var product_table = $('#product_table').DataTable({
       "pagingType": "numbers",
       "processing": true,
@@ -156,16 +156,16 @@ if (session_status() == PHP_SESSION_NONE) {
       "ajax": "./../../controllers/tables/product_table.php",
     });
 
-    window.reloadDataTable = function () {
+    window.reloadDataTable = function() {
       product_table.ajax.reload();
     };
 
   });
 
   //Column 3
-  $(document).ready(function () {
+  $(document).ready(function() {
     // Function to handle click event on datatable rows
-    $('#product_table').on('click', 'tr td:nth-child(4) .fetchDataProductImage', function () {
+    $('#product_table').on('click', 'tr td:nth-child(4) .fetchDataProductImage', function() {
       var product_id = $(this).closest('tr').find('td').first().text(); // Get the product_id from the clicked row
 
       $.ajax({
@@ -174,12 +174,12 @@ if (session_status() == PHP_SESSION_NONE) {
         data: {
           product_id: product_id
         },
-        success: function (response) {
+        success: function(response) {
           $('#modalContainerProduct').html(response);
           $('#editProductModal').modal('show');
           console.log("#editProductModal" + product_id);
         },
-        error: function (xhr, status, error) {
+        error: function(xhr, status, error) {
           console.error(xhr.responseText);
         }
       });
@@ -187,32 +187,88 @@ if (session_status() == PHP_SESSION_NONE) {
   });
 
   //Column 5
-  $(document).ready(function () {
-    // Function to handle click event on datatable rows
-    $('#product_table').on('click', 'tr td:nth-child(5) .fetchDataProduct', function () {
-      var product_id = $(this).closest('tr').find('td').first().text(); // Get the product_id from the clicked row
+  $(document).ready(function() {
+    // When a row's edit button is clicked
+    $('#product_table').on('click', 'tr td:nth-child(5) .fetchDataProduct', function() {
+      var product_id = $(this).closest('tr').find('td').first().text(); // Get the product ID
 
       $.ajax({
-        url: './../../modals/product/modal_edit_product.php', // Path to PHP script to fetch modal content
+        url: './../../modals/product/modal_edit_product.php', // Load modal content
         method: 'POST',
         data: {
           product_id: product_id
         },
-        success: function (response) {
+        success: function(response) {
           $('#modalContainerProduct').html(response);
           $('#editProductModal').modal('show');
-          console.log("#editProductModal" + product_id);
+          console.log("#editProductModal loaded for product ID:", product_id);
+
+          const unitPriceInputEdit = document.getElementById('product_unitprice_edit');
+          const sellingPriceInputEdit = document.getElementById('product_sellingprice_edit');
+          const markupInputEdit = document.getElementById('markup_percent_edit');
+          const saveEditButton = document.getElementById('saveProductButton');
+
+          const showWarningEdit = (show) => {
+            let warning = document.getElementById('priceWarningEdit');
+            if (!warning) {
+              warning = document.createElement('small');
+              warning.id = 'priceWarningEdit';
+              warning.style.color = 'red';
+              warning.style.display = 'none';
+              unitPriceInputEdit.parentNode.appendChild(warning);
+            }
+
+            warning.textContent = '⚠️ Unit price cannot be greater than selling price.';
+            warning.style.display = show ? 'block' : 'none';
+
+            unitPriceInputEdit.style.borderColor = show ? 'red' : '';
+            sellingPriceInputEdit.style.borderColor = show ? 'red' : '';
+
+            saveEditButton.style.display = show ? 'none' : 'inline-block';
+          };
+
+          const updateMarkupPercent = () => {
+            const unitPrice = parseFloat(unitPriceInputEdit.value);
+            const sellingPrice = parseFloat(sellingPriceInputEdit.value);
+
+            if (!isNaN(unitPrice) && !isNaN(sellingPrice) && unitPrice > 0) {
+              const markup = ((sellingPrice - unitPrice) / unitPrice) * 100;
+              markupInputEdit.value = markup;
+            } else {
+              markupInputEdit.value = '';
+            }
+          };
+
+          const validatePricesEdit = () => {
+            const unitPrice = parseFloat(unitPriceInputEdit.value);
+            const sellingPrice = parseFloat(sellingPriceInputEdit.value);
+
+            if (!isNaN(unitPrice) && !isNaN(sellingPrice)) {
+              showWarningEdit(unitPrice > sellingPrice);
+              updateMarkupPercent();
+            } else {
+              showWarningEdit(false);
+              markupInputEdit.value = '';
+            }
+          };
+
+          unitPriceInputEdit.addEventListener('input', validatePricesEdit);
+          sellingPriceInputEdit.addEventListener('input', validatePricesEdit);
+
+          // Trigger once for pre-filled values
+          validatePricesEdit();
         },
-        error: function (xhr, status, error) {
-          console.error(xhr.responseText);
+        error: function(xhr, status, error) {
+          console.error("Error loading modal:", xhr.responseText);
         }
       });
     });
   });
 
-  $(document).ready(function () {
+
+  $(document).ready(function() {
     // Function to handle click event on datatable rows
-    $('#product_table').on('click', 'tr td:nth-child(5) .fetchDataProductDelete', function () {
+    $('#product_table').on('click', 'tr td:nth-child(5) .fetchDataProductDelete', function() {
       var product_id = $(this).closest('tr').find('td').first().text(); // Get the product_id from the clicked row
 
       $.ajax({
@@ -221,12 +277,12 @@ if (session_status() == PHP_SESSION_NONE) {
         data: {
           product_id: product_id
         },
-        success: function (response) {
+        success: function(response) {
           $('#modalContainerProductDelete').html(response);
           $('#deleteProductModal').modal('show');
           console.log("#deleteProductModal" + product_id);
         },
-        error: function (xhr, status, error) {
+        error: function(xhr, status, error) {
           console.error(xhr.responseText);
         }
       });

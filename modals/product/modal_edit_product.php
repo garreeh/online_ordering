@@ -82,20 +82,25 @@ if (isset($_POST['product_id'])) {
                 </div>
 
                 <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <label for="product_description">Product Description:</label>
-                    <input type="text" class="form-control" id="product_description" name="product_description" placeholder="Enter Product Description" value="<?php echo $row['product_description']; ?>" required>
+                  <div class="form-group col-md-4">
+                    <label for="product_unitprice_edit">Product Unit Price:</label>
+                    <input type="number" class="form-control" id="product_unitprice_edit" name="product_unitprice" placeholder="Enter Product Unit Price" value="<?php echo $row['product_unitprice']; ?>" required>
                   </div>
-                  <div class="form-group col-md-6">
-                    <label for="product_unitprice">Product Unit Price:</label>
-                    <input type="number" class="form-control" id="product_unitprice" name="product_unitprice" placeholder="Enter Product Unit Price" value="<?php echo $row['product_unitprice']; ?>" required>
+                  <div class="form-group col-md-4">
+                    <label for="product_sellingprice_edit">Product Selling Price:</label>
+                    <input type="number" class="form-control" id="product_sellingprice_edit" name="product_sellingprice" placeholder="Enter Product Selling Price" value="<?php echo $row['product_sellingprice']; ?>" required>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="markup_percent_edit">Mark Up Percentage(%):</label>
+                    <input type="number" class="form-control" id="markup_percent_edit" name="markup_percent" value="<?php echo $row['markup_percent']; ?>" required readonly>
                   </div>
                 </div>
 
                 <div class="form-row">
+
                   <div class="form-group col-md-6">
-                    <label for="product_sellingprice">Product Selling Price:</label>
-                    <input type="number" class="form-control" id="product_sellingprice" name="product_sellingprice" placeholder="Enter Product Selling Price" value="<?php echo $row['product_sellingprice']; ?>" required>
+                    <label for="product_description">Product Description:</label>
+                    <input type="text" class="form-control" id="product_description" name="product_description" placeholder="Enter Product Description" value="<?php echo $row['product_description']; ?>" required>
                   </div>
                   <div class="form-group col-md-6">
                     <label for="product_image">Product Image:</label>
@@ -237,5 +242,49 @@ if (isset($_POST['product_id'])) {
 
 
     });
+  });
+</script>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('✅ Edit validation script loaded'); // <-- Test log
+    const unitPriceInputEdit = document.getElementById('product_unitprice_edit');
+    const sellingPriceInputEdit = document.getElementById('product_sellingprice_edit');
+    const saveEditButton = document.getElementById('saveEditButton'); // <-- make sure this is the submit button ID
+
+    const showWarningEdit = (show) => {
+      let warning = document.getElementById('priceWarningEdit');
+      if (!warning) {
+        warning = document.createElement('small');
+        warning.id = 'priceWarningEdit';
+        warning.style.color = 'red';
+        warning.style.display = 'none';
+        unitPriceInputEdit.parentNode.appendChild(warning);
+      }
+
+      warning.textContent = '⚠️ Unit price cannot be greater than selling price.';
+      warning.style.display = show ? 'block' : 'none';
+
+      unitPriceInputEdit.style.borderColor = show ? 'red' : '';
+      sellingPriceInputEdit.style.borderColor = show ? 'red' : '';
+
+      // Toggle save button
+      saveEditButton.style.display = show ? 'none' : 'inline-block';
+    };
+
+    function validatePricesEdit() {
+      const unitPrice = parseFloat(unitPriceInputEdit.value);
+      const sellingPrice = parseFloat(sellingPriceInputEdit.value);
+
+      if (!isNaN(unitPrice) && !isNaN(sellingPrice)) {
+        showWarningEdit(unitPrice > sellingPrice);
+      } else {
+        showWarningEdit(false);
+      }
+    }
+
+    unitPriceInputEdit.addEventListener('input', validatePricesEdit);
+    sellingPriceInputEdit.addEventListener('input', validatePricesEdit);
   });
 </script>

@@ -56,20 +56,26 @@ if ($result) {
           </div>
 
           <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="product_description">Product Description:</label>
-              <input type="text" class="form-control" id="product_description" name="product_description" placeholder="Enter Product Description" required>
-            </div>
-            <div class="form-group col-md-6">
-              <label for="product_unitprice">Product Unit Price:</label>
+            <div class="form-group col-md-4">
+              <label for="product_unitprice">Product Unit Price (Cost):</label>
               <input type="number" class="form-control" id="product_unitprice" name="product_unitprice" placeholder="Enter Product Unit Price" required>
+            </div>
+
+            <div class="form-group col-md-4">
+              <label for="product_sellingprice">Product Selling Price:</label>
+              <input type="number" class="form-control" id="product_sellingprice" name="product_sellingprice" placeholder="Enter Product Selling Price" required>
+            </div>
+
+            <div class="form-group col-md-4">
+              <label for="markup_percent">Mark up Percent (%):</label>
+              <input type="number" class="form-control" id="markup_percent" name="markup_percent" required readonly>
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="product_sellingprice">Product Selling Price:</label>
-              <input type="number" class="form-control" id="product_sellingprice" name="product_sellingprice" placeholder="Enter Product Selling Price" required>
+              <label for="product_description">Product Description:</label>
+              <input type="text" class="form-control" id="product_description" name="product_description" placeholder="Enter Product Description" required>
             </div>
             <div class="form-group col-md-6">
               <label for="product_image">Product Image:</label>
@@ -197,5 +203,55 @@ if ($result) {
       $('#supplier_id')[0].selectize.clear();
 
     });
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const unitPriceInput = document.getElementById('product_unitprice');
+    const sellingPriceInput = document.getElementById('product_sellingprice');
+    const markupInput = document.getElementById('markup_percent');
+    const addButton = document.getElementById('addProductButton');
+
+    const showWarning = (show) => {
+      let warning = document.getElementById('priceWarning');
+      if (!warning) {
+        warning = document.createElement('small');
+        warning.id = 'priceWarning';
+        warning.style.color = 'red';
+        warning.style.display = 'none';
+        unitPriceInput.parentNode.appendChild(warning);
+      }
+
+      warning.textContent = '⚠️ Unit price cannot be greater than selling price.';
+      warning.style.display = show ? 'block' : 'none';
+
+      unitPriceInput.style.borderColor = show ? 'red' : '';
+      sellingPriceInput.style.borderColor = show ? 'red' : '';
+
+      addButton.style.display = show ? 'none' : 'inline-block';
+    };
+
+    const validateAndComputeMarkup = () => {
+      const unitPrice = parseFloat(unitPriceInput.value);
+      const sellingPrice = parseFloat(sellingPriceInput.value);
+
+      if (!isNaN(unitPrice) && !isNaN(sellingPrice)) {
+        showWarning(unitPrice > sellingPrice);
+
+        if (unitPrice > 0 && sellingPrice >= unitPrice) {
+          const markup = ((sellingPrice - unitPrice) / unitPrice) * 100;
+          markupInput.value = markup;
+        } else {
+          markupInput.value = '';
+        }
+      } else {
+        showWarning(false);
+        markupInput.value = '';
+      }
+    };
+
+    unitPriceInput.addEventListener('input', validateAndComputeMarkup);
+    sellingPriceInput.addEventListener('input', validateAndComputeMarkup);
   });
 </script>
