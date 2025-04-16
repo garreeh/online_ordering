@@ -39,7 +39,7 @@ if ($resultProduct) {
               <input type="number" class="form-control" id="purchase_number" name="purchase_number" placeholder="Enter Purchase Number" required>
             </div>
             <div class="form-group col-md-6">
-              <label for="quantity">Quantity:</label>
+              <label for="quantity">Quantity (Per KG):</label>
               <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Enter Quantity" required>
             </div>
           </div>

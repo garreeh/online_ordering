@@ -80,14 +80,14 @@ if (session_status() == PHP_SESSION_NONE) {
 
 
 
-                  <table class="table custom-table table-hover" name="ingredients_ingredients_product_table"
+                  <table class="table custom-table table-hover" name="ingredients_product_table"
                     id="ingredients_product_table">
                     <thead>
                       <tr>
                         <th>ID</th>
                         <th>SKU</th>
                         <th>Name</th>
-                        <th>Stocks</th>
+                        <th>Stocks per KG</th>
                         <th>Manage</th>
                       </tr>
                     </thead>
@@ -130,7 +130,7 @@ if (session_status() == PHP_SESSION_NONE) {
     integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
 
   <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
       $('select').selectize({
         sortField: 'text'
       });
@@ -145,13 +145,13 @@ if (session_status() == PHP_SESSION_NONE) {
 </html>
 
 <script>
-  $('#sidebarToggle').click(function () {
+  $('#sidebarToggle').click(function() {
     $('#ingredients_product_table').css('width', '100%');
     // console.log(table) //This is for testing only
   });
 
   //Table for Product
-  $(document).ready(function () {
+  $(document).ready(function() {
     var ingredients_product_table = $('#ingredients_product_table').DataTable({
       "pagingType": "numbers",
       "processing": true,
@@ -159,16 +159,16 @@ if (session_status() == PHP_SESSION_NONE) {
       "ajax": "./../../controllers/tables/ingredients_product_table.php",
     });
 
-    window.reloadDataTable = function () {
+    window.reloadDataTable = function() {
       ingredients_product_table.ajax.reload();
     };
 
   });
 
   //Column 5
-  $(document).ready(function () {
+  $(document).ready(function() {
     // Function to handle click event on datatable rows
-    $('#ingredients_product_table').on('click', 'tr td:nth-child(5) .fetchDataProduct', function () {
+    $('#ingredients_product_table').on('click', 'tr td:nth-child(5) .fetchDataProduct', function() {
       var product_id = $(this).closest('tr').find('td').first().text(); // Get the product_id from the clicked row
 
       $.ajax({
@@ -177,21 +177,21 @@ if (session_status() == PHP_SESSION_NONE) {
         data: {
           product_id: product_id
         },
-        success: function (response) {
+        success: function(response) {
           $('#modalContainerProduct').html(response);
           $('#editProductModal').modal('show');
           console.log("#editProductModal" + product_id);
         },
-        error: function (xhr, status, error) {
+        error: function(xhr, status, error) {
           console.error(xhr.responseText);
         }
       });
     });
   });
 
-  $(document).ready(function () {
+  $(document).ready(function() {
     // Function to handle click event on datatable rows
-    $('#ingredients_product_table').on('click', 'tr td:nth-child(5) .fetchDataProductDelete', function () {
+    $('#ingredients_product_table').on('click', 'tr td:nth-child(5) .fetchDataProductDelete', function() {
       var product_id = $(this).closest('tr').find('td').first().text(); // Get the product_id from the clicked row
 
       $.ajax({
@@ -200,21 +200,21 @@ if (session_status() == PHP_SESSION_NONE) {
         data: {
           product_id: product_id
         },
-        success: function (response) {
+        success: function(response) {
           $('#modalContainerProductDelete').html(response);
           $('#deleteProductModal').modal('show');
           console.log("#deleteProductModal" + product_id);
         },
-        error: function (xhr, status, error) {
+        error: function(xhr, status, error) {
           console.error(xhr.responseText);
         }
       });
     });
   });
 
-  $(document).ready(function () {
+  $(document).ready(function() {
     // Function to handle click event on datatable rows
-    $('#ingredients_product_table').on('click', 'tr td:nth-child(5) .fetchDataProductManualWithdraw', function () {
+    $('#ingredients_product_table').on('click', 'tr td:nth-child(5) .fetchDataProductManualWithdraw', function() {
       var product_id = $(this).closest('tr').find('td').first().text(); // Get the product_id from the clicked row
 
       $.ajax({
@@ -223,12 +223,12 @@ if (session_status() == PHP_SESSION_NONE) {
         data: {
           product_id: product_id
         },
-        success: function (response) {
+        success: function(response) {
           $('#modalContainerProductWithdraw').html(response);
           $('#withdrawProductModal').modal('show');
           console.log("#withdrawProductModal" + product_id);
         },
-        error: function (xhr, status, error) {
+        error: function(xhr, status, error) {
           console.error(xhr.responseText);
         }
       });

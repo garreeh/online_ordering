@@ -38,7 +38,7 @@ $columns = array(
     'dt' => 3,
     'field' => 'product_stocks',
     'formatter' => function ($lab2, $row) {
-      return $row['product_stocks'];
+      return $row['product_stocks'] . ' / KG';
     }
   ),
 

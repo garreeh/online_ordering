@@ -33,7 +33,7 @@ if (isset($_POST['purchase_order_id'])) {
                 <input type="hidden" name="purchase_order_id" value="<?php echo $row['purchase_order_id']; ?>">
                 <div class="form-row">
                   <div class="form-group col-md-12">
-                    <label for="quantity">Quantity:</label>
+                    <label for="quantity">Quantity (Per KG):</label>
                     <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Enter Quantity" value="<?php echo $row['quantity']; ?>" required>
                   </div>
                 </div>
