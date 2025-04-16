@@ -58,19 +58,8 @@ if ($result) {
             </div>
           </div>
           <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="supplier_id">Supplier:</label>
-              <select class="form-control" id="supplier_id" name="supplier_id" required>
-                <option value="">Select Supplier</option>
-                <?php foreach ($supplier_names as $supplier_rows): ?>
-                  <option value="<?php echo $supplier_rows['supplier_id']; ?>">
-                    <?php echo $supplier_rows['supplier_name']; ?>
-                  </option>
-                <?php endforeach; ?>
-              </select>
-            </div>
 
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-12">
               <label for="category_id">Category:</label>
               <select class="form-control" id="category_id" name="category_id" required>
                 <option value="">Select Category</option>
@@ -82,7 +71,15 @@ if ($result) {
               </select>
             </div>
           </div>
-
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label>Supplier:</label>
+              <div id="supplier-container">
+                <!-- Placeholder for supplier -->
+              </div>
+              <button type="button" class="btn btn-secondary mt-2" id="add-supplier-button">+ Add Supplier</button>
+            </div>
+          </div>
           <!-- Add a hidden input field to submit the form with the button click -->
           <input type="hidden" name="add_product" value="1">
 
@@ -102,6 +99,39 @@ if ($result) {
 <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
 <script>
+  const addSupplierButton = document.getElementById('add-supplier-button');
+  addSupplierButton.addEventListener('click', function() {
+    const container = document.getElementById('supplier-container');
+
+    const row = document.createElement('div');
+    row.className = 'form-row mt-2';
+
+    // Variation name field
+    const supplierNameCol = document.createElement('div');
+    supplierNameCol.className = 'form-group col-md-11';
+    supplierNameCol.innerHTML = `
+    <input type="text" class="form-control" name="supplier_multi_name[]" placeholder="Enter Supplier Name" required>
+  `;
+
+    // Remove button
+    const removeCol = document.createElement('div');
+    removeCol.className = 'form-group col-md-1';
+    removeCol.innerHTML = `
+    <button type="button" class="btn btn-danger btn-block remove-add-supplier">Remove</button>
+  `;
+
+    row.appendChild(supplierNameCol);
+    row.appendChild(removeCol);
+
+    container.appendChild(row);
+
+    // Add event listener for remove button
+    const removeButton = row.querySelector('.remove-add-supplier');
+    removeButton.addEventListener('click', function() {
+      container.removeChild(row);
+    });
+  });
+
   $(document).ready(function() {
     $('#addProductModal form').submit(function(event) {
       event.preventDefault(); // Prevent default form submission
@@ -140,7 +170,7 @@ if ($result) {
 
             // Optionally, reset select for selectized
             $('#category_id')[0].selectize.clear();
-            $('#supplier_id')[0].selectize.clear();
+            // $('#supplier_id')[0].selectize.clear();
             // Optionally, close the modal
             $('#addProductModal').modal('hide');
             window.reloadDataTable();

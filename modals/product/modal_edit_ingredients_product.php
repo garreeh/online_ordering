@@ -48,6 +48,17 @@ if ($result) {
 
 if (isset($_POST['product_id'])) {
   $product_id = $_POST['product_id'];
+
+  $sql = "SELECT * FROM multiple_supplier WHERE product_id = '$product_id'";
+  $result_suppliers = mysqli_query($conn, $sql);
+
+  $suppliers = [];
+  if ($result_suppliers) {
+    while ($row = mysqli_fetch_assoc($result_suppliers)) {
+      $suppliers[] = $row;
+    }
+  }
+
   $sql = "SELECT * FROM ingredients_product WHERE product_id = '$product_id'";
   $result = mysqli_query($conn, $sql);
 
@@ -85,23 +96,7 @@ if (isset($_POST['product_id'])) {
                 </div>
 
                 <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <label for="supplier_id">Supplier:</label>
-                    <select class="form-control" id="supplier_id" name="supplier_id" required>
-                      <option value="" disabled>Select Supplier</option>
-                      <?php
-                      // Loop through the supplier names to populate the dropdown
-                      foreach ($supplier_names as $supplier_rows) {
-                        // Set selected if the supplier_id matches
-                        $selected = ($supplier_rows['supplier_id'] == $row['supplier_id']) ? 'selected' : '';
-                        echo "<option value='" . $supplier_rows['supplier_id'] . "' $selected>" . $supplier_rows['supplier_name'] . "</option>";
-                      }
-                      ?>
-                    </select>
-                  </div>
-
-
-                  <div class="form-group col-md-6">
+                  <div class="form-group col-md-12">
                     <label for="category_id">Category:</label>
                     <select class="form-control" id="category_id" name="category_id" required>
                       <option value="" disabled>Select Category</option>
@@ -116,6 +111,39 @@ if (isset($_POST['product_id'])) {
                     </select>
                   </div>
 
+                </div>
+
+
+                <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <label>Suppliers :</label>
+
+                    <div id="variations-container_update">
+                      <?php if (!empty($suppliers)): ?>
+                        <?php foreach ($suppliers as $supplier): ?>
+                          <div class="form-row mt-2">
+                            <input type="hidden" name="supplier_multi_id[]" value="<?php echo $supplier['supplier_multi_id']; ?>">
+
+                            <div class="form-group col-md-11">
+                              <label>Supplier Name:</label>
+
+                              <input type="text" class="form-control" name="supplier_multi_name[]" value="<?php echo $supplier['supplier_multi_name']; ?>"
+                                placeholder="Enter Supplier Name" required>
+                            </div>
+                            <div class="form-group col-md-1">
+                              <label></label>
+
+                              <button type="button" class="btn btn-danger remove-suppliers_edit"
+                                data-id="<?php echo $supplier['supplier_multi_id']; ?>">Remove</button>
+
+                            </div>
+                          </div>
+                        <?php endforeach; ?>
+                      <?php endif; ?>
+                      <button type="button" class="btn btn-secondary" id="add-variation-button_update">+ Add
+                        Variation</button>
+                    </div>
+                  </div>
                 </div>
 
                 <!-- Add a hidden input field to submit the form with the button click -->
@@ -155,6 +183,95 @@ if (isset($_POST['product_id'])) {
 
 <script>
   $(document).ready(function() {
+    // Add Variation Functionality
+    document.getElementById('add-variation-button_update').addEventListener('click', function() {
+      const container = document.getElementById('variations-container_update');
+
+      const newVariation = document.createElement('div');
+      newVariation.classList.add('form-row', 'mt-2');
+      newVariation.innerHTML = `
+    <div class="form-group col-md-11">
+      <label>Supplier Name:</label>
+      <input type="text" class="form-control" name="supplier_multi_name[]" placeholder="Enter Supplier Name" required>
+    </div>
+    <div class="form-group col-md-1">
+      <label></label>
+      <button type="button" class="btn btn-danger remove-suppliers_edit">Remove</button>
+    </div>
+  `;
+
+      container.appendChild(newVariation);
+
+    });
+
+    // Remove Variation Functionality
+    document.querySelectorAll('.remove-suppliers_edit').forEach(function(button) {
+      button.addEventListener('click', function() {
+        this.parentElement.parentElement.remove();
+      });
+    });
+
+    $(document).off('click', '.remove-suppliers_edit').on('click', '.remove-suppliers_edit', function() {
+      var supplier_multi_id = $(this).data('id');
+
+      if (supplier_multi_id) {
+        // Send the supplier_multi_id to the backend via AJAX for deletion
+        $.ajax({
+          type: 'POST',
+          url: '/online_ordering/controllers/admin/remove_supplier_process.php',
+          data: {
+            remove_supplier_multi_id: [supplier_multi_id]
+          },
+          success: function(response) {
+            try {
+              response = JSON.parse(response);
+
+              if (response.success) {
+                Toastify({
+                  text: 'Supplier removed successfully!',
+                  duration: 2000,
+                  backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)"
+                }).showToast();
+
+                // Remove the corresponding <div> from the UI
+                $(this).closest('.form-row').remove(); // Fix: `this` needs to reference the current `remove-suppliers_edit` element
+              } else {
+                Toastify({
+                  text: response.message,
+                  duration: 2000,
+                  backgroundColor: "linear-gradient(to right, #ff6a00, #ee0979)"
+                }).showToast();
+              }
+            } catch (error) {
+              console.error('Error parsing response JSON:', error);
+              Toastify({
+                text: "An error occurred while processing the variation removal.",
+                duration: 2000,
+                backgroundColor: "linear-gradient(to right, #ff6a00, #ee0979)"
+              }).showToast();
+            }
+          },
+          error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+            Toastify({
+              text: "Error occurred while removing variation. Please try again later.",
+              duration: 2000,
+              backgroundColor: "linear-gradient(to right, #ff6a00, #ee0979)"
+            }).showToast();
+          }
+        });
+      } else {
+        // If no `supplier_multi_id`, simply perform the deletion without AJAX
+        $(this).closest('.form-row').remove();
+        Toastify({
+          text: 'Variation removed successfully!',
+          duration: 2000,
+          backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)"
+        }).showToast();
+      }
+    });
+
+
     $('#editProductModal form').submit(function(event) {
       event.preventDefault(); // Prevent default form submission
 
