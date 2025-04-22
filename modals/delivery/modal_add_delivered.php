@@ -80,6 +80,7 @@ if ($result) {
           console.log(response); // Log the response for debugging
           response = JSON.parse(response);
           if (response.success) {
+
             Toastify({
               text: response.message,
               duration: 2000,
@@ -91,8 +92,12 @@ if ($result) {
 
             // Optionally, close the modal
             $('#addDeliveredModal').modal('hide');
+
+
+            // Refresh the data table
             window.reloadDataTable();
 
+            fetchN
           } else {
             Toastify({
               text: response.message,

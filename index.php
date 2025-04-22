@@ -69,11 +69,58 @@ if (
     <link href="assets/user/corporate/css/style-responsive.css" rel="stylesheet">
     <link href="assets/user/corporate/css/themes/red.css" rel="stylesheet" id="style-color">
     <link href="assets/user/corporate/css/custom.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
     <!-- Theme styles END -->
 </head>
 <!-- Head END -->
 
 <style>
+    /* Ensure parent container has position relative */
+    .search-bar {
+        position: relative;
+    }
+
+    #searchResults {
+        position: absolute !important;
+        top: 100% !important;
+        left: 0 !important;
+        right: 0 !important;
+        background-color: #ffffff !important;
+        border: 1px solid #ddd !important;
+        border-radius: 8px !important;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+        max-height: 250px !important;
+        overflow-y: auto !important;
+        z-index: 1000 !important;
+        padding: 0.5rem 0 !important;
+    }
+
+    /* Show the dropdown when the "show" class is added */
+    #searchResults.show {
+        display: block;
+    }
+
+    #searchResults .dropdown-item {
+        display: block !important;
+        padding: 10px 15px !important;
+        color: #333 !important;
+        font-weight: 500 !important;
+        text-decoration: none !important;
+        transition: background-color 0.2s ease !important;
+        border-bottom: 1px solid #f1f1f1 !important;
+    }
+
+    #searchResults .dropdown-item:last-child {
+        border-bottom: none !important;
+    }
+
+    #searchResults .dropdown-item:hover {
+        background-color: #f5f5f5 !important;
+        color: #000 !important;
+    }
+
     /* Category Filter styling */
     .category-filter {
         max-width: 250px !important;
@@ -304,6 +351,49 @@ if (
                 </div>
 
                 <div class="col-md-9 col-sm-8 col-xs-7 special-product">
+
+                    <!-- Dropdown to select a product -->
+                    <!-- <div class="search-bar">
+                        <select id="productDropdown" class="form-control d-none d-md-block">
+                            <option value="">Search Product</option>
+                            </?php
+                            include '../../connections/connections.php';
+
+                            // Query to get all categories
+                            $categoryQuery = "SELECT * FROM category";
+                            $categoryResult = $conn->query($categoryQuery);
+
+                            // Loop through categories
+                            while ($categoryRow = $categoryResult->fetch_assoc()) {
+                                $category_id = $categoryRow['category_id'];
+                                $category_name = htmlspecialchars($categoryRow['category_name']);
+
+                                echo "<optgroup label=\"$category_name\">";
+
+                                // Query to get products based on category
+                                $productQuery = "SELECT * FROM product WHERE category_id = '$category_id'";
+                                $productResult = $conn->query($productQuery);
+
+                                // Loop through products and add them to the dropdown
+                                while ($productRow = $productResult->fetch_assoc()) {
+                                    $product_id = $productRow['product_id'];
+                                    $product_name = htmlspecialchars($productRow['product_name']);
+                                    echo "<option value=\"$product_id\" data-category-id=\"$category_id\">$product_name</option>";
+                                }
+
+                                echo "</optgroup>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+
+                    <div id="filteredProducts"></div> -->
+
+                    <div class="search-bar">
+                        <input type="text" id="searchInput" class="form-control d-none d-md-block" placeholder="Search products..." autocomplete="off">
+                        <div id="searchResults" class="dropdown-menu"></div>
+                    </div>
+
                     <?php
                     $categoryQuery = "SELECT * FROM category";
                     $categoryResult = $conn->query($categoryQuery);
@@ -370,7 +460,6 @@ if (
 
 </html>
 
-
 <script src="assets/user/plugins/jquery.min.js" type="text/javascript"></script>
 <script src="assets/user/plugins/jquery-migrate.min.js" type="text/javascript"></script>
 <script src="assets/user/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
@@ -386,10 +475,17 @@ if (
 
 <script src="assets/user/corporate/scripts/layout.js" type="text/javascript"></script>
 <script src="assets/user/pages/scripts/bs-carousel.js" type="text/javascript"></script>
-
+<!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> -->
 <!-- Add Toastify CSS and JS -->
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+
+<!-- COPY THESE WHOLE CODE WHEN IMPORT SELECT -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+
+
 
 <script type="text/javascript">
     jQuery(document).ready(function() {
@@ -401,8 +497,44 @@ if (
     });
 </script>
 <!-- END PAGE LEVEL JAVASCRIPTS -->
-
 <script type="text/javascript">
+    // AJAX for Search Bar using jQuery
+    $('#searchInput').on('input', function() {
+        const query = $(this).val().trim();
+        if (query.length > 0) {
+            $.ajax({
+                type: 'POST',
+                url: '/online_ordering/controllers/users/search_products.php',
+                data: {
+                    query: query
+                },
+                success: function(response) {
+                    $('#searchResults').html(response).addClass('show');
+                }
+            });
+        } else {
+            $('#searchResults').removeClass('show');
+        }
+    });
+
+    // Hide search results when clicking outside
+    $(document).on('click', function(e) {
+        if (!$(e.target).closest('#searchInput, #searchResults').length) {
+            $('#searchResults').removeClass('show');
+        }
+    });
+
+    $(document).ready(function() {
+        // Initialize Selectize for the product dropdown
+        $('#productDropdown').selectize({
+            placeholder: 'Search Product...', // Placeholder text
+            allowEmptyOption: true, // Allow blank selection
+            onInitialize: function() { // Clear the selection on init
+                this.clear(true);
+            }
+        });
+    });
+
     function filterProducts(categoryId) {
         document.querySelectorAll('.category-products').forEach(categoryProducts => {
             categoryProducts.style.display = categoryProducts.getAttribute('data-category-id') === categoryId || categoryId === '' ? 'block' : 'none';
@@ -516,6 +648,35 @@ if (
                         position: "right",
                         backgroundColor: "#FF0000", // Red background for error
                     }).showToast();
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        // When the dropdown selection changes
+        $('#productDropdown').change(function() {
+            // Get the selected product ID
+            var selectedProductId = $(this).val();
+
+            // If no product is selected, hide the product list
+            if (selectedProductId === "") {
+                $('#filteredProducts').html('');
+                return;
+            }
+
+            // Make an AJAX request to fetch the filtered products
+            $.ajax({
+                url: 'filter_products.php', // PHP file that will handle the filtering logic
+                type: 'GET',
+                data: {
+                    product_id: selectedProductId
+                },
+                success: function(response) {
+                    // Display the filtered products
+                    $('#filteredProducts').html(response);
                 }
             });
         });

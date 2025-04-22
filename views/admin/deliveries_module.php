@@ -152,6 +152,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
     window.reloadDataTable = function() {
       delivery_table.ajax.reload();
+
     };
 
   });
@@ -185,6 +186,8 @@ if (session_status() == PHP_SESSION_NONE) {
     $('#delivery_table').on('click', 'tr td:nth-child(9) .fetchDataFinish', function() {
       var cart_id = $(this).closest('tr').find('td').first().text(); // Get the cart_id from the clicked row
 
+      console.log('Clicked cart_id:', cart_id); // Log the cart_id for debugging
+
       $.ajax({
         url: './../../modals/delivery/modal_add_delivered.php', // Path to PHP script to fetch modal content
         method: 'POST',
@@ -192,13 +195,18 @@ if (session_status() == PHP_SESSION_NONE) {
           cart_id: cart_id
         },
         success: function(response) {
+          console.log('Modal Response:', response); // Log the modal response
+
+          // Insert the modal content into the page
           $('#modalContainerProvider').html(response);
           $('#addDeliveredModal').modal('show');
           $('#cart_id').val(cart_id); // Set the cart_id here
           console.log("#addDeliveredModal: " + cart_id);
+
         },
+
         error: function(xhr, status, error) {
-          console.error(xhr.responseText);
+          console.error('Error fetching modal content:', error); // Log errors related to fetching modal content
         }
       });
     });

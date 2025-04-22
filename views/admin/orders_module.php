@@ -191,6 +191,10 @@ if (session_status() == PHP_SESSION_NONE) {
           $('#addDeliveryModal').modal('show');
           $('#cart_id').val(cart_id); // Set the cart_id here
           console.log("#addDeliveryModal: " + cart_id);
+          // fetchNotifications();
+
+
+
         },
         error: function(xhr, status, error) {
           console.error(xhr.responseText);

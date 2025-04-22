@@ -10,7 +10,8 @@ if (isset($_POST['tag_as_delivered'])) {
   $sql = "UPDATE `cart` 
           SET 
               cart_status = 'Delivered',
-              payment_status = 'Paid'
+              payment_status = 'Paid',
+              delivery_rider_id = NULL
           WHERE cart_id = '$cart_id'";
 
   // Execute SQL query
@@ -24,6 +25,5 @@ if (isset($_POST['tag_as_delivered'])) {
     $response = array('success' => false, 'message' => 'Error Delivering: ' . mysqli_error($conn));
     echo json_encode($response);
     exit();
-  } 
+  }
 }
-?>

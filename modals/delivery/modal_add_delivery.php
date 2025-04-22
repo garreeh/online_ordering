@@ -1,8 +1,16 @@
 <?php
 include './../../connections/connections.php';
 
-// Fetch user types from the database
-$sql = "SELECT * FROM users WHERE user_type_id = 4";
+// Fetch all delivery riders and check if they are currently assigned in cart
+$sql = "
+  SELECT u.user_id, u.user_fullname, 
+         CASE WHEN c.delivery_rider_id IS NOT NULL THEN 1 ELSE 0 END AS has_delivery
+  FROM users u
+  LEFT JOIN cart c ON u.user_id = c.delivery_rider_id
+  WHERE u.user_type_id = 4
+  GROUP BY u.user_id
+";
+
 $result = mysqli_query($conn, $sql);
 
 $user_names = [];
@@ -11,8 +19,8 @@ if ($result) {
     $user_names[] = $row;
   }
 }
-
 ?>
+
 <style>
   /* Custom CSS for label color */
   .modal-body label {
@@ -35,16 +43,23 @@ if ($result) {
       <div class="modal-body">
         <form method="post" enctype="multipart/form-data">
           <div class="form-group col-md-12">
-            <label for="user_id">Assign Delivery Rider:</label>
+            <label for="user_id">Assign Delivery Riderrr:</label>
             <select class="form-control" id="user_id" name="user_id" required>
               <option value="">Select Delivery Rider</option>
-              <?php foreach ($user_names as $user_rows) : ?>
-                <option value="<?php echo $user_rows['user_id']; ?>">
-                  <?php echo $user_rows['user_fullname']; ?>
+              <?php foreach ($user_names as $user_rows): ?>
+                <option value="<?php echo $user_rows['user_id']; ?>"
+                  <?php echo $user_rows['has_delivery'] ? 'disabled' : ''; ?>>
+                  <?php
+                  echo $user_rows['user_fullname'];
+                  if ($user_rows['has_delivery']) {
+                    echo ' * (Ongoing Delivery)';
+                  }
+                  ?>
                 </option>
               <?php endforeach; ?>
             </select>
           </div>
+
 
           <!-- Add a hidden input field to submit the form with the button click -->
           <input type="hidden" name="cart_id" id="cart_id" value="">
@@ -99,6 +114,7 @@ if ($result) {
             // Optionally, close the modal
             $('#addDeliveryModal').modal('hide');
             window.reloadDataTable();
+            fetchNotifications();
 
           } else {
             Toastify({
