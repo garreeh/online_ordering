@@ -197,8 +197,8 @@ if ($result) {
             <div id="collapse3" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
               <div class="bg-white py-2 collapse-inner rounded">
                 <!-- <h6 class="collapse-header">Setup:</h6> -->
-                <a class="collapse-item" href="/online_ordering/views/admin/ingredients_supplier_module.php">Ingredients
-                  Suppliers</a>
+                <!-- <a class="collapse-item" href="/online_ordering/views/admin/ingredients_supplier_module.php">Ingredients
+                  Suppliers</a> -->
                 <a class="collapse-item" href="/online_ordering/views/admin/ingredients_category_module.php">Ingredients
                   Category</a>
                 <a class="collapse-item" href="/online_ordering/views/admin/ingredients_product_module.php">Ingredients

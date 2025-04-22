@@ -1,10 +1,8 @@
 <?php
 include './../../connections/connections.php';
 
-// Fetch products with supplier names
-$sql = "SELECT *
-        FROM ingredients_product
-        LEFT JOIN ingredients_supplier ON ingredients_product.supplier_id = ingredients_supplier.supplier_id";
+// Fetch products
+$sql = "SELECT * FROM ingredients_product";
 $resultProduct = mysqli_query($conn, $sql);
 $products = [];
 if ($resultProduct) {
@@ -50,7 +48,7 @@ if ($resultProduct) {
               <select class="form-control" id="product_id" name="product_id" onchange="inheritSupplierDetails()" required>
                 <option value="">Select Product</option>
                 <?php foreach ($products as $product) : ?>
-                  <option value="<?php echo $product['product_id']; ?> - <?php echo $product['supplier_name']; ?> - <?php echo $product['supplier_id']; ?>">
+                  <option value="<?php echo $product['product_id']; ?>">
                     <?php echo $product['product_name']; ?>
                   </option>
                 <?php endforeach; ?>
@@ -58,13 +56,11 @@ if ($resultProduct) {
             </div>
 
             <div class="form-group col-md-6">
-              <label for="supplier_name">Supplier:</label>
+              <label for="supplier_name">Suppliers:</label>
               <input type="text" class="form-control" id="supplier_name" name="supplier_name" readonly>
             </div>
 
-            <div class="form-group col-md-6">
-              <input type="hidden" class="form-control" id="supplier_id" name="supplier_id" readonly>
-            </div>
+            <input type="hidden" class="form-control" id="supplier_id" name="supplier_id" readonly>
           </div>
 
           <input type="hidden" name="add_purchase" value="1">
@@ -84,24 +80,37 @@ if ($resultProduct) {
 
 <script>
   function inheritSupplierDetails() {
-    var selectedProduct = document.getElementById('product_id').value;
-    console.log('Selected Product Value:', selectedProduct);
+    var productId = $('#product_id').val();
+    console.log('Selected Product ID:', productId);
 
-    var details = selectedProduct.split(' - ');
-    console.log('Split Details Array:', details);
+    if (!productId) {
+      $('#supplier_name').val('');
+      return;
+    }
 
-    var supplierName = details[1];
-    var supplierId = details[2];
+    $.ajax({
+      url: '/online_ordering/controllers/admin/get_suppliers_by_product.php',
+      type: 'POST',
+      data: {
+        product_id: productId
+      },
+      success: function(response) {
+        console.log('Supplier response:', response);
+        var res = JSON.parse(response);
 
-    document.getElementById('supplier_name').value = supplierName;
-    document.getElementById('supplier_id').value = supplierId;
-
-    console.log('Supplier Name:', supplierName);
-    console.log('Supplier ID:', supplierId);
+        if (res.success) {
+          $('#supplier_name').val(res.supplier_names);
+        } else {
+          $('#supplier_name').val('No suppliers found');
+        }
+      },
+      error: function() {
+        $('#supplier_name').val('Error loading suppliers');
+      }
+    });
   }
 
   $(document).ready(function() {
-    // Handle form submission
     $('#addPurchaseOrderModal form').on('submit', function(event) {
       event.preventDefault();
 
@@ -109,7 +118,6 @@ if ($resultProduct) {
       var $submitButton = $form.find('button[type="submit"]');
       var originalButtonText = $submitButton.text();
 
-      // Change button text to "Adding..."
       $submitButton.text('Adding...').prop('disabled', true);
 
       var formData = new FormData($form[0]);
@@ -141,7 +149,7 @@ if ($resultProduct) {
             }).showToast();
           }
         },
-        error: function(xhr, status, error) {
+        error: function(xhr) {
           console.error(xhr.responseText);
           Toastify({
             text: "Error occurred while adding product. Please try again later.",
@@ -150,7 +158,6 @@ if ($resultProduct) {
           }).showToast();
         },
         complete: function() {
-          // Revert button text and re-enable it
           $submitButton.text(originalButtonText).prop('disabled', false);
         }
       });
