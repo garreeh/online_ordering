@@ -25,7 +25,7 @@ while ($row = $result->fetch_assoc()) {
 $total_items = count($cart_items);
 $total_price = 0;
 foreach ($cart_items as $item) {
-    $total_price += $item['cart_quantity'] * $item['product_sellingprice'];
+    $total_price += $item['cart_quantity'] * $item['total_price'];
 }
 
 $response = array(
@@ -36,4 +36,3 @@ $response = array(
 );
 
 echo json_encode($response);
-?>

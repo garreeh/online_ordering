@@ -61,7 +61,7 @@ if ($result) {
 
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="product_sellingprice">Product Selling Price:</label>
+              <label for="product_sellingprice">Main Selling Price:</label>
               <input type="text" class="form-control" id="product_sellingprice" name="product_sellingprice"
                 placeholder="Enter Product Selling Price" required>
             </div>
@@ -79,6 +79,19 @@ if ($result) {
             </div>
           </div>
           <hr>
+
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label>Size :</label>
+              <div id="variations-container">
+                <!-- Placeholder for variations -->
+              </div>
+              <button type="button" class="btn btn-secondary mt-2" id="add-variation-button">+ Add Size</button>
+            </div>
+          </div>
+
+          <hr>
+
           <div class="form-row">
             <div class="form-group col-md-12">
               <label>Other Product Images:</label>
@@ -108,6 +121,67 @@ if ($result) {
 <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
 <script>
+  const addVariationButton = document.getElementById('add-variation-button');
+  addVariationButton.addEventListener('click', function() {
+    const container = document.getElementById('variations-container');
+
+    const row = document.createElement('div');
+    row.className = 'form-row mt-2';
+
+    // Variation name field
+    const variationNameCol = document.createElement('div');
+    variationNameCol.className = 'form-group col-md-6';
+    variationNameCol.innerHTML = `
+    <input type="text" class="form-control" name="size_name[]" placeholder="Enter Size" required>
+  `;
+
+    // Variation price field
+    const variationPriceCol = document.createElement('div');
+    variationPriceCol.className = 'form-group col-md-5';
+    variationPriceCol.innerHTML = `
+    <input type="text" class="form-control variation-price" name="size_price[]" placeholder="Enter Size Price" required>
+  `;
+
+    // Remove button
+    const removeCol = document.createElement('div');
+    removeCol.className = 'form-group col-md-1';
+    removeCol.innerHTML = `
+    <button type="button" class="btn btn-danger btn-block remove-add-variation">Remove</button>
+  `;
+
+    row.appendChild(variationNameCol);
+    row.appendChild(variationPriceCol);
+    row.appendChild(removeCol);
+
+    container.appendChild(row);
+
+    // Add the event listener for the newly created price input
+    const priceInput = row.querySelector('.variation-price');
+    priceInput.addEventListener('input', restrictPriceInput);
+
+    // Add event listener for remove button
+    const removeButton = row.querySelector('.remove-add-variation');
+    removeButton.addEventListener('click', function() {
+      container.removeChild(row);
+    });
+  });
+
+  // Function to restrict input to numbers and a single dot
+  function restrictPriceInput(e) {
+    this.value = this.value.replace(/[^0-9.]/g, ''); // Remove non-numeric characters except dot
+    if ((this.value.match(/\./g) || []).length > 1) {
+      this.value = this.value.slice(0, -1); // Remove the last character if there's more than one dot
+    }
+  }
+
+  // Attach to existing inputs (if any)
+  document.querySelectorAll('.variation-price').forEach(function(input) {
+    input.addEventListener('input', restrictPriceInput);
+  });
+
+
+
+
   // Add Image functionality with remove button
   const addImageButton = document.getElementById('add-image-button');
   addImageButton.addEventListener('click', function() {

@@ -48,6 +48,24 @@ if (isset($_POST['add_product_booking'])) {
   if (mysqli_query($conn, $sql)) {
     $product_id = $conn->insert_id; // Get the last inserted product ID
     $response['success'] = true;
+    $response['message'] = 'Booking added successfully!';
+
+    if (isset($_POST['size_name']) && isset($_POST['size_price'])) {
+      $size_names = $_POST['size_name'];
+      $size_prices = $_POST['size_price'];
+
+      foreach ($size_names as $index => $variation_name) {
+        $variation_name = $conn->real_escape_string($variation_name);
+        $variation_price = $conn->real_escape_string($size_prices[$index]);
+
+        $sql_variation = "INSERT INTO `size_booking` (product_id, `size_name`, size_price)
+                          VALUES ('$product_id', '$variation_name', '$variation_price')";
+        mysqli_query($conn, $sql_variation);
+      }
+    }
+
+    $product_id = $conn->insert_id; // Get the last inserted product ID
+    $response['success'] = true;
     $response['message'] = 'Product Booking added successfully!';
 
     // Handle additional product images (if any)

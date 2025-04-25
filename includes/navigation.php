@@ -137,7 +137,7 @@ if (session_status() == PHP_SESSION_NONE) {
                 cartContent += '<a href="shop-item.html"><img src="' + baseURL + item.product_image + '" alt="' + item.product_name + '" width="37" height="34"></a>';
                 cartContent += '<span class="cart-content-count">x ' + item.cart_quantity + '</span>';
                 cartContent += '<strong><a href="shop-item.html">' + item.product_name + '</a></strong>';
-                cartContent += '<em>₱' + (item.product_sellingprice * item.cart_quantity).toFixed(2) + '</em>';
+                cartContent += '<em>₱' + (item.total_price * item.cart_quantity).toFixed(2) + '</em>';
                 cartContent += '<a href="#" class="del-goods" data-product-id="' + item.product_id + '">&nbsp;</a>';
                 cartContent += '</li>';
               });

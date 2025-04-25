@@ -29,6 +29,15 @@ if (isset($_POST['product_id'])) {
   $sql = "SELECT * FROM product WHERE product_id = '$product_id'";
   $result = mysqli_query($conn, $sql);
 
+  $sql = "SELECT * FROM size_booking WHERE product_id = '$product_id'";
+  $result_variations = mysqli_query($conn, $sql);
+
+  $variations = [];
+  if ($result_variations) {
+    while ($row = mysqli_fetch_assoc($result_variations)) {
+      $variations[] = $row;
+    }
+  }
 
   $sql = "SELECT * FROM product_image WHERE product_id = '$product_id'";
   $result_images = mysqli_query($conn, $sql);
@@ -105,6 +114,45 @@ if (isset($_POST['product_id'])) {
                 </div>
 
                 <hr>
+
+                <div class="form-row">
+                  <div class="form-group col-md-12">
+                    <label>Sizes :</label>
+
+                    <div id="variations-container_update">
+                      <?php if (!empty($variations)): ?>
+                        <?php foreach ($variations as $variation): ?>
+                          <div class="form-row mt-2">
+                            <input type="hidden" name="size_id[]" value="<?php echo $variation['size_id']; ?>">
+
+                            <div class="form-group col-md-6">
+                              <label>Size Name:</label>
+
+                              <input type="text" class="form-control" name="size_name[]" value="<?php echo $variation['size_name']; ?>"
+                                placeholder="Enter Size Name" required>
+                            </div>
+                            <div class="form-group col-md-5">
+                              <label>Size Price:</label>
+                              <input type="text" class="form-control variation-price" name="size_price[]"
+                                value="<?php echo $variation['size_price']; ?>" placeholder="Enter Size Price" required>
+                            </div>
+                            <div class="form-group col-md-1">
+                              <label></label>
+
+                              <button type="button" class="btn btn-danger remove-variation"
+                                data-id="<?php echo $variation['size_id']; ?>">Remove</button>
+
+                            </div>
+                          </div>
+                        <?php endforeach; ?>
+                      <?php endif; ?>
+                      <button type="button" class="btn btn-secondary" id="add-variation-button_update">+ Add
+                        Size</button>
+                    </div>
+                  </div>
+                </div>
+                <hr>
+
                 <div class="form-row">
                   <div class="form-group col-md-12">
                     <label>Other Product Images:</label>
@@ -176,6 +224,54 @@ if (isset($_POST['product_id'])) {
 ?>
 
 <script>
+  // Add Variation Functionality
+  document.getElementById('add-variation-button_update').addEventListener('click', function() {
+    const container = document.getElementById('variations-container_update');
+
+    const newVariation = document.createElement('div');
+    newVariation.classList.add('form-row', 'mt-2');
+    newVariation.innerHTML = `
+    <div class="form-group col-md-6">
+      <label>Size Name:</label>
+      <input type="text" class="form-control" name="size_name[]" placeholder="Enter Size Name" required>
+    </div>
+    <div class="form-group col-md-5">
+      <label>Size Price:</label>
+      <input type="text" class="form-control variation-price" name="size_price[]" placeholder="Enter Size Price" required>
+    </div>
+    <div class="form-group col-md-1">
+      <label></label>
+      <button type="button" class="btn btn-danger remove-variation">Remove</button>
+    </div>
+  `;
+
+    container.appendChild(newVariation);
+
+    // Add event listener to newly added Remove button
+    // newVariation.querySelector('.remove-variation').addEventListener('click', function() {
+    //   newVariation.remove();
+    // });
+    const priceInputs = document.querySelectorAll('.variation-price');
+    priceInputs.forEach(function(priceInput) {
+      priceInput.addEventListener('input', function(e) {
+        this.value = this.value.replace(/[^0-9.]/g, ''); // Remove non-numeric characters except dot
+        if ((this.value.match(/\./g) || []).length > 1) {
+          this.value = this.value.slice(0, -1); // Remove the last character if there's more than one dot
+        }
+      });
+    });
+  });
+
+  // Remove Variation Functionality
+  document.querySelectorAll('.remove-variation').forEach(function(button) {
+    button.addEventListener('click', function() {
+      this.parentElement.parentElement.remove();
+    });
+  });
+
+
+
+
   // Remove Variation Functionality
   document.querySelectorAll('.remove-variation').forEach(function(button) {
     button.addEventListener('click', function() {
@@ -214,6 +310,68 @@ if (isset($_POST['product_id'])) {
     button.addEventListener('click', function() {
       this.parentElement.parentElement.remove();
     });
+  });
+
+
+  // Variation Remove AJAX
+  $(document).off('click', '.remove-variation').on('click', '.remove-variation', function() {
+    var size_id = $(this).data('id');
+
+    if (size_id) {
+      // Send the variation_id to the backend via AJAX for deletion
+      $.ajax({
+        type: 'POST',
+        url: '/online_ordering/controllers/admin/remove_varation_process.php',
+        data: {
+          remove_size_id: [size_id]
+        },
+        success: function(response) {
+          try {
+            response = JSON.parse(response);
+
+            if (response.success) {
+              Toastify({
+                text: 'Size removed successfully!',
+                duration: 2000,
+                backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)"
+              }).showToast();
+
+              // Remove the corresponding <div> from the UI
+              $(this).closest('.form-row').remove(); // Fix: `this` needs to reference the current `remove-variation` element
+            } else {
+              Toastify({
+                text: response.message,
+                duration: 2000,
+                backgroundColor: "linear-gradient(to right, #ff6a00, #ee0979)"
+              }).showToast();
+            }
+          } catch (error) {
+            console.error('Error parsing response JSON:', error);
+            Toastify({
+              text: "An error occurred while processing the variation removal.",
+              duration: 2000,
+              backgroundColor: "linear-gradient(to right, #ff6a00, #ee0979)"
+            }).showToast();
+          }
+        },
+        error: function(xhr, status, error) {
+          console.error(xhr.responseText);
+          Toastify({
+            text: "Error occurred while removing variation. Please try again later.",
+            duration: 2000,
+            backgroundColor: "linear-gradient(to right, #ff6a00, #ee0979)"
+          }).showToast();
+        }
+      });
+    } else {
+      // If no `variation_id`, simply perform the deletion without AJAX
+      $(this).closest('.form-row').remove();
+      Toastify({
+        text: 'Variation removed successfully!',
+        duration: 2000,
+        backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)"
+      }).showToast();
+    }
   });
 
 

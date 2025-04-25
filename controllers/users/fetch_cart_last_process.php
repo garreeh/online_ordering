@@ -18,9 +18,9 @@ if ($result && mysqli_num_rows($result) > 0) {
     $cartItems[] = [
       'product_name' => $row['product_name'],
       'cart_quantity' => $row['cart_quantity'],
-      'product_sellingprice' => floatval($row['product_sellingprice']),
+      'product_sellingprice' => floatval($row['total_price']),
     ];
-    $totalPrice += $row['cart_quantity'] * $row['product_sellingprice'];
+    $totalPrice += $row['cart_quantity'] * $row['total_price'];
   }
 }
 

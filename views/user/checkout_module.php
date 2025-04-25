@@ -110,10 +110,10 @@ if (!isset($_SESSION['user_id'])) {
                     <em>Sub total</em>
                     <strong class="price" id="cart-subtotal"><span>₱ </span>0.00</strong>
                   </li>
-                  <li>
+                  <!-- <li>
                     <em>Delivery cost</em>
                     <strong class="price" id="cart-shipping"><span>₱ </span>35.00</strong>
-                  </li>
+                  </li> -->
                   <li class="shopping-total-price">
                     <em>Total</em>
                     <strong class="price" id="cart-total"><span>₱ </span>0.00</strong>
@@ -264,6 +264,7 @@ if (!isset($_SESSION['user_id'])) {
             } else {
               // Iterate over cart items and generate HTML content
               $.each(response.items, function(index, item) {
+                var productPriceTest = parseFloat(item.total_price) || 0;
                 var productPrice = parseFloat(item.product_sellingprice) || 0;
                 var cartQuantity = parseInt(item.cart_quantity, 10) || 0;
                 var baseURL = "./../uploads/";
@@ -273,8 +274,8 @@ if (!isset($_SESSION['user_id'])) {
                 cartContent += '<td class="goods-page-description"><h3><a href="javascript:;"></a></h3><p><strong>' + item.product_name + '</strong></p><em>' + item.product_description + '</em></td>';
                 cartContent += '<td class="goods-page-ref-no">' + item.product_sku + '</td>';
                 cartContent += '<td class="goods-page-quantity"><div class="product-quantity"><input type="text" value="' + cartQuantity + '" readonly class="form-control input-sm"></div></td>';
-                cartContent += '<td class="goods-page-price"><strong><span>₱ </span>' + productPrice.toFixed(2) + '</strong></td>';
-                cartContent += '<td class="goods-page-total"><strong><span>₱ </span>' + (productPrice * cartQuantity).toFixed(2) + '</strong></td>';
+                cartContent += '<td class="goods-page-price"><strong><span>₱ </span>' + productPriceTest.toFixed(2) + '</strong></td>';
+                cartContent += '<td class="goods-page-total"><strong><span>₱ </span>' + (productPriceTest * cartQuantity).toFixed(2) + '</strong></td>';
                 cartContent += '<td class="del-goods-col"><a class="del-goods" href="javascript:;" data-product-id="' + item.product_id + '">&nbsp;</a></td>';
                 cartContent += '</tr>';
               });
@@ -657,6 +658,8 @@ if (!isset($_SESSION['user_id'])) {
             } else {
               // Iterate over cart items and generate HTML content
               $.each(response.items, function(index, item) {
+                var productPriceTest = parseFloat(item.total_price) || 0;
+
                 var productPrice = parseFloat(item.product_sellingprice) || 0;
                 var cartQuantity = parseInt(item.cart_quantity, 10) || 0;
                 var baseURL = "./../uploads/";
@@ -666,8 +669,8 @@ if (!isset($_SESSION['user_id'])) {
                 cartContent += '<td class="goods-page-description"><h3><a href="javascript:;"></a></h3><p><strong>' + item.product_name + '</strong></p><em>' + item.product_description + '</em></td>';
                 cartContent += '<td class="goods-page-ref-no">' + item.product_sku + '</td>';
                 cartContent += '<td class="goods-page-quantity"><div class="product-quantity"><input type="text" value="' + cartQuantity + '" readonly class="form-control input-sm"></div></td>';
-                cartContent += '<td class="goods-page-price"><strong><span>₱ </span>' + productPrice.toFixed(2) + '</strong></td>';
-                cartContent += '<td class="goods-page-total"><strong><span>₱ </span>' + (productPrice * cartQuantity).toFixed(2) + '</strong></td>';
+                cartContent += '<td class="goods-page-price"><strong><span>₱ </span>' + productPriceTest.toFixed(2) + '</strong></td>';
+                cartContent += '<td class="goods-page-total"><strong><span>₱ </span>' + (productPriceTest * cartQuantity).toFixed(2) + '</strong></td>';
                 cartContent += '<td class="del-goods-col"><a class="del-goods" href="javascript:;" data-product-id="' + item.product_id + '">&nbsp;</a></td>';
                 cartContent += '</tr>';
               });
@@ -714,7 +717,7 @@ if (!isset($_SESSION['user_id'])) {
               cartItemsHtml += '<td>₱ ' + item.product_sellingprice.toFixed(2) + '</td>';
               cartItemsHtml += '<td>₱ ' + (item.cart_quantity * item.product_sellingprice).toFixed(2) + '</td>';
               cartItemsHtml += '</tr>';
-              totalPrice += item.cart_quantity * item.product_sellingprice + 35;
+              totalPrice += item.cart_quantity * item.cart_quantity;
             });
 
             // Update the cart content and total price in the modal

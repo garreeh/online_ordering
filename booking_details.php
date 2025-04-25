@@ -453,6 +453,45 @@ if (isset($_GET['product_id'])) {
 
                           <input type="hidden" id="selected_date" name="selected_date">
                           <input type="hidden" id="selected_time" name="selected_time">
+
+
+                          <!-- Select Size Dropdown -->
+                          <h4 style="margin-top: 20px; margin-bottom: 10px;">Select Size:</h4>
+                          <select id="sizeDropdown" class="form-control" required style="font-weight: bold; text-align: center;">
+                            <option value="">-- Select Size --</option>
+                            <?php
+                            $product_id = $row['product_id'];
+                            $query_sizes = "SELECT * FROM size_booking WHERE product_id = '$product_id'";
+                            $result_sizes = mysqli_query($conn, $query_sizes);
+                            while ($size = mysqli_fetch_assoc($result_sizes)) {
+                              echo "<option value='{$size['size_price']}'>{$size['size_name']} - ₱" . number_format($size['size_price'], 2) . "</option>";
+                            }
+                            ?>
+                          </select>
+
+                          <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                              var sizeDropdown = document.getElementById('sizeDropdown');
+                              var productPriceSpan = document.getElementById('productPrice');
+                              var productPriceInput = document.getElementById('product_sellingprice');
+                              var originalPrice = <?php echo $row['product_sellingprice']; ?>;
+
+                              sizeDropdown.addEventListener('change', function() {
+                                var selectedPrice = this.value;
+
+                                if (selectedPrice) {
+                                  var price = parseFloat(selectedPrice).toFixed(2);
+                                  productPriceSpan.textContent = price;
+                                  productPriceInput.value = price;
+                                } else {
+                                  var price = parseFloat(originalPrice).toFixed(2);
+                                  productPriceSpan.textContent = price;
+                                  productPriceInput.value = price;
+                                }
+                              });
+                            });
+                          </script>
+
                         </div>
 
 
@@ -475,8 +514,7 @@ if (isset($_GET['product_id'])) {
                         <input
                           type="hidden"
                           name="product_sellingprice"
-                          id="product_sellingprice"
-                          value="<?php echo $product_sellingprice; ?>">
+                          id="product_sellingprice">
                       </form>
 
                       <br>
@@ -648,7 +686,10 @@ if (isset($_GET['product_id'])) {
 
           // Get selected date and time
           var selectedDate = $('#selected_date').val();
+          var product_sellingprice = $('#product_sellingprice').val();
+
           var selectedTime = $('input[name="selected_time"]:checked').val();
+          var selectedSize = $('#sizeDropdown').val();
 
           // Validate if date and time are selected
           if (!selectedDate) {
@@ -675,6 +716,18 @@ if (isset($_GET['product_id'])) {
             return;
           }
 
+          if (!selectedSize) {
+            Toastify({
+              text: "Please select a size before adding to cart.",
+              duration: 3000,
+              close: true,
+              gravity: "top",
+              position: "right",
+              backgroundColor: "#FF0000", // Red background for error
+            }).showToast();
+            return;
+          }
+
           // Proceed with AJAX call to add_cart_process.php
           $.ajax({
             url: '/online_ordering/controllers/users/add_cart_booking_process.php',
@@ -683,7 +736,8 @@ if (isset($_GET['product_id'])) {
               product_id: productId,
               cart_quantity: quantity,
               selected_date: selectedDate,
-              selected_time: selectedTime
+              selected_time: selectedTime,
+              product_sellingprice: product_sellingprice
             },
             success: function(response) {
               try {
@@ -702,6 +756,8 @@ if (isset($_GET['product_id'])) {
                   $('input[name="selected_time"]').prop('checked', false);
                   $('#calendar').val(''); // Clear the input field
                   $('#selected_date').val(''); // Clear hidden input field
+                  $('#sizeDropdown').val(''); // Clear hidden input field
+
                   let calendarInstance = document.querySelector("#calendar")._flatpickr;
                   if (calendarInstance) {
                     calendarInstance.setDate(null); // Clears the selected date without resetting Flatpickr

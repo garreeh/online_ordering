@@ -94,6 +94,29 @@ if (isset($_POST['edit_product'])) {
             WHERE product_id='$product_id'";
 
   if (mysqli_query($conn, $sql)) {
+    // Updating Variations
+    if (isset($_POST['size_name']) && isset($_POST['size_price'])) {
+      $variation_names = $_POST['size_name'];
+      $variation_prices = $_POST['size_price'];
+
+      $variation_ids = isset($_POST['size_id']) ? $_POST['size_id'] : [];
+
+      foreach ($variation_names as $index => $variation_name) {
+        $variation_id = isset($variation_ids[$index]) ? $variation_ids[$index] : null;
+        $variation_name = $conn->real_escape_string($variation_name);
+        $variation_price = $conn->real_escape_string($variation_prices[$index]);
+
+
+        if ($variation_id) {
+          // Update existing variation
+          $sql_variation = "UPDATE `size_booking` SET `size_name`='$variation_name', size_price='$variation_price' WHERE size_id='$variation_id'";
+        } else {
+          // Insert new variation
+          $sql_variation = "INSERT INTO `size_booking` (product_id, `size_name`, size_price) VALUES ('$product_id', '$variation_name', '$variation_price')";
+        }
+        mysqli_query($conn, $sql_variation);
+      }
+    }
 
 
     // Updating Images
